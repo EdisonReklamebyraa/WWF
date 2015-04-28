@@ -1,0 +1,94 @@
+@import "settings";
+@import "foundation";
+
+$beigeish: #eeede3;
+$orangeish: #ff9600;
+$greenish: #6ac82b;
+$darkgreenish: #007925;
+$blueish: #0e6e8d;
+
+
+body {
+	background: $beigeish;
+	font-family: Georgia, sans-serif;
+}
+
+.row {
+	max-width: 69.5rem;
+}
+
+
+h1, h2, h3 { 
+	font-family: 'wwfregular', Arial, Helvetica, sans-serif; 
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+
+h1 {
+	  font-size: 3.8rem;
+  line-height: 1.1;
+  padding: 0.5em;
+}
+
+h3 {
+	font-size: 1.2rem;
+}
+.larger {
+	font-size: 1.8rem;
+}
+.sidebar {
+	text-align: center;
+}
+.sidebar p {
+	font-size: 13px;
+	line-height: 1.2;
+}
+.whitewrap {
+	background: white;
+}
+
+header .whitewrap {
+	min-height: 12.7em;
+}
+
+.modifier {
+	color: $orangeish;
+	border-bottom: 4px solid $orangeish;
+}
+
+.greened {
+	color: $greenish;
+}
+.darkgreened {
+	color: $darkgreenish;
+}
+.blued {
+	color: $blueish;
+}
+
+.spin {
+	
+}
+
+
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+
+@font-face {
+    font-family: 'wwfregular';
+    src: url('wwf-webfont.eot');
+    src: url('wwf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('wwf-webfont.woff') format('woff'),
+         url('wwf-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
