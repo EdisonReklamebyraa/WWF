@@ -9157,83 +9157,245 @@ th.hide-for-touch {
     display: table-cell !important;
   }
 }
-/* line 11, ../scss/app.scss */
+/* Variables
+--------------------------------------------------------------------- */
+/* Main resets and fixes
+--------------------------------------------------------------------- */
+/* line 16, ../scss/app.scss */
 body {
   background: #eeede3;
   font-family: Georgia, sans-serif;
 }
 
-/* line 16, ../scss/app.scss */
+/* line 20, ../scss/app.scss */
+ul {
+  margin: 0;
+}
+
+/* line 23, ../scss/app.scss */
 .row {
   max-width: 69.5rem;
 }
 
-/* line 21, ../scss/app.scss */
-h1, h2, h3 {
+/* line 27, ../scss/app.scss */
+.noLeftPadd {
+  padding-left: 0;
+}
+
+/* line 30, ../scss/app.scss */
+.noRightPadd {
+  padding-right: 0;
+}
+
+/* line 33, ../scss/app.scss */
+.noSidePadd {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+/* line 37, ../scss/app.scss */
+.margTop {
+  margin-top: 1.875rem;
+}
+
+/* line 40, ../scss/app.scss */
+.bigPaddBot {
+  padding-bottom: 5.625rem;
+}
+
+/* line 43, ../scss/app.scss */
+.left-floater {
+  float: left !important;
+}
+
+/* Type
+--------------------------------------------------------------------- */
+/* line 50, ../scss/app.scss */
+h1, h2, h3, .techBox p, .accordion .accordion-navigation a {
   font-family: 'wwfregular', Arial, Helvetica, sans-serif;
   font-weight: normal;
   text-transform: uppercase;
 }
 
-/* line 28, ../scss/app.scss */
+/* line 55, ../scss/app.scss */
 h1 {
   font-size: 3.8rem;
   line-height: 1.1;
   padding: 0.5em;
+  margin: 0;
 }
 
-/* line 34, ../scss/app.scss */
-h3 {
+/* line 61, ../scss/app.scss */
+h3, .accordion .accordion-navigation a {
   font-size: 1.2rem;
 }
 
-/* line 37, ../scss/app.scss */
+/* line 64, ../scss/app.scss */
 .larger {
   font-size: 1.8rem;
 }
 
-/* line 40, ../scss/app.scss */
-.sidebar {
-  text-align: center;
+/* line 67, ../scss/app.scss */
+header.row {
+  margin-bottom: 1.875rem;
 }
 
-/* line 43, ../scss/app.scss */
+/* line 70, ../scss/app.scss */
 .sidebar p {
-  font-size: 13px;
+  font-size: 0.8rem;
   line-height: 1.2;
 }
 
-/* line 47, ../scss/app.scss */
-.whitewrap {
-  background: white;
+/* line 74, ../scss/app.scss */
+.icon {
+  height: 1.3rem;
+  margin: 0 0.2rem 0.3rem;
 }
 
-/* line 51, ../scss/app.scss */
-header .whitewrap {
-  min-height: 12.7em;
-}
-
-/* line 55, ../scss/app.scss */
+/* line 78, ../scss/app.scss */
 .modifier {
   color: #ff9600;
   border-bottom: 4px solid #ff9600;
 }
 
-/* line 60, ../scss/app.scss */
+/* line 83, ../scss/app.scss */
 .greened {
   color: #6ac82b;
 }
 
-/* line 63, ../scss/app.scss */
+/* line 84, ../scss/app.scss */
 .darkgreened {
   color: #007925;
 }
 
-/* line 66, ../scss/app.scss */
+/* line 85, ../scss/app.scss */
 .blued {
   color: #0e6e8d;
 }
 
+/* Main layout
+--------------------------------------------------------------------- */
+/* line 90, ../scss/app.scss */
+.sidebar {
+  text-align: center;
+}
+
+/* line 93, ../scss/app.scss */
+.whitewrap {
+  background: white;
+}
+
+/* line 96, ../scss/app.scss */
+.techBox, .earthBox {
+  position: relative;
+}
+
+/* line 99, ../scss/app.scss */
+.techBox p, .earthBox h2 {
+  position: absolute;
+}
+
+/* line 103, ../scss/app.scss */
+.earthBox h2 {
+  top: 38%;
+  left: 34%;
+  font-size: 4rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 0.2rem 0.4rem 0.4rem;
+  margin: 0;
+  line-height: 1;
+  z-index: 9;
+}
+
+/* line 113, ../scss/app.scss */
+.techBox p {
+  line-height: 1;
+}
+
+/* line 116, ../scss/app.scss */
+.techBox p span {
+  font-size: 1.5rem;
+}
+
+/* line 119, ../scss/app.scss */
+#hydro {
+  top: 53%;
+  left: 13%;
+}
+
+/* line 120, ../scss/app.scss */
+#bio {
+  top: 54%;
+  left: 26%;
+}
+
+/* line 121, ../scss/app.scss */
+#wind {
+  top: 36%;
+  left: 43%;
+}
+
+/* line 122, ../scss/app.scss */
+#geo {
+  top: 33%;
+  left: 56%;
+}
+
+/* line 123, ../scss/app.scss */
+#solarpv {
+  top: 35%;
+  left: 68%;
+}
+
+/* line 124, ../scss/app.scss */
+#solarp {
+  top: 29%;
+  left: 80%;
+}
+
+/* line 126, ../scss/app.scss */
+.papered {
+  background: url("../img/paper.jpg");
+  padding: 0.9375rem 0;
+}
+
+/* line 131, ../scss/app.scss */
+header .whitewrap {
+  min-height: 14.1em;
+}
+
+/* line 135, ../scss/app.scss */
+.dollas img {
+  position: absolute;
+  width: 34%;
+  top: 24%;
+  left: 34%;
+}
+
+/* line 142, ../scss/app.scss */
+.graphs {
+  border: 1px solid lightgray;
+  margin-bottom: 1.25rem;
+}
+
+/* Table styles
+--------------------------------------------------------------------- */
+/* line 150, ../scss/app.scss */
+.accordion-navigation a:before {
+  content: "+";
+  margin-right: 0.2rem;
+}
+
+/* line 156, ../scss/app.scss */
+table {
+  width: 100%;
+}
+
+/* Animations
+--------------------------------------------------------------------- */
+/*.spin {
+	-webkit-animation: rotate 90s infinite linear;
+}*/
 @-webkit-keyframes rotate {
   from {
     -webkit-transform: rotate(0deg);
@@ -9242,6 +9404,8 @@ header .whitewrap {
     -webkit-transform: rotate(360deg);
   }
 }
+/* Font-face
+--------------------------------------------------------------------- */
 @font-face {
   font-family: 'wwfregular';
   src: url("wwf-webfont.eot");
