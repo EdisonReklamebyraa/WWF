@@ -1,0 +1,186 @@
+@import "settings";
+@import "foundation";
+
+
+/* Variables
+--------------------------------------------------------------------- */
+$beigeish: #eeede3;
+$orangeish: #ff9600;
+$greenish: #6ac82b;
+$darkgreenish: #007925;
+$blueish: #0e6e8d;
+
+
+/* Main resets and fixes
+--------------------------------------------------------------------- */
+body {
+	background: $beigeish;
+	font-family: Georgia, sans-serif;
+}
+ul {
+	margin: 0;
+}
+.row {
+	max-width: 69.5rem;
+}
+
+.noLeftPadd {
+	padding-left: 0;
+}
+.noRightPadd {
+	padding-right: 0;
+}
+.noSidePadd {
+	padding-right: 0;
+	padding-left: 0;
+}
+.margTop {
+	margin-top: 1.875rem;
+}
+.bigPaddBot {
+	padding-bottom: 5.625rem;
+}
+.left-floater {
+	float: left!important;
+}
+
+
+/* Type
+--------------------------------------------------------------------- */
+h1, h2, h3, .techBox p, .accordion .accordion-navigation a { 
+	font-family: 'wwfregular', Arial, Helvetica, sans-serif; 
+	font-weight: normal;
+	text-transform: uppercase;
+}
+h1 {
+	  font-size: 3.8rem;
+  line-height: 1.1;
+  padding: 0.5em;
+  margin: 0;
+}
+h3, .accordion .accordion-navigation a {
+	font-size: 1.2rem;
+}
+.larger {
+	font-size: 1.8rem;
+}
+header.row {
+	margin-bottom: 1.875rem;
+}
+.sidebar p {
+	font-size: 0.8rem;
+	line-height: 1.2;
+}
+.icon {
+	height: 1.3rem;
+	margin: 0 0.2rem 0.3rem;
+}
+.modifier {
+	color: $orangeish;
+	border-bottom: 4px solid $orangeish;
+}
+
+.greened {color: $greenish;}
+.darkgreened {color: $darkgreenish;}
+.blued {	color: $blueish;}
+
+
+/* Main layout
+--------------------------------------------------------------------- */
+.sidebar {
+	text-align: center;
+}
+.whitewrap {
+	background: white;
+}
+.techBox, .earthBox {
+	position: relative;
+}
+.techBox p, .earthBox h2 {
+	position: absolute;
+}
+
+.earthBox h2 {
+	top: 38%;
+	left: 34%;
+	font-size: 4rem;
+	background-color: rgba(255, 255, 255, 0.85);
+	padding: 0.2rem 0.4rem 0.4rem;
+	margin: 0;
+	line-height: 1;
+	z-index: 9;
+}
+.techBox p {
+	line-height: 1;
+}
+.techBox p span {
+	font-size: 1.5rem;
+}
+#hydro {top: 53%;left: 13%;}
+#bio {top: 54%;left: 26%;}
+#wind {top: 36%;left: 43%;}
+#geo {top: 33%;left: 56%;}
+#solarpv {top: 35%;left: 68%;}
+#solarp {top: 29%;left: 80%;}
+
+.papered {
+	background: url("../img/paper.jpg");
+	padding: 0.9375rem 0;
+}
+
+header .whitewrap {
+	min-height: 14.1em;
+}
+
+.dollas img {
+	position: absolute;
+	width: 34%;
+	top: 24%;
+	left: 34%;
+}
+
+.graphs {
+	border: 1px solid lightgray;
+	margin-bottom: 1.25rem;
+}
+
+/* Table styles
+--------------------------------------------------------------------- */
+
+.accordion-navigation a:before {
+	content:"+";
+	margin-right: 0.2rem;
+}
+
+
+table {
+	width: 100%;
+}
+
+/* Animations
+--------------------------------------------------------------------- */
+/*.spin {
+	-webkit-animation: rotate 90s infinite linear;
+}*/
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+
+/* Font-face
+--------------------------------------------------------------------- */
+@font-face {
+    font-family: 'wwfregular';
+    src: url('wwf-webfont.eot');
+    src: url('wwf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('wwf-webfont.woff') format('woff'),
+         url('wwf-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
