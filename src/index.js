@@ -8,9 +8,9 @@ var user = require(path.join(__dirname,'data','user.js'));
 
 
 
-module.exports = wwf;
+module.exports = WWF;
 
-function wwf() {
+function WWF() {
 
 
 }
