@@ -11,8 +11,7 @@ var energyScenario = new EnergyScenario(electricity);
 var backgroundData = require('./data/background.js');
 var RES = require('../res.js');
 var res = new RES(backgroundData);
-console.log(res);
-debugger;
+
 
 test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
 

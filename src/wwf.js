@@ -1,37 +1,42 @@
 var _ = require('lodash');
-var background = require('./data/background.js');
-var electricityMix = require('./data/electricity_mix.js');
-var user = require('./data/user.js');
 
+var EnergyScenario = require('./energyScenario.js');
+var RES = require('./res.js');
 
-
+var Tables = require("./tables.js");
+var _ = require("lodash");
 
 
 module.exports = WWF;
 
 function WWF() {
 
-    this.setUpTables();
+    this.tables = new Tables();
+    this.loadData();
+
 }
+
 
 WWF.prototype = _.create(WWF.prototype, {
 
-    setUpTables : function() {
-        var data = [
-    ["", "Kia", "Nissan", "Toyota", "Honda"],
-    ["2008", 10, 11, 12, 13],
-    ["2009", 20, 11, 14, 13],
-    ["2010", 30, 15, 12, 13]
-  ];
+    tables: null,
 
-  var container = document.getElementById('TableA');
-  var hot = new Handsontable(container,
-    {
-      data: data,
-      minSpareRows: 1,
-      colHeaders: true,
-      contextMenu: true
-    });
+    loadData: function() {
+        var _self = this;
+
+        $.getJSON( "/data.json",function(json) {
+            _self.tables.load(json);
+            _self.tables.init();
+        }).fail(function(jqxhr, textStatus, error ) {
+            var err = textStatus + ", " + error;
+            console.log( "Request Failed: " + err );
+        });
     }
+
+
+
+
+
+
 
 });
