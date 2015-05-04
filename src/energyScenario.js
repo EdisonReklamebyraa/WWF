@@ -1,7 +1,4 @@
 var _ = require("lodash");
-var path = require('path');
-
-
 
 
 
@@ -9,32 +6,31 @@ var path = require('path');
 module.exports = EnergyScenario;
 
 function EnergyScenario(data) {
-    self = this;
-    self.electricityMix = data;
 
+    this.electricityMix = data;
 }
 
 EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                     {
-                                        self : null,
+                                        this : null,
                                         electricityMix: null,
 
                                         getYear : function(year)
                                         {
-                                            var prevYear = self.getPreviousYear(year);
+                                            var prevYear = this.getPreviousYear(year);
 
                                             if(year === _.first(prevYear))
                                               return prevYear;
                                             else{
-                                                return self.getProjectedYear(year, prevYear, self.getNextYear(year));
+                                                return this.getProjectedYear(year, prevYear, this.getNextYear(year));
 
                                             }
                                         },
 
 
                                         getAnnualVariationInCapacity : function(year) {
-                                            var currYear = self.getYear(year)
-                                              , prevYear = self.getYear(year - 1)
+                                            var currYear = this.getYear(year)
+                                              , prevYear = this.getYear(year - 1)
                                               , results = [];
 
                                             for(var i = 1; i < currYear.length; i++)
@@ -46,7 +42,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                         },
 
                                         getShare : function(year) {
-                                            var yearData = self.getYear(year)
+                                            var yearData = this.getYear(year)
                                               , results = [];
 
 
@@ -59,38 +55,38 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                         },
 
                                         getRelativeShare : function(year) {
-                                            var yearData = self.getYear(year),
-                                                prevYear = self.getYear(year - 1)
+                                            var yearData = this.getYear(year),
+                                                prevYear = this.getYear(year - 1)
                                               , results = {};
 
 
 
 
-                                            for(var i = 0; i < self.electricityMix.groups.length; i++)
+                                            for(var i = 0; i < this.electricityMix.groups.length; i++)
                                             {
                                                 var totalInstalled = 0;
                                                 var total = 0;
-                                                var result = {title:self.electricityMix.groups[i].title, total : 0, members:[] };
+                                                var result = {title:this.electricityMix.groups[i].title, total : 0, members:[] };
 
-                                                for(var j = 0; j < self.electricityMix.groups[i].members.length; j++)
+                                                for(var j = 0; j < this.electricityMix.groups[i].members.length; j++)
                                                 {
-                                                    var id = self.electricityMix.groups[i].members[j];
+                                                    var id = this.electricityMix.groups[i].members[j];
                                                     totalInstalled += yearData[id] - prevYear[id];
                                                     total += yearData[id];
                                                 }
 
                                                 result["total"] = total;
 
-                                                for(j = 0; j < self.electricityMix.groups[i].members.length; j++)
+                                                for(j = 0; j < this.electricityMix.groups[i].members.length; j++)
                                                 {
-                                                    var id = self.electricityMix.groups[i].members[j];
+                                                    var id = this.electricityMix.groups[i].members[j];
                                                     var needed = yearData[id] - prevYear[id];
                                                     result.members.push({
                                                         id: id,
                                                         percent: needed/totalInstalled,
                                                         relativeShare: yearData[id]/total,
                                                         needed: needed,
-                                                        title: self.electricityMix.cols[id]
+                                                        title: this.electricityMix.cols[id]
                                                     });
                                                 }
                                                 results[result.title] = result;
@@ -100,11 +96,11 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                         },
 
                                         getRenewableEnergyShare : function(year) {
-                                            return self.getRelativeShare(year)[self.electricityMix.RENEWABLEENERGY];
+                                            return this.getRelativeShare(year)[this.electricityMix.RENEWABLEENERGY];
                                         },
 
                                         getFossilFuelsShare : function(year) {
-                                            return self.getRelativeShare(year)[self.electricityMix.FOSSILFUELS];
+                                            return this.getRelativeShare(year)[this.electricityMix.FOSSILFUELS];
                                         },
 
 
@@ -113,14 +109,14 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                             var shares = [];
                                             for(var i = 0; i < years.length; i++)
                                             {
-                                                shares.push(self.getRelativeShare(years[i])[self.electricityMix.RENEWABLEENERGY]);
+                                                shares.push(this.getRelativeShare(years[i])[this.electricityMix.RENEWABLEENERGY]);
                                             }
                                             return shares;
                                         },
 
                                         getPreviousYear: function(year)
                                         {
-                                            return _.findLast(self.electricityMix.data, function(y) {
+                                            return _.findLast(this.electricityMix.data, function(y) {
                                                        return year >= _.first(y);
                                                    });
                                         },
@@ -128,7 +124,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
 
                                         getNextYear: function (year)
                                         {
-                                            return _.find(self.electricityMix.data, function(y) {
+                                            return _.find(this.electricityMix.data, function(y) {
                                                        return year <= _.first(y);
                                                    });
                                         },
@@ -140,7 +136,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
 
 
                                             if(!prevYear && !nextYear){
-                                                projectedValues = _.clone(_.first(self.electricityMix.data));
+                                                projectedValues = _.clone(_.first(this.electricityMix.data));
                                                 projectedValues[0] = year;
                                             }
                                             else if(prevYear && !nextYear){
@@ -152,7 +148,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                                 projectedValues[0] = year;
                                             }
                                             else{
-                                                projectedValues  = self.projectYear(year, prevYear, nextYear);
+                                                projectedValues  = this.projectYear(year, prevYear, nextYear);
                                             }
 
                                             return projectedValues;

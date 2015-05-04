@@ -11,7 +11,8 @@ var energyScenario = new EnergyScenario(electricity);
 var backgroundData = require('./data/background.js');
 var RES = require('../res.js');
 var res = new RES(backgroundData);
-
+console.log(res);
+debugger;
 
 test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
 
@@ -43,7 +44,7 @@ test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
                    "Should calculate Annual investment in Res");
 
 
-    t.isEquivalent(payments = res.getInvestments(1000000, 0.02, 0.05 ,5),
+    t.isEquivalent(res.getInvestments(1000000, 0.02, 0.05 ,5),
                    [10200, 10608, 11028.239999999998, 11461.0464, 11906.753760000007],
                    "Should calculate Annual investment in Res");
 

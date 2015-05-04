@@ -2,28 +2,19 @@ var _ = require("lodash");
 
 
 
-
-
-
-
-
 module.exports = RES;
 
 function RES(data) {
-    self = this;
-    self.backgroundData = data;
+    this.backgroundData = data;
 }
 
 RES.prototype = _.create(
     RES.prototype,
     {
-
-        self : null,
         backgroundData: null,
-
         growInvestment : function(investment, annualGrowthRate)
         {
-            return self.growInvestmentInYears(investment,annualGrowthRate,1);
+            return this.growInvestmentInYears(investment,annualGrowthRate,1);
         },
 
         growInvestmentInYears : function(investment, annualGrowthRate, years)
@@ -33,12 +24,12 @@ RES.prototype = _.create(
 
         growInvestmentOverYears : function(investment, annualGrowthRate, start, end)
         {
-            return  self.growInvestmentInYears(investment, annualGrowthRate, end - start);
+            return  this.growInvestmentInYears(investment, annualGrowthRate, end - start);
         },
 
         targetAmount : function(investment, annualGrowthRate, start, end, targetPercentage)
         {
-            return self.growInvestmentOverYears(investment, annualGrowthRate, start, end) * targetPercentage;
+            return this.growInvestmentOverYears(investment, annualGrowthRate, start, end) * targetPercentage;
         },
 
         yearlyInvestmentWithInterest : function(annualGrowthRate, years, target)
@@ -57,7 +48,7 @@ RES.prototype = _.create(
             for(var i = 0; i < years; i++)
             {
                 cumulativePercentage += yearlyPercentage;
-                investment =  self.growInvestment(investment,annualGrowthRate );
+                investment =  this.growInvestment(investment,annualGrowthRate );
                 current = (investment*cumulativePercentage) ;
                 payments.push(current - payed);
                 payed = current;
@@ -84,7 +75,7 @@ RES.prototype = _.create(
         {
             for(var i = 0; i < share.members.length; i++)
             {
-                var data = self.backgroundData[ share.members[i].id];
+                var data = this.backgroundData[ share.members[i].id];
                 share.members[i].installed =   share.members[i].money / data.overnightCapitalCost;
             }
             return share;
@@ -94,7 +85,7 @@ RES.prototype = _.create(
         addAnnualOutput : function(share){
             for(var i = 0; i < share.members.length; i++)
             {
-                var data = self.backgroundData[ share.members[i].id];
+                var data = this.backgroundData[ share.members[i].id];
                 share.members[i].annualOutput =   share.members[i].installed * data.averageHours;
 
             }
@@ -107,7 +98,7 @@ RES.prototype = _.create(
             var totalLifetimeOutput = 0;
             for(var i = 0; i < share.members.length; i++)
             {
-                var data = self.backgroundData[ share.members[i].id];
+                var data = this.backgroundData[ share.members[i].id];
                 share.members[i].lifetimeOutput =   share.members[i].annualOutput * data.years;
                 totalLifetimeOutput += share.members[i].lifetimeOutput;
 
@@ -118,15 +109,15 @@ RES.prototype = _.create(
         },
 
         addInvestmentLifetimeOutput : function(share, investment){
-            self.addAllocatedMoney(share, investment);
-            self.addCapacityInstalled(share);
-            self.addAnnualOutput(share);
-            self.addLifetimeOutput(share);
+            this.addAllocatedMoney(share, investment);
+            this.addCapacityInstalled(share);
+            this.addAnnualOutput(share);
+            this.addLifetimeOutput(share);
             return share;
         },
 
         getInvestmentLifetime : function(){
-            return _.reduce(self.backgroundData, function(max, n) {
+            return _.reduce(this.backgroundData, function(max, n) {
                        max = (typeof(max) === "number")?max:0;
                        return (n.years && (n.years > max))?  n.years : max ;
                    });
@@ -136,7 +127,7 @@ RES.prototype = _.create(
         //   Annual output added  * years
         getLifeTimeSpread : function(shares, investments){
 
-            var lifeTime = self.getInvestmentLifetime() ;
+            var lifeTime = this.getInvestmentLifetime() ;
             var totalYearsReturns = lifeTime + investments.length  ;
 
             var matrix = makeMatrix(_.first(shares).members.length, totalYearsReturns)
@@ -144,11 +135,11 @@ RES.prototype = _.create(
             for(var i = 0; i < investments.length; i++)
             {
                 var share = shares[i];
-                self.addInvestmentLifetimeOutput(share, investments[i]);
+                this.addInvestmentLifetimeOutput(share, investments[i]);
 
                 for(var j = 0; j < share.members.length; j++)
                 {
-                    var data = self.backgroundData[ share.members[j].id];
+                    var data = this.backgroundData[ share.members[j].id];
 
                     for(var k = 0; k < (data.years); k++)
                     {
@@ -185,7 +176,7 @@ RES.prototype = _.create(
             var totalLifetimeEmissions = 0;
             for(var i = 0; i < share.members.length; i++)
             {
-                var data = self.backgroundData[ share.members[i].id];
+                var data = this.backgroundData[ share.members[i].id];
                 share.members[i].lifetimeEmissions =  share.members[i].lifetimeOutput * data.emissions;
                 totalLifetimeEmissions += share.members[i].lifetimeEmissions;
             }
@@ -199,7 +190,7 @@ RES.prototype = _.create(
         addComparison : function(ffShare, reShare) {
             var ffC02 = 0;
             for(var i = 0; i < ffShare.members.length; i++){
-                var ffData = self.backgroundData[ ffShare.members[i].id];
+                var ffData = this.backgroundData[ ffShare.members[i].id];
 
                 ffShare.members[i].renewableEnergy =  ffShare.members[i].relativeShare * reShare.totalLifetimeOutput;
                 ffShare.members[i].renewableEnergyCO2 =  ffShare.members[i].renewableEnergy * ffData.emissions;
@@ -215,7 +206,7 @@ RES.prototype = _.create(
 
                                                        for(var i = 0; i < share.members.length; i++)
                                                        {
-                                                           var data = self.backgroundData[ share.members[i].id];
+                                                           var data = this.backgroundData[ share.members[i].id];
                                                            share.members[i].jobsCreated =  share.members[i].lifetimeOutput * data.employment_1 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
                                                            totalJobsCreated += share.members[i].jobsCreated;
                                                        }
@@ -235,7 +226,7 @@ RES.prototype = _.create(
 
                           for(var i = 0; i < ffShare.members.length; i++)
                           {
-                              var data = self.backgroundData[ ffShare.members[i].id];
+                              var data = this.backgroundData[ ffShare.members[i].id];
                               // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
                               ffShare.members[i].REJobs =
                                 (reShare.totalLifetimeOutput
@@ -259,7 +250,7 @@ RES.prototype = _.create(
 
                         for(var i = 0; i < share.members.length; i++)
                         {
-                            var data = self.backgroundData[ share.members[i].id];
+                            var data = this.backgroundData[ share.members[i].id];
                             share.members[i].jobsUSDCreated =  share.members[i].money * data.employment_2 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
                             totalJobsCreated += share.members[i].jobsCreated;
                         }
@@ -279,9 +270,13 @@ RES.prototype = _.create(
 
                             for(var i = 0; i < ffShare.members.length; i++)
                             {
-                                var data = self.backgroundData[ ffShare.members[i].id];
+                                var data = this.backgroundData[ ffShare.members[i].id];
                                 // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
-                                ffShare.members[i].REUSDJobs =  (reShare.investment * 0.000001) * data.employment_2 * (ffShare.members[i].relativeShare + (ffShare.members[1].relativeShare/2)) ;
+                                ffShare.members[i].REUSDJobs =
+                                  (reShare.investment * 0.000001)
+                                  * data.employment_2
+                                  * (ffShare.members[i].relativeShare
+                                  + (ffShare.members[1].relativeShare/2)) ;
                                 totalJobsCreated += ffShare.members[i].REUSDJobs;
                             }
 
@@ -289,7 +284,8 @@ RES.prototype = _.create(
                             return ffShare;
                         }
 
-    }),
+    });
+
 
 
 function makeMatrix(l,w){

@@ -17,6 +17,7 @@ body {
 	background: $beigeish;
 	font-family: Georgia, sans-serif;
 }
+
 ul {
 	margin: 0;
 }
@@ -80,6 +81,23 @@ header.row {
 	border-bottom: 4px solid $orangeish;
 }
 
+.modalLink {
+	text-transform: lowercase;
+	color: $orangeish;
+	border: 1px solid $orangeish;
+	width: 1.4rem;
+	height: 1.4rem;
+	line-height: 1.1rem;
+	margin-left: 0.35rem;
+	border-radius: 50%;
+	display: inline-block;	
+}
+
+.modalLink:hover {
+	color: white;
+	background: $orangeish;
+}
+
 .greened {color: $greenish;}
 .darkgreened {color: $darkgreenish;}
 .blued {	color: $blueish;}
@@ -87,8 +105,76 @@ header.row {
 
 /* Main layout
 --------------------------------------------------------------------- */
+
+h1 input[type="text"], h2 input[type="text"] {
+	display: inline;
+	color: #FFA500;
+	padding: 0;
+	border: none;
+	box-shadow: none;
+	height: auto;
+	border-bottom: 4px solid #FFA500;
+}
+
+h1 input[type="text"] {
+	font-size: 3.8rem;
+	  width: auto;
+	  text-align: right;
+	    padding-right: 0.3rem;
+  max-width: 3rem;
+}
+h2 input[type="text"] {
+	font-size: 4rem;
+	padding: 0 0.5rem 0.4rem 0.5rem;
+	width: 9rem;
+	margin: 0;
+	background-color: rgba(255, 255, 255, 0.85);
+}
+
+.upndownBox {
+	  display: inline-block;
+  width: 2rem;
+  	text-indent: -9999px;
+  	position: relative;
+  	top: 1.15rem;
+  	border-bottom: 4px solid #FFA500;
+}
+h2 .upndownBox {
+	top: 1.65rem;
+	left: -2.5rem;
+}
+.upndownBox a {
+	position: absolute;
+}
+.upBtn {
+	  bottom: 2.5rem;
+  left: 0.5rem;
+	width: 0;
+height: 0;
+border-style: solid;
+border-width: 0 10px 20px 10px;
+border-color: transparent transparent #ff9500 transparent;
+}
+.downBtn {
+	  bottom: 0.75rem;
+  left: 0.5rem;
+	width: 0;
+height: 0;
+border-style: solid;
+border-width: 20px 10px 0 10px;
+border-color: #ff9500 transparent transparent transparent;
+}
+
+h2 .upndownBox .upBtn {
+	bottom: 3rem;
+}
+
+h2 .upndownBox .downBtn {
+	bottom: 1.25rem;
+}
 .sidebar {
 	text-align: center;
+	  padding: 2rem 0;
 }
 .whitewrap {
 	background: white;
@@ -99,13 +185,13 @@ header.row {
 .techBox p, .earthBox h2 {
 	position: absolute;
 }
-
+.earthBox {
+	padding-top:0.9375rem;
+}
 .earthBox h2 {
-	top: 38%;
+	top: 40%;
 	left: 34%;
 	font-size: 4rem;
-	background-color: rgba(255, 255, 255, 0.85);
-	padding: 0.2rem 0.4rem 0.4rem;
 	margin: 0;
 	line-height: 1;
 	z-index: 9;
@@ -125,11 +211,11 @@ header.row {
 
 .papered {
 	background: url("../img/paper.jpg");
-	padding: 0.9375rem 0;
+	padding:0;
 }
 
 header .whitewrap {
-	min-height: 14.1em;
+	min-height: 14.55rem;
 }
 
 .dollas img {
@@ -137,6 +223,12 @@ header .whitewrap {
 	width: 34%;
 	top: 24%;
 	left: 34%;
+}
+.dollas h3 {
+	position: absolute;
+	  width: 18%;
+  top: 37%;
+  left: 45%;
 }
 
 .graphs {
