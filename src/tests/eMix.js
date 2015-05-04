@@ -1,7 +1,10 @@
 var test = require('prova');
 
+var data = require('./data/electricity_mix.js');
+var EnergyScenario = require('../energyScenario.js');
+var energyScenario = new EnergyScenario(data);
 
-var energyScenario = require('../energyScenario.js');
+
 
 
 test('Test ENERGY SCENARIO per year', function(t) {

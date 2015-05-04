@@ -1,8 +1,16 @@
 var test = require('prova');
 var _ = require("lodash");
-var energyScenario = require('../energyScenario.js');
-var res = require('../res.js');
 
+
+
+var electricity = require('./data/electricity_mix.js');
+var EnergyScenario = require('../energyScenario.js');
+var energyScenario = new EnergyScenario(electricity);
+
+
+var backgroundData = require('./data/background.js');
+var RES = require('../res.js');
+var res = new RES(backgroundData);
 
 
 test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
