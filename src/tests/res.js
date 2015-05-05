@@ -184,7 +184,7 @@ test('Test JOBS CREATION - Method 1: based on GWh produced', function(t) {
 test('Test JOBS CREATION - Method 2: based on USD invested', function(t) {
 
 
-    var share =  energyScenario.getRenewableEnergyShare(2016);
+   var share =  energyScenario.getRenewableEnergyShare(2016);
     var ffShare = energyScenario.getFossilFuelsShare(2016);
     var investments = res.getInvestments(1000000, 0.02, 0.05 ,5);
     res.addInvestmentLifetimeOutput(share,investments[0]);

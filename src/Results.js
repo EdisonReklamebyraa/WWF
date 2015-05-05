@@ -55,9 +55,12 @@ Results.prototype = _.create(
                 this.data.user["target year"] - this.data.user["starting year"]);
             var shares = this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"]);
 
+            var summary = this.res.summarise(this.res.getLifeTimeSpread(shares,investments ));
+
+
             this.updateShares(_.first(shares));
             this.updateMoneyToInvest(investments);
-
+            this.updateInstalledCapacity(shares);
         },
 
         updateShares: function(share) {
@@ -70,13 +73,22 @@ Results.prototype = _.create(
             }
         },
 
+        updateInstalledCapacity: function(shares) {
+            var installed = 0 ;
+            for(var i = 0; i < shares.length; i++)
+            {
+                installed     += shares[i].totalLifetimeOutput;
+            }
+
+            $("#gigawatts").text(numeral(installed / 1000000).format('0.00'));
+        },
+
 
         updateMoneyToInvest: function(investments) {
             var investment = investments.reduce(
                 function(previousValue, currentValue) {return previousValue + currentValue;})
 
-            $("#budget1").text(numeral(investment).format('($ 0.00 a)'));
-
+            $("#budget1").text(numeral(investment).format('($ 0.00 a)') );
         }
 
 
