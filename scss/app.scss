@@ -22,7 +22,7 @@ ul {
 	margin: 0;
 }
 .row {
-	max-width: 69.5rem;
+	max-width: 72rem;
 }
 
 .noLeftPadd {
@@ -81,7 +81,7 @@ header.row {
 	border-bottom: 4px solid $orangeish;
 }
 
-.modalLink {
+a.modalLink {
 	text-transform: lowercase;
 	color: $orangeish;
 	border: 1px solid $orangeish;
@@ -93,7 +93,7 @@ header.row {
 	display: inline-block;	
 }
 
-.modalLink:hover {
+a.modalLink:hover {
 	color: white;
 	background: $orangeish;
 }

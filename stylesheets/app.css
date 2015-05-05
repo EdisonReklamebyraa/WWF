@@ -9174,7 +9174,7 @@ ul {
 
 /* line 24, ../scss/app.scss */
 .row {
-  max-width: 69.5rem;
+  max-width: 72rem;
 }
 
 /* line 28, ../scss/app.scss */
@@ -9259,7 +9259,7 @@ header.row {
 }
 
 /* line 84, ../scss/app.scss */
-.modalLink {
+a.modalLink {
   text-transform: lowercase;
   color: #ff9600;
   border: 1px solid #ff9600;
@@ -9272,7 +9272,7 @@ header.row {
 }
 
 /* line 96, ../scss/app.scss */
-.modalLink:hover {
+a.modalLink:hover {
   color: white;
   background: #ff9600;
 }
