@@ -60,8 +60,6 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                               , results = {};
 
 
-
-
                                             for(var i = 0; i < this.electricityMix.groups.length; i++)
                                             {
                                                 var totalInstalled = 0;
@@ -81,9 +79,10 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                                 {
                                                     var id = this.electricityMix.groups[i].members[j];
                                                     var needed = yearData[id] - prevYear[id];
+
                                                     result.members.push({
                                                         id: id,
-                                                        percent: needed/totalInstalled,
+                                                        percent: (totalInstalled > 0)?needed/totalInstalled:0,
                                                         relativeShare: yearData[id]/total,
                                                         needed: needed,
                                                         title: this.electricityMix.cols[id]
@@ -105,11 +104,11 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
 
 
 
-                                        getRenewableEnergyShares : function(years) {
+                                        getRenewableEnergyShares : function(start, end) {
                                             var shares = [];
-                                            for(var i = 0; i < years.length; i++)
+                                            for(var i = 0; i < end - start; i++)
                                             {
-                                                shares.push(this.getRelativeShare(years[i])[this.electricityMix.RENEWABLEENERGY]);
+                                                shares.push(this.getRelativeShare(start + i )[this.electricityMix.RENEWABLEENERGY]);
                                             }
                                             return shares;
                                         },

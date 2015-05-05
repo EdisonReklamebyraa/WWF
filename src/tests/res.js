@@ -66,7 +66,7 @@ test('Test POWER GENERATION', function(t) {
 
     var share =  energyScenario.getRenewableEnergyShare(2016);
     var investments = res.getInvestments(1000000, 0.02, 0.05 ,5);
-    var shares = energyScenario.getRenewableEnergyShares([2016,2017,2017,2018,2018]);
+    var shares = energyScenario.getRenewableEnergyShares(2016, 2021);
 
     t.isEquivalent(_.map(res.addAllocatedMoney(share, investments[0]).members, function(a) {
                        return a.money;
@@ -184,7 +184,7 @@ test('Test JOBS CREATION - Method 1: based on GWh produced', function(t) {
 test('Test JOBS CREATION - Method 2: based on USD invested', function(t) {
 
 
-   var share =  energyScenario.getRenewableEnergyShare(2016);
+    var share =  energyScenario.getRenewableEnergyShare(2016);
     var ffShare = energyScenario.getFossilFuelsShare(2016);
     var investments = res.getInvestments(1000000, 0.02, 0.05 ,5);
     res.addInvestmentLifetimeOutput(share,investments[0]);

@@ -25,6 +25,9 @@ Tables.prototype = _.create(
 
         update: function(json) {
 
+
+            Arbiter.publish("update", json);
+
             Arbiter.publish("update/user", json.user);
             var UDhot = new Handsontable(document.getElementById("UserData"), {
                                            data: json.user

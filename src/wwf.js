@@ -5,14 +5,17 @@ var RES = require('./res.js');
 
 var Tables = require("./tables.js");
 var UI = require("./UI.js");
+var Results = require("./Results.js");
 var _ = require("lodash");
 
 
 module.exports = WWF;
 
 function WWF() {
-    this.tables = new Tables();
+
     this.ui = new UI();
+    this.results = new Results();
+    this.tables = new Tables();
 }
 
 
