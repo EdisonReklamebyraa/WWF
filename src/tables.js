@@ -1,8 +1,10 @@
+var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
+
 module.exports = Tables;
 
 function Tables(data) {
-
+    this.load();
 }
 
 Tables.prototype = _.create(
@@ -13,38 +15,31 @@ Tables.prototype = _.create(
         userData: null,
 
         load: function(json) {
-            this.backgroundData = json.background;
-            this.eMixData = json.electricity_mix;
-            this.userData = json.user;
+            var _self = this;
+            $.getJSON( "/data.json",function(json) {
+                _self.update(json);
+            }).fail(function(jqxhr, textStatus, error ) {
+                var err = textStatus + ", " + error;
+            });
         },
 
-        init: function() {
-            var container = document.getElementById('UserData');
-            var UDhot = new Handsontable(container,
-                                       {
-                                           data: this.userData
+        update: function(json) {
+
+            Arbiter.publish("update/user", json.user);
+            var UDhot = new Handsontable(document.getElementById("UserData"), {
+                                           data: json.user
                                        });
 
 
-            var container = document.getElementById('BackgroundData');
-            var BDhot = new Handsontable(container,
-                                       {
-                                           data: this.backgroundData
+            Arbiter.publish("update background", json.background);
+            var BDhot = new Handsontable(document.getElementById('BackgroundData'), {
+                                           data: json.background
                                        });
 
-            var emix = document.getElementById('EMix');
-            var EMDhot = new Handsontable(emix,
-                                       {
-                                           data: this.eMixData.data
+            Arbiter.publish("update mix", json.emix);
+            var EMDhot = new Handsontable(document.getElementById("EMix"), {
+                                           data: json.emix
                                        });
-
-            window.UDhot = UDhot;
-
-            debugger;
-
-
-
-
         }
 
     });

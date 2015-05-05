@@ -9311,7 +9311,7 @@ h1 input[type="text"] {
   width: auto;
   text-align: right;
   padding-right: 0.3rem;
-  max-width: 3rem;
+  max-width: 6rem;
 }
 
 /* line 126, ../scss/app.scss */
