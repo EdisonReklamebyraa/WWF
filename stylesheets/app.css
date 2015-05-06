@@ -9222,7 +9222,7 @@ h1, h2, h3, .techBox p, .accordion .accordion-navigation a {
 h1 {
   font-size: 3.8rem;
   line-height: 1.1;
-  padding: 0.5em;
+  padding: 0.5em 0.5em 0;
   margin: 0;
 }
 
@@ -9315,7 +9315,7 @@ h1 input[type="text"] {
   max-width: 6rem;
 }
 
-/* line 127, ../scss/app.scss */
+/* line 128, ../scss/app.scss */
 h2 input[type="text"] {
   font-size: 4rem;
   padding: 0 0.5rem 0.4rem 0.5rem;
@@ -9324,7 +9324,7 @@ h2 input[type="text"] {
   background-color: rgba(255, 255, 255, 0.85);
 }
 
-/* line 135, ../scss/app.scss */
+/* line 136, ../scss/app.scss */
 .upndownBox {
   display: inline-block;
   width: 2rem;
@@ -9334,18 +9334,18 @@ h2 input[type="text"] {
   border-bottom: 4px solid #FFA500;
 }
 
-/* line 143, ../scss/app.scss */
+/* line 144, ../scss/app.scss */
 h2 .upndownBox {
   top: 1.65rem;
   left: -2.5rem;
 }
 
-/* line 147, ../scss/app.scss */
+/* line 148, ../scss/app.scss */
 .upndownBox a {
   position: absolute;
 }
 
-/* line 150, ../scss/app.scss */
+/* line 151, ../scss/app.scss */
 .upBtn {
   bottom: 2.5rem;
   left: 0.5rem;
@@ -9356,7 +9356,7 @@ h2 .upndownBox {
   border-color: transparent transparent #ff9500 transparent;
 }
 
-/* line 159, ../scss/app.scss */
+/* line 160, ../scss/app.scss */
 .downBtn {
   bottom: 0.75rem;
   left: 0.5rem;
@@ -9367,43 +9367,43 @@ h2 .upndownBox {
   border-color: #ff9500 transparent transparent transparent;
 }
 
-/* line 169, ../scss/app.scss */
+/* line 170, ../scss/app.scss */
 h2 .upndownBox .upBtn {
   bottom: 3rem;
 }
 
-/* line 173, ../scss/app.scss */
+/* line 174, ../scss/app.scss */
 h2 .upndownBox .downBtn {
   bottom: 1.25rem;
 }
 
-/* line 176, ../scss/app.scss */
+/* line 177, ../scss/app.scss */
 .sidebar {
   text-align: center;
   padding: 2rem 0;
 }
 
-/* line 180, ../scss/app.scss */
+/* line 181, ../scss/app.scss */
 .whitewrap {
   background: white;
 }
 
-/* line 183, ../scss/app.scss */
+/* line 185, ../scss/app.scss */
 .techBox, .earthBox {
   position: relative;
 }
 
-/* line 186, ../scss/app.scss */
+/* line 188, ../scss/app.scss */
 .techBox p, .earthBox h2 {
   position: absolute;
 }
 
-/* line 189, ../scss/app.scss */
+/* line 191, ../scss/app.scss */
 .earthBox {
   padding-top: 0.9375rem;
 }
 
-/* line 192, ../scss/app.scss */
+/* line 194, ../scss/app.scss */
 .earthBox h2 {
   top: 40%;
   left: 34%;
@@ -9413,64 +9413,82 @@ h2 .upndownBox .downBtn {
   z-index: 9;
 }
 
-/* line 200, ../scss/app.scss */
+/* line 202, ../scss/app.scss */
 .techBox p {
   line-height: 1;
 }
 
-/* line 203, ../scss/app.scss */
+/* line 205, ../scss/app.scss */
 .techBox p span {
   font-size: 1.5rem;
 }
 
-/* line 206, ../scss/app.scss */
+/* line 208, ../scss/app.scss */
 #hydro {
   top: 53%;
   left: 13%;
 }
 
-/* line 207, ../scss/app.scss */
+/* line 209, ../scss/app.scss */
 #bio {
   top: 54%;
   left: 26%;
 }
 
-/* line 208, ../scss/app.scss */
+/* line 210, ../scss/app.scss */
 #wind {
   top: 36%;
   left: 43%;
 }
 
-/* line 209, ../scss/app.scss */
+/* line 211, ../scss/app.scss */
 #geo {
   top: 33%;
   left: 56%;
 }
 
-/* line 210, ../scss/app.scss */
+/* line 212, ../scss/app.scss */
 #solarpv {
   top: 35%;
   left: 68%;
 }
 
-/* line 211, ../scss/app.scss */
+/* line 213, ../scss/app.scss */
 #solarp {
   top: 29%;
   left: 80%;
 }
 
-/* line 213, ../scss/app.scss */
+/* line 215, ../scss/app.scss */
 .papered {
   background: url("../img/paper.jpg");
   padding: 0;
 }
 
-/* line 218, ../scss/app.scss */
+/* line 220, ../scss/app.scss */
 header .whitewrap {
-  min-height: 14.55rem;
+  min-height: 14.65rem;
 }
 
-/* line 222, ../scss/app.scss */
+/* line 224, ../scss/app.scss */
+header .fundBox {
+  min-height: 0;
+  padding: 1rem 1.9rem 1rem;
+  background: #E8E8E8;
+  border-bottom: 4px solid #808080;
+}
+
+/* line 231, ../scss/app.scss */
+.fundBox input[type="text"] {
+  display: inline;
+  width: auto;
+  font-size: 1rem;
+  color: #ff9600;
+  min-width: 10rem;
+  margin: 0 0 0 1rem;
+}
+
+/* line 240, ../scss/app.scss */
 .dollas img {
   position: absolute;
   width: 34%;
@@ -9478,7 +9496,7 @@ header .whitewrap {
   left: 34%;
 }
 
-/* line 228, ../scss/app.scss */
+/* line 246, ../scss/app.scss */
 .dollas h3 {
   position: absolute;
   width: 18%;
@@ -9486,39 +9504,31 @@ header .whitewrap {
   left: 45%;
 }
 
-/* line 235, ../scss/app.scss */
+/* line 253, ../scss/app.scss */
 .graphs {
   border: 1px solid lightgray;
   margin-bottom: 1.25rem;
 }
 
-/* line 240, ../scss/app.scss */
+/* line 258, ../scss/app.scss */
 #globes {
   margin-bottom: 1.25rem;
 }
 
-/* line 243, ../scss/app.scss */
+/* line 261, ../scss/app.scss */
 #globes img {
   max-width: 3.5rem;
 }
 
 /* Table styles
 --------------------------------------------------------------------- */
-<<<<<<< Updated upstream
-/* line 243, ../scss/app.scss */
-=======
-/* line 250, ../scss/app.scss */
->>>>>>> Stashed changes
+/* line 268, ../scss/app.scss */
 .accordion-navigation a:before {
   content: "+";
   margin-right: 0.2rem;
 }
 
-<<<<<<< Updated upstream
-/* line 249, ../scss/app.scss */
-=======
-/* line 256, ../scss/app.scss */
->>>>>>> Stashed changes
+/* line 274, ../scss/app.scss */
 table {
   width: 100%;
 }
