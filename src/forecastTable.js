@@ -26,9 +26,5 @@ ForecastTable.prototype = _.create(
 
         update: function(json) {
 
-            var BDhot = new Handsontable(document.getElementById('BackgroundData'), {
-                                           data: json.background
-                                       });
-
         }
     });

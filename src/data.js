@@ -1,4 +1,7 @@
 var Arbiter = require('arbiter-subpub');
+var RES = require('./res.js');
+var EnergyScenario = require('./energyScenario.js');
+
 var _ = require("lodash");
 
 module.exports = Data;
@@ -10,9 +13,7 @@ function Data(data) {
 Data.prototype = _.create(
     Data.prototype,
     {
-        backgroundData: null,
-        eMixData: null,
-        userData: null,
+        data: null,
 
         load: function(json) {
             var _self = this;
@@ -24,20 +25,11 @@ Data.prototype = _.create(
         },
 
         update: function(json) {
-
-
+            this.data = json.data;
             Arbiter.publish("update", json);
             Arbiter.publish("update/user", json.user);
-            Arbiter.publish("update/mix", json.emix);
+            Arbiter.publish("update/mix", json.electricity_mix);
             Arbiter.publish("update/background", json.background);
 
-            var BDhot = new Handsontable(document.getElementById('BackgroundData'), {
-                                           data: json.background
-                                       });
-
-            var EMDhot = new Handsontable(document.getElementById("EMix"), {
-                                           data: json.emix
-                                       });
         }
-
     });
