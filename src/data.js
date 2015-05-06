@@ -1,14 +1,14 @@
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
-module.exports = Tables;
+module.exports = Data;
 
-function Tables(data) {
+function Data(data) {
     this.load();
 }
 
-Tables.prototype = _.create(
-    Tables.prototype,
+Data.prototype = _.create(
+    Data.prototype,
     {
         backgroundData: null,
         eMixData: null,
@@ -27,19 +27,14 @@ Tables.prototype = _.create(
 
 
             Arbiter.publish("update", json);
-
             Arbiter.publish("update/user", json.user);
-            var UDhot = new Handsontable(document.getElementById("UserData"), {
-                                           data: json.user
-                                       });
+            Arbiter.publish("update/mix", json.emix);
+            Arbiter.publish("update/background", json.background);
 
-
-            Arbiter.publish("update background", json.background);
             var BDhot = new Handsontable(document.getElementById('BackgroundData'), {
                                            data: json.background
                                        });
 
-            Arbiter.publish("update mix", json.emix);
             var EMDhot = new Handsontable(document.getElementById("EMix"), {
                                            data: json.emix
                                        });

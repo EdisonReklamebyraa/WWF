@@ -58,8 +58,9 @@ UIs.prototype = _.create(
 
         interaction: function() {
             this.user["starting year"] = Math.max(2013,numeral().unformat($("input[name=startYear]").val()));
-            this.user["target year"] = Math.max(2013,numeral().unformat($("input[name=endYear]").val()));
+            this.user["target year"] = Math.max(2013,this.user["starting year"] + 1 ,numeral().unformat($("input[name=endYear]").val()));
             this.user["target"] = numeral().unformat($("input[name=investPercentage]").val());
+            this.updateUI();
             Arbiter.publish("changed/user",this.user);
         }
 
