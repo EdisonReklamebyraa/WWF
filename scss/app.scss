@@ -4,6 +4,7 @@
 
 /* Variables
 --------------------------------------------------------------------- */
+/* Colors */
 $beigeish: #eeede3;
 $orangeish: #ff9600;
 $greenish: #6ac82b;
@@ -237,6 +238,13 @@ header .whitewrap {
 	margin-bottom: 1.25rem;
 }
 
+#globes {
+	margin-bottom: 1.25rem,
+}
+#globes img {
+	max-width: 3.5rem;
+}
+
 /* Table styles
 --------------------------------------------------------------------- */
 
@@ -254,7 +262,7 @@ table {
 --------------------------------------------------------------------- */
 /*.spin {
 	-webkit-animation: rotate 90s infinite linear;
-}*/
+}
 
 @-webkit-keyframes rotate {
   from {

@@ -9159,65 +9159,66 @@ th.hide-for-touch {
 }
 /* Variables
 --------------------------------------------------------------------- */
+/* Colors */
 /* Main resets and fixes
 --------------------------------------------------------------------- */
-/* line 16, ../scss/app.scss */
+/* line 17, ../scss/app.scss */
 body {
   background: #eeede3;
   font-family: Georgia, sans-serif;
 }
 
-/* line 21, ../scss/app.scss */
+/* line 22, ../scss/app.scss */
 ul {
   margin: 0;
 }
 
-/* line 24, ../scss/app.scss */
+/* line 25, ../scss/app.scss */
 .row {
   max-width: 72rem;
 }
 
-/* line 28, ../scss/app.scss */
+/* line 29, ../scss/app.scss */
 .noLeftPadd {
   padding-left: 0;
 }
 
-/* line 31, ../scss/app.scss */
+/* line 32, ../scss/app.scss */
 .noRightPadd {
   padding-right: 0;
 }
 
-/* line 34, ../scss/app.scss */
+/* line 35, ../scss/app.scss */
 .noSidePadd {
   padding-right: 0;
   padding-left: 0;
 }
 
-/* line 38, ../scss/app.scss */
+/* line 39, ../scss/app.scss */
 .margTop {
   margin-top: 1.875rem;
 }
 
-/* line 41, ../scss/app.scss */
+/* line 42, ../scss/app.scss */
 .bigPaddBot {
   padding-bottom: 5.625rem;
 }
 
-/* line 44, ../scss/app.scss */
+/* line 45, ../scss/app.scss */
 .left-floater {
   float: left !important;
 }
 
 /* Type
 --------------------------------------------------------------------- */
-/* line 51, ../scss/app.scss */
+/* line 52, ../scss/app.scss */
 h1, h2, h3, .techBox p, .accordion .accordion-navigation a {
   font-family: 'wwfregular', Arial, Helvetica, sans-serif;
   font-weight: normal;
   text-transform: uppercase;
 }
 
-/* line 56, ../scss/app.scss */
+/* line 57, ../scss/app.scss */
 h1 {
   font-size: 3.8rem;
   line-height: 1.1;
@@ -9225,40 +9226,40 @@ h1 {
   margin: 0;
 }
 
-/* line 62, ../scss/app.scss */
+/* line 63, ../scss/app.scss */
 h3, .accordion .accordion-navigation a {
   font-size: 1.2rem;
 }
 
-/* line 65, ../scss/app.scss */
+/* line 66, ../scss/app.scss */
 .larger {
   font-size: 1.8rem;
 }
 
-/* line 68, ../scss/app.scss */
+/* line 69, ../scss/app.scss */
 header.row {
   margin-bottom: 1.875rem;
 }
 
-/* line 71, ../scss/app.scss */
+/* line 72, ../scss/app.scss */
 .sidebar p {
   font-size: 0.8rem;
   line-height: 1.2;
 }
 
-/* line 75, ../scss/app.scss */
+/* line 76, ../scss/app.scss */
 .icon {
   height: 1.3rem;
   margin: 0 0.2rem 0.3rem;
 }
 
-/* line 79, ../scss/app.scss */
+/* line 80, ../scss/app.scss */
 .modifier {
   color: #ff9600;
   border-bottom: 4px solid #ff9600;
 }
 
-/* line 84, ../scss/app.scss */
+/* line 85, ../scss/app.scss */
 a.modalLink {
   text-transform: lowercase;
   color: #ff9600;
@@ -9271,30 +9272,30 @@ a.modalLink {
   display: inline-block;
 }
 
-/* line 96, ../scss/app.scss */
+/* line 97, ../scss/app.scss */
 a.modalLink:hover {
   color: white;
   background: #ff9600;
 }
 
-/* line 101, ../scss/app.scss */
+/* line 102, ../scss/app.scss */
 .greened {
   color: #6ac82b;
 }
 
-/* line 102, ../scss/app.scss */
+/* line 103, ../scss/app.scss */
 .darkgreened {
   color: #007925;
 }
 
-/* line 103, ../scss/app.scss */
+/* line 104, ../scss/app.scss */
 .blued {
   color: #0e6e8d;
 }
 
 /* Main layout
 --------------------------------------------------------------------- */
-/* line 109, ../scss/app.scss */
+/* line 110, ../scss/app.scss */
 h1 input[type="text"], h2 input[type="text"] {
   display: inline;
   color: #FFA500;
@@ -9305,7 +9306,7 @@ h1 input[type="text"], h2 input[type="text"] {
   border-bottom: 4px solid #FFA500;
 }
 
-/* line 119, ../scss/app.scss */
+/* line 120, ../scss/app.scss */
 h1 input[type="text"] {
   font-size: 3.8rem;
   width: auto;
@@ -9491,15 +9492,33 @@ header .whitewrap {
   margin-bottom: 1.25rem;
 }
 
+/* line 240, ../scss/app.scss */
+#globes {
+  margin-bottom: 1.25rem;
+}
+
+/* line 243, ../scss/app.scss */
+#globes img {
+  max-width: 3.5rem;
+}
+
 /* Table styles
 --------------------------------------------------------------------- */
+<<<<<<< Updated upstream
 /* line 243, ../scss/app.scss */
+=======
+/* line 250, ../scss/app.scss */
+>>>>>>> Stashed changes
 .accordion-navigation a:before {
   content: "+";
   margin-right: 0.2rem;
 }
 
+<<<<<<< Updated upstream
 /* line 249, ../scss/app.scss */
+=======
+/* line 256, ../scss/app.scss */
+>>>>>>> Stashed changes
 table {
   width: 100%;
 }
@@ -9508,15 +9527,18 @@ table {
 --------------------------------------------------------------------- */
 /*.spin {
 	-webkit-animation: rotate 90s infinite linear;
-}*/
+}
+
 @-webkit-keyframes rotate {
   from {
     -webkit-transform: rotate(0deg);
   }
-  to {
+  to { 
     -webkit-transform: rotate(360deg);
   }
 }
+
+
 /* Font-face
 --------------------------------------------------------------------- */
 @font-face {
