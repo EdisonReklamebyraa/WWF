@@ -4,6 +4,7 @@
 
 /* Variables
 --------------------------------------------------------------------- */
+/* Colors */
 $beigeish: #eeede3;
 $orangeish: #ff9600;
 $greenish: #6ac82b;
@@ -56,7 +57,7 @@ h1, h2, h3, .techBox p, .accordion .accordion-navigation a {
 h1 {
 	  font-size: 3.8rem;
   line-height: 1.1;
-  padding: 0.5em;
+  padding: 0.5em 0.5em 0;
   margin: 0;
 }
 h3, .accordion .accordion-navigation a {
@@ -180,6 +181,7 @@ h2 .upndownBox .downBtn {
 .whitewrap {
 	background: white;
 }
+
 .techBox, .earthBox {
 	position: relative;
 }
@@ -216,7 +218,23 @@ h2 .upndownBox .downBtn {
 }
 
 header .whitewrap {
-	min-height: 14.55rem;
+	min-height: 14.65rem;
+}
+
+header .fundBox {
+	min-height: 0;
+	padding: 1rem 1.9rem 1rem;
+	background: #E8E8E8;
+	border-bottom: 4px solid #808080;
+}
+
+.fundBox input[type="text"] {
+	  display: inline;
+  width: auto;
+  font-size: 1rem;
+  color: $orangeish;
+  min-width: 10rem;
+  margin: 0 0 0 1rem;
 }
 
 .dollas img {
@@ -237,6 +255,13 @@ header .whitewrap {
 	margin-bottom: 1.25rem;
 }
 
+#globes {
+	margin-bottom: 1.25rem,
+}
+#globes img {
+	max-width: 3.5rem;
+}
+
 /* Table styles
 --------------------------------------------------------------------- */
 
@@ -254,7 +279,7 @@ table {
 --------------------------------------------------------------------- */
 /*.spin {
 	-webkit-animation: rotate 90s infinite linear;
-}*/
+}
 
 @-webkit-keyframes rotate {
   from {
