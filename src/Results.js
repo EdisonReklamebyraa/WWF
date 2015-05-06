@@ -47,24 +47,23 @@ Results.prototype = _.create(
         },
 
         updateResults: function() {
-
+            var endOfyear  = 1;
             var investments = this.res.getInvestments(
                 this.data.user["investment"],
                 this.data.user["annual growth rate"],
                 this.data.user["target"],
-                this.data.user["target year"] - this.data.user["starting year"]);
-            var shares = this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"]);
+                this.data.user["target year"] - this.data.user["starting year"] + endOfyear);
+            var shares = this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear );
 
             var summary = this.res.summarise(this.res.getLifeTimeSpread(shares,investments ));
-
 
             this.updateShares(_.first(shares));
             this.updateMoneyToInvest(investments);
             this.updateInstalledCapacity(shares);
+            this.updateImpact(shares,investments);
         },
 
         updateShares: function(share) {
-
             for(var i = 0; i < share.members.length; i++)
             {
                 $("[data-id="+share.members[i].id+"] span").text(
@@ -89,7 +88,16 @@ Results.prototype = _.create(
                 function(previousValue, currentValue) {return previousValue + currentValue;})
 
             $("#budget1").text(numeral(investment).format('($ 0.00 a)') );
+        },
+
+        updateImpact: function(shares,investments) {
+            var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
+
+            $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0a')+'H');
+            $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
+            $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
+            $("#twhImpact .start").text(this.data.user["starting year"]);
+            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+
         }
-
-
     });

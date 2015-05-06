@@ -2,7 +2,7 @@
     "user": {
 
         "investment": 1000000,
-        "annual growth rate": 0.002,
+        "annual growth rate": 0.02,
         "target": 0.05,
         "starting year": 2016,
         "target year": 2020

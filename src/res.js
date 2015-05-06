@@ -130,7 +130,7 @@ RES.prototype = _.create(
         getLifeTimeSpread : function(shares, investments){
 
             var lifeTime = this.getInvestmentLifetime() ;
-            var totalYearsReturns = lifeTime + investments.length  ;
+            var totalYearsReturns = lifeTime + investments.length - 1  ;
 
             var matrix = makeMatrix(_.first(shares).members.length, totalYearsReturns)
 
@@ -154,20 +154,37 @@ RES.prototype = _.create(
 
         summarise : function(matrix) {
             var  peakPowerGeneration = 0
-              , yearlyTotalPowerGeneration = []
-              , total = 0;
+              , yearlyTotalPowerGeneration = zeroArray(matrix[0].length)
+              , totalPowerGenerationPerType = []
+              , total = 0
+              , yearlyMax = 0;
 
 
             for(var i = 0; i < matrix.length; i++) {
                 var yearTotal = _.reduce(matrix[i],function(total, n) { return total + n;  });
-                yearlyTotalPowerGeneration.push(yearTotal);
+                totalPowerGenerationPerType.push(yearTotal);
                 peakPowerGeneration = (yearTotal > peakPowerGeneration)? yearTotal: peakPowerGeneration;
                 total += yearTotal;
             }
+
+            for(var j = 0; j < matrix.length; j++)
+            {
+                for(var k = 0; k < matrix[j].length; k++)
+                {
+                    yearlyTotalPowerGeneration[k] += matrix[j][k];
+                    yearlyMax = Math.max(yearlyMax, yearlyTotalPowerGeneration[k]);
+                }
+
+            }
+
+
             return {
-                averageAnnualPowerGeneration : total/matrix.length,
+                years : matrix[0].length,
+                averageAnnualPowerGeneration : total/(matrix[0].length),
                 peakPowerGeneration: peakPowerGeneration,
-                yearlyTotalPowerGeneration: yearlyTotalPowerGeneration
+                yearlyTotalPowerGeneration: yearlyTotalPowerGeneration,
+                totalPowerGenerationPerType: totalPowerGenerationPerType,
+                yearlyMaximum: yearlyMax
             }
         },
 
@@ -294,7 +311,12 @@ function makeMatrix(l,w){
     var matrix = [];
     for(var x = 0; x < l; x++)
     {
-        matrix.push(Array.apply(null, new Array(w)).map(Number.prototype.valueOf,0));
+        matrix.push(zeroArray(w));
     }
     return  matrix;
+}
+
+
+function zeroArray(w){
+    return Array.apply(null, new Array(w)).map(Number.prototype.valueOf,0);
 }
