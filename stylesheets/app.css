@@ -9521,15 +9521,20 @@ header .fundBox {
   max-width: 3.5rem;
 }
 
+/* line 267, ../scss/app.scss */
+#BackgroundData, #EMix, #InvestmentDataTable {
+  position: relative;
+}
+
 /* Table styles
 --------------------------------------------------------------------- */
-/* line 270, ../scss/app.scss */
+/* line 274, ../scss/app.scss */
 .accordion-navigation a:before {
   content: "+";
   margin-right: 0.2rem;
 }
 
-/* line 276, ../scss/app.scss */
+/* line 280, ../scss/app.scss */
 table {
   width: 100%;
 }
@@ -9560,78 +9565,78 @@ table {
   font-style: normal;
 }
 @media only screen and (min-width: 72rem) {
-  /* line 309, ../scss/app.scss */
+  /* line 313, ../scss/app.scss */
   .noLeftPadd {
     padding-left: 0;
   }
 
-  /* line 312, ../scss/app.scss */
+  /* line 316, ../scss/app.scss */
   .noRightPadd {
     padding-right: 0;
   }
 }
 @media only screen and (max-width: 72rem) {
-  /* line 319, ../scss/app.scss */
+  /* line 323, ../scss/app.scss */
   header h1, header h1 input[type="text"] {
     font-size: 2.75rem;
   }
 
-  /* line 322, ../scss/app.scss */
+  /* line 326, ../scss/app.scss */
   header .whitewrap {
     padding-bottom: 2rem;
   }
 
-  /* line 325, ../scss/app.scss */
+  /* line 329, ../scss/app.scss */
   header .upndownBox {
     top: 0.95rem;
     width: 1.8rem;
   }
 
-  /* line 329, ../scss/app.scss */
+  /* line 333, ../scss/app.scss */
   header .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2rem;
   }
 
-  /* line 333, ../scss/app.scss */
+  /* line 337, ../scss/app.scss */
   header .downBtn {
     border-width: 14px 8px 0 8px;
   }
 
-  /* line 340, ../scss/app.scss */
+  /* line 344, ../scss/app.scss */
   header .whitewrap {
     min-height: 0;
   }
 }
 @media only screen and (max-width: 64.063rem) {
-  /* line 345, ../scss/app.scss */
+  /* line 349, ../scss/app.scss */
   header .large-2 {
     width: 8rem;
   }
 
-  /* line 348, ../scss/app.scss */
+  /* line 352, ../scss/app.scss */
   header .large-2 .whitewrap {
     padding: 0 0.5rem;
   }
 
-  /* line 351, ../scss/app.scss */
+  /* line 355, ../scss/app.scss */
   h2 input[type="text"] {
     font-size: 3rem;
     width: 7rem;
   }
 
-  /* line 356, ../scss/app.scss */
+  /* line 360, ../scss/app.scss */
   .earthBox .upndownBox {
     top: 1.4rem;
     width: 1.8rem;
     left: -2.15rem;
   }
-  /* line 361, ../scss/app.scss */
+  /* line 365, ../scss/app.scss */
   .earthBox .upndownBox .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2.5rem;
   }
-  /* line 365, ../scss/app.scss */
+  /* line 369, ../scss/app.scss */
   .earthBox .upndownBox .downBtn {
     border-width: 14px 8px 0 8px;
   }

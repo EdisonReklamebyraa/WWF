@@ -26,10 +26,9 @@ Data.prototype = _.create(
 
         update: function(json) {
             this.data = json.data;
-            Arbiter.publish("update", json);
             Arbiter.publish("update/user", json.user);
             Arbiter.publish("update/mix", json.electricity_mix);
             Arbiter.publish("update/background", json.background);
-
+            Arbiter.publish("update", json);
         }
     });

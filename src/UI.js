@@ -24,6 +24,7 @@ UIs.prototype = _.create(
 
         updateUI: function(json) {
             $("input[name=startYear]").val(this.user["starting year"] );
+            $("input[name=totalFund]").val(numeral(this.user["investment"] ).format('$ 0,0 a')  );
             $("input[name=endYear]").val(this.user["target year"] );
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
         },
@@ -31,7 +32,6 @@ UIs.prototype = _.create(
 
         loadEvents: function(e) {
             self = this;
-
             $(".upndownBox .downBtn").click(function(e) {
                 e.preventDefault();
                 var p = $(this).parent();
@@ -52,6 +52,8 @@ UIs.prototype = _.create(
 
             $("input").change(function() {
                 self.interaction();
+            }).focus(function() {
+                $(this).val(numeral().unformat($(this).val()));
             });
         },
 
@@ -60,7 +62,9 @@ UIs.prototype = _.create(
             this.user["starting year"] = Math.max(2013,numeral().unformat($("input[name=startYear]").val()));
             this.user["target year"] = Math.max(2013,this.user["starting year"] + 1 ,numeral().unformat($("input[name=endYear]").val()));
             this.user["target"] = numeral().unformat($("input[name=investPercentage]").val());
+            this.user["investment"] = numeral().unformat($("input[name=totalFund]").val());
             this.updateUI();
+
             Arbiter.publish("changed/user",this.user);
         }
 

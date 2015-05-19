@@ -2,6 +2,69 @@
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
+module.exports = BackgroundDataTable;
+
+function BackgroundDataTable(data) {
+
+    var self = this;
+
+    Arbiter.subscribe("update/background",function(json) {
+        self.loadData(json);
+    } );
+}
+
+BackgroundDataTable.prototype = _.create(
+
+    BackgroundDataTable.prototype,
+    {
+        data: null,
+        table: null,
+
+        loadData: function(json) {
+            this.data = json;
+            this.updateTable();
+        },
+
+        updateTable: function() {
+            var self = this;
+            if(!this.table){
+
+                var container = document.getElementById('BackgroundData');
+                this.table = new Handsontable(container, {
+                    data: this.data,
+                    rowHeaders: true,
+                    colHeaders: ["type","years", "overnight capital cost", "min hours", "max hours", "average hours", "emissions", "employment a", "employment b" ],
+
+                    stretchH: "all",
+                    contextMenu: true,
+                    cells: function(row,cell,prop) {
+
+                        if(cell > 0){
+                            this.type = "numeric";
+                            this.format = "0,00.0' a";
+                        }
+                    }
+                });
+
+                this.table.addHook('afterChange', function(col, type) {
+                    if(type == "edit"){
+                        self.data = this.getData()
+                        Arbiter.publish("edit/mix", self.data);
+                    }
+                });
+
+
+            }else{
+
+            }
+        }
+
+    });
+
+},{"arbiter-subpub":10,"lodash":11}],2:[function(require,module,exports){
+var Arbiter = require('arbiter-subpub');
+var _ = require("lodash");
+
 module.exports = ElectricityDataTable;
 
 function ElectricityDataTable(data) {
@@ -37,14 +100,16 @@ ElectricityDataTable.prototype = _.create(
                     data: this.data.data,
                     rowHeaders: true,
                     colHeaders: this.data.cols,
-                    columns: [{type: 'numeric', format: '0,0'}, {type: 'numeric', format: '0,0'},{type: 'numeric', format: '0,0'},{type: 'numeric', format: '0,0'}, {type: 'numeric', format: '0,0'},{type: 'numeric', format: '0,0'},{type: 'numeric', format: '0,0'}, {type: 'numeric', format: '0,0'},{type: 'numeric', format: '0,0'},{type: 'numeric', format: '0,0'}, {type: 'numeric', format: '0,0'},{type: 'numeric', format: '0,0'}],
+                    stretchH: "all",
+                    columns: [{type: 'numeric', format: '0'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}],
                     contextMenu: true
                 });
 
                 this.table.addHook('afterChange', function(col, type) {
+
                     if(type == "edit"){
                         self.data = this.getData()
-                        Arbiter.subscribe("update/mix", self.data);
+                        Arbiter.publish("edit/mix", self.data);
                     }
                 });
 
@@ -56,7 +121,98 @@ ElectricityDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":7,"lodash":8}],2:[function(require,module,exports){
+},{"arbiter-subpub":10,"lodash":11}],3:[function(require,module,exports){
+var Arbiter = require('arbiter-subpub');
+var _ = require("lodash");
+
+module.exports = InvestmentDataTable;
+
+function InvestmentDataTable() {
+
+    var self = this;
+
+
+    Arbiter.subscribe("update/investments",function(json) {
+
+        self.loadData(json);
+    } );
+
+    Arbiter.subscribe("update/user", function(json) {
+
+        self.loadUser(json);
+    });
+    Arbiter.subscribe("update", function(json) {
+        self.loadUser(json.user);
+    });
+
+
+}
+
+InvestmentDataTable.prototype = _.create(
+
+    InvestmentDataTable.prototype,
+    {
+        data: null,
+        table: null,
+        userData: null,
+
+        loadData: function(json) {
+            this.data = json;
+            this.updateTable();
+        },
+
+        loadUser: function(json) {
+
+            this.userData = json;
+            this.updateTable();
+        },
+
+        tableData: function() {
+            return [this.data];
+        },
+
+        updateTable: function() {
+            var self = this;
+
+
+            if(!this.data)
+              return;
+
+            if(!this.table){
+                var container = document.getElementById('InvestmentDataTable');
+                var colHeaders = [];
+
+                for(var i = this.userData["starting year"]; i <= this.userData["target year"]; i++)
+                {
+                    colHeaders.push(i);
+                }
+
+                this.table = new Handsontable(container, {
+                    data: self.tableData(),
+                    stretchH: "all",
+                    colHeaders: true,
+                    colHeaders: colHeaders,
+                    contextMenu: true,
+                    cells: function(row,cell,prop) {
+                        this.type = "numeric";
+                        this.format = "000.000 a"
+                    }
+                });
+
+                this.table.addHook('afterChange', function(col, type) {
+                    if(type == "edit"){
+                        self.data = this.getData()[0];
+                        Arbiter.publish("edit/investments", self.data);
+                    }
+                });
+            }else{
+                this.table.loadData(self.tableData());
+            }
+        }
+
+    });
+
+},{"arbiter-subpub":10,"lodash":11}],4:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -81,6 +237,16 @@ function Results(data) {
         self.loadUser(json);
         self.update();
     } );
+    Arbiter.subscribe("edit/mix",function(json) {
+        self.loadMix(json);
+        self.update();
+    } );
+
+    Arbiter.subscribe("edit/investments",function(json) {
+        self.setInvestments(json);
+        self.updateResults();
+    } );
+
 }
 
 Results.prototype = _.create(
@@ -89,38 +255,64 @@ Results.prototype = _.create(
         data: null,
         res: null,
         energyScenario: null,
+        investments: null,
+        shares:null,
+        summary: null,
 
         loadData: function(json) {
             this.data = json;
         },
 
-
         loadUser: function(json) {
             this.data.user = json;
+        },
+
+
+        loadMix: function(json) {
+            this.data.electricity_mix.data = json;
         },
 
         update: function() {
             this.res = new RES(this.data.background);
             this.energyScenario = new EnergyScenario(this.data.electricity_mix);
-            this.updateResults();
+            this.updateInvestments();
         },
 
-        updateResults: function() {
+        updateInvestments : function() {
+
             var endOfyear  = 1;
-            var investments = this.res.getInvestments(
+            this.setInvestments( this.res.getInvestments(
                 this.data.user["investment"],
                 this.data.user["annual growth rate"],
                 this.data.user["target"],
-                this.data.user["target year"] - this.data.user["starting year"] + endOfyear);
-            var shares = this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear );
+                this.data.user["target year"] - this.data.user["starting year"] + endOfyear));
 
-            var summary = this.res.summarise(this.res.getLifeTimeSpread(shares,investments ));
+            this.setShares( this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
+            this.updateResults();
 
-            this.updateShares(_.first(shares));
-            this.updateMoneyToInvest(investments);
-            this.updateInstalledCapacity(shares);
-            this.updateImpact(shares,investments);
         },
+
+        updateResults: function() {
+
+            this.summary = this.res.summarise(this.res.getLifeTimeSpread(this.shares,this.investments ));
+
+            this.updateShares(_.first(this.shares));
+            this.updateMoneyToInvest(this.investments);
+            this.updateInstalledCapacity(this.shares);
+            this.updateImpact(this.shares,this.investments);
+
+            Arbiter.publish("update/investments", this.investments);
+            Arbiter.publish("update/shares", this.shares);
+        },
+
+        setInvestments: function(investments){
+            this.investments = investments;
+        },
+
+        setShares: function(shares){
+            this.shares = shares;
+        },
+
 
         updateShares: function(share) {
             for(var i = 0; i < share.members.length; i++)
@@ -143,7 +335,7 @@ Results.prototype = _.create(
 
 
         updateMoneyToInvest: function(investments) {
-            var investment = investments.reduce(
+            var investment = _.reduce(investments,
                 function(previousValue, currentValue) {return previousValue + currentValue;})
 
             $("#budget1").text(numeral(investment).format('($ 0.00 a)') );
@@ -160,7 +352,140 @@ Results.prototype = _.create(
 
         }
     });
-},{"./energyScenario.js":5,"./res.js":9,"arbiter-subpub":7,"lodash":8}],3:[function(require,module,exports){
+},{"./energyScenario.js":8,"./res.js":12,"arbiter-subpub":10,"lodash":11}],5:[function(require,module,exports){
+var Arbiter = require('arbiter-subpub');
+var _ = require("lodash");
+
+module.exports = SharesDataTable;
+
+function SharesDataTable() {
+
+    var self = this;
+
+    Arbiter.subscribe("update/shares",function(json) {
+        self.loadData(json);
+    } );
+    Arbiter.subscribe("update/user", function(json) {
+
+        self.loadUser(json);
+    });
+    Arbiter.subscribe("update", function(json) {
+        self.loadUser(json.user);
+    });
+}
+
+SharesDataTable.prototype = _.create(
+
+    SharesDataTable.prototype,
+    {
+        data: null,
+        table: null,
+        userData: null,
+
+
+        loadData: function(json) {
+            this.data = json;
+            this.updateTable();
+        },
+
+        loadUser: function(json) {
+
+            this.userData = json;
+            this.updateTable();
+        },
+
+        getData: function() {
+            var out = {cols: [""], data: []};
+
+
+            var rows = [];
+            var inc = 1;
+            var clump = 5;
+
+
+            for(var i = 0; i < this.data.length; i++)
+            {
+                var members = this.data[i].members;
+
+
+                out.cols.push(this.userData["starting year"] + i);
+
+
+
+                for(var j = 0; j < members.length; j++)
+                {
+
+                    var member = members[j];
+                    var index = clump * j;
+
+
+                    for(var k = 0; k <  clump; k++)
+                    {
+                        if(!rows[index + k ])
+                          rows[index + k] = [];
+                    }
+
+
+                    rows[index][i] = "";
+                    rows[index][i+1] = "";
+
+                    rows[index][0] = member.title;
+
+                    rows[index + 1][0] = "investments";
+                    rows[index + 2][0] = "annual Output";
+                    rows[index + 3][0] = "lifetime Output";
+
+
+                    rows[index+1][i+1] = member.money;
+                    rows[index+2][i+1] = member.annualOutput;
+                    rows[index+3][i+1] = member.lifetimeOutput;
+                }
+
+
+            }
+            out.data = rows;
+
+            return out;
+        },
+
+        updateTable: function() {
+            var self = this;
+
+            if(!this.data)
+              return;
+
+            if(!this.table){
+                var container = document.getElementById('SharesDataTable');
+                var d = this.getData();
+                this.table = new Handsontable(container, {
+                    data: d.data,
+                    stretchH: "all",
+                    colHeaders: d.cols,
+                    contextMenu: true,
+                    cells: function(row,cell,prop) {
+
+                        if(cell > 0){
+                            this.type = "numeric";
+                            this.format = "000.000 a";
+                        }
+                    }
+                });
+
+                this.table.addHook('afterChange', function(col, type) {
+                    if(type == "edit"){
+                        self.data = this.getData();
+                        Arbiter.publish("edit/shares", self.data);
+                    }
+                });
+            }else{
+                var d = this.getData();
+                this.table.loadData(d.data);
+            }
+        }
+
+    });
+
+},{"arbiter-subpub":10,"lodash":11}],6:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -187,6 +512,7 @@ UIs.prototype = _.create(
 
         updateUI: function(json) {
             $("input[name=startYear]").val(this.user["starting year"] );
+            $("input[name=totalFund]").val(numeral(this.user["investment"] ).format('$ 0,0 a')  );
             $("input[name=endYear]").val(this.user["target year"] );
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
         },
@@ -194,7 +520,6 @@ UIs.prototype = _.create(
 
         loadEvents: function(e) {
             self = this;
-
             $(".upndownBox .downBtn").click(function(e) {
                 e.preventDefault();
                 var p = $(this).parent();
@@ -215,6 +540,8 @@ UIs.prototype = _.create(
 
             $("input").change(function() {
                 self.interaction();
+            }).focus(function() {
+                $(this).val(numeral().unformat($(this).val()));
             });
         },
 
@@ -223,14 +550,16 @@ UIs.prototype = _.create(
             this.user["starting year"] = Math.max(2013,numeral().unformat($("input[name=startYear]").val()));
             this.user["target year"] = Math.max(2013,this.user["starting year"] + 1 ,numeral().unformat($("input[name=endYear]").val()));
             this.user["target"] = numeral().unformat($("input[name=investPercentage]").val());
+            this.user["investment"] = numeral().unformat($("input[name=totalFund]").val());
             this.updateUI();
+
             Arbiter.publish("changed/user",this.user);
         }
 
 
     });
 
-},{"arbiter-subpub":7,"lodash":8}],4:[function(require,module,exports){
+},{"arbiter-subpub":10,"lodash":11}],7:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -259,15 +588,14 @@ Data.prototype = _.create(
 
         update: function(json) {
             this.data = json.data;
-            Arbiter.publish("update", json);
             Arbiter.publish("update/user", json.user);
             Arbiter.publish("update/mix", json.electricity_mix);
             Arbiter.publish("update/background", json.background);
-
+            Arbiter.publish("update", json);
         }
     });
 
-},{"./energyScenario.js":5,"./res.js":9,"arbiter-subpub":7,"lodash":8}],5:[function(require,module,exports){
+},{"./energyScenario.js":8,"./res.js":12,"arbiter-subpub":10,"lodash":11}],8:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -440,17 +768,17 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                     }
                                    );
 
-},{"lodash":8}],6:[function(require,module,exports){
+},{"lodash":11}],9:[function(require,module,exports){
 var WWF = require('./wwf.js');
 var wwf = new WWF();
 
 $(document).foundation();
-},{"./wwf.js":10}],7:[function(require,module,exports){
+},{"./wwf.js":13}],10:[function(require,module,exports){
 /*
 Arbiter.js
-  by Matt Kruse 
+  by Matt Kruse
   http://ArbiterJS.com - See site for documentation
-  
+
   This work is in the public domain and may be used in any way, for any purpose, without restriction.
 */
 var Arbiter = (function () {
@@ -484,13 +812,13 @@ var Arbiter = (function () {
           if (/\*$/.test(msg)) {
             wildcard = true;
             msg = msg.replace(/\*$/,'');
-            subscription_list = wildcard_subscriptions[msg];        
+            subscription_list = wildcard_subscriptions[msg];
             if (!subscription_list) {
               wildcard_subscriptions[msg] = subscription_list = [];
             }
           }
           else {
-            subscription_list = subscriptions[msg];       
+            subscription_list = subscriptions[msg];
             if (!subscription_list) {
               subscriptions[msg] = subscription_list = [];
             }
@@ -511,7 +839,7 @@ var Arbiter = (function () {
             subscriptions[msg] = subscription_list;
           }
           return_ids.push(id);
-          
+
           // Check to see if there are any persistent messages that need
           // to be fired immediately
           if (!options.persist && persistent_messages[msg]) {
@@ -527,7 +855,7 @@ var Arbiter = (function () {
         }
         return return_ids[0];
       }
-      
+
       ,'publish': function(msg, data, options) {
         var async_timeout=10,result,overall_result=true,cancelable=true,internal_data={},subscriber, wildcard_msg;
         var subscription_list = subscriptions[msg] || [];
@@ -544,15 +872,15 @@ var Arbiter = (function () {
           }
           persistent_messages[msg].push( data );
         }
-        if (subscription_list.length==0) { 
-          return overall_result; 
+        if (subscription_list.length==0) {
+          return overall_result;
         }
         if (typeof options.cancelable=="boolean") {
           cancelable = options.cancelable;
         }
         for (var i=0; i<subscription_list.length; i++) {
           subscriber = subscription_list[i];
-          if (subscriber.unsubscribed) { 
+          if (subscriber.unsubscribed) {
             continue; // Ignore unsubscribed listeners
           }
           try {
@@ -572,12 +900,13 @@ var Arbiter = (function () {
             }
           }
           catch(e) {
-            overall_result = false;
+              overall_result = false;
+              console.log(e);
           }
         }
         return overall_result;
       }
-      
+
       ,'unsubscribe': function(id) {
         if (id_lookup[id]) {
            id_lookup[id].unsubscribed = true;
@@ -585,7 +914,7 @@ var Arbiter = (function () {
         }
         return false;
       }
-      
+
       ,'resubscribe': function(id) {
         if (id_lookup[id]) {
            id_lookup[id].unsubscribed = false;
@@ -593,17 +922,17 @@ var Arbiter = (function () {
         }
         return false;
       }
-      
+
     };
   };
   return create_arbiter();
-  
+
 })();
 
 
 module.exports = Arbiter;
 
-},{}],8:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -12773,7 +13102,7 @@ module.exports = Arbiter;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -13097,7 +13426,7 @@ function zeroArray(w){
     return Array.apply(null, new Array(w)).map(Number.prototype.valueOf,0);
 }
 
-},{"lodash":8}],10:[function(require,module,exports){
+},{"lodash":11}],13:[function(require,module,exports){
 var _ = require('lodash');
 
 var EnergyScenario = require('./energyScenario.js');
@@ -13107,6 +13436,10 @@ var Data = require("./data.js");
 var UI = require("./UI.js");
 var Results = require("./Results.js");
 var ElectricityDataTable = require("./ElectricityDataTable.js");
+var BackgroundDataTable = require("./BackgroundDataTable.js");
+var InvestmentDataTable = require("./InvestmentDataTable.js");
+var SharesDataTable = require("./SharesDataTable.js");
+
 
 var _ = require("lodash");
 
@@ -13121,6 +13454,9 @@ function WWF() {
     this.results = new Results();
     this.data = new Data();
     this.electricityDataTable = new ElectricityDataTable();
+    this.backgroundDataTable = new BackgroundDataTable();
+    this.investmentDataTable = new InvestmentDataTable();
+    this.sharesDataTable = new SharesDataTable();
 }
 
 
@@ -13129,4 +13465,4 @@ WWF.prototype = _.create(WWF.prototype, {
     ui: null
 });
 
-},{"./ElectricityDataTable.js":1,"./Results.js":2,"./UI.js":3,"./data.js":4,"./energyScenario.js":5,"./res.js":9,"lodash":8}]},{},[6]);
+},{"./BackgroundDataTable.js":1,"./ElectricityDataTable.js":2,"./InvestmentDataTable.js":3,"./Results.js":4,"./SharesDataTable.js":5,"./UI.js":6,"./data.js":7,"./energyScenario.js":8,"./res.js":12,"lodash":11}]},{},[9]);

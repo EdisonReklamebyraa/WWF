@@ -22,6 +22,16 @@ function Results(data) {
         self.loadUser(json);
         self.update();
     } );
+    Arbiter.subscribe("edit/mix",function(json) {
+        self.loadMix(json);
+        self.update();
+    } );
+
+    Arbiter.subscribe("edit/investments",function(json) {
+        self.setInvestments(json);
+        self.updateResults();
+    } );
+
 }
 
 Results.prototype = _.create(
@@ -30,38 +40,64 @@ Results.prototype = _.create(
         data: null,
         res: null,
         energyScenario: null,
+        investments: null,
+        shares:null,
+        summary: null,
 
         loadData: function(json) {
             this.data = json;
         },
 
-
         loadUser: function(json) {
             this.data.user = json;
+        },
+
+
+        loadMix: function(json) {
+            this.data.electricity_mix.data = json;
         },
 
         update: function() {
             this.res = new RES(this.data.background);
             this.energyScenario = new EnergyScenario(this.data.electricity_mix);
-            this.updateResults();
+            this.updateInvestments();
         },
 
-        updateResults: function() {
+        updateInvestments : function() {
+
             var endOfyear  = 1;
-            var investments = this.res.getInvestments(
+            this.setInvestments( this.res.getInvestments(
                 this.data.user["investment"],
                 this.data.user["annual growth rate"],
                 this.data.user["target"],
-                this.data.user["target year"] - this.data.user["starting year"] + endOfyear);
-            var shares = this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear );
+                this.data.user["target year"] - this.data.user["starting year"] + endOfyear));
 
-            var summary = this.res.summarise(this.res.getLifeTimeSpread(shares,investments ));
+            this.setShares( this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
+            this.updateResults();
 
-            this.updateShares(_.first(shares));
-            this.updateMoneyToInvest(investments);
-            this.updateInstalledCapacity(shares);
-            this.updateImpact(shares,investments);
         },
+
+        updateResults: function() {
+
+            this.summary = this.res.summarise(this.res.getLifeTimeSpread(this.shares,this.investments ));
+
+            this.updateShares(_.first(this.shares));
+            this.updateMoneyToInvest(this.investments);
+            this.updateInstalledCapacity(this.shares);
+            this.updateImpact(this.shares,this.investments);
+
+            Arbiter.publish("update/investments", this.investments);
+            Arbiter.publish("update/shares", this.shares);
+        },
+
+        setInvestments: function(investments){
+            this.investments = investments;
+        },
+
+        setShares: function(shares){
+            this.shares = shares;
+        },
+
 
         updateShares: function(share) {
             for(var i = 0; i < share.members.length; i++)
@@ -84,7 +120,7 @@ Results.prototype = _.create(
 
 
         updateMoneyToInvest: function(investments) {
-            var investment = investments.reduce(
+            var investment = _.reduce(investments,
                 function(previousValue, currentValue) {return previousValue + currentValue;})
 
             $("#budget1").text(numeral(investment).format('($ 0.00 a)') );
