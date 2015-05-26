@@ -50,9 +50,7 @@ ElectricityDataTable.prototype = _.create(
                 });
 
 
-            }else{
-
-            }
+            } 
         }
 
     });

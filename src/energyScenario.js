@@ -102,17 +102,14 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                             return this.getRelativeShare(year)[this.electricityMix.FOSSILFUELS];
                                         },
 
-
                                         getFossilFuelsShares : function(start, end) {
                                             var shares = [];
                                             for(var i = 0; i < end - start; i++)
                                             {
-                                                shares.push(this.getFossilFuelsShare(start + i )[this.electricityMix.FOSSILFUELS]);
+                                                shares.push(this.getRelativeShare(start + i )[this.electricityMix.FOSSILFUELS]);
                                             }
                                             return shares;
                                         },
-
-
 
                                         getRenewableEnergyShares : function(start, end) {
                                             var shares = [];

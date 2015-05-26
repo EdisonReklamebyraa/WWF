@@ -48,7 +48,7 @@ BackgroundDataTable.prototype = _.create(
                 this.table.addHook('afterChange', function(col, type) {
                     if(type == "edit"){
                         self.data = this.getData()
-                        Arbiter.publish("edit/mix", self.data);
+                        Arbiter.publish("edit/background", self.data);
                     }
                 });
 

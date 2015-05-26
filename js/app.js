@@ -49,7 +49,7 @@ BackgroundDataTable.prototype = _.create(
                 this.table.addHook('afterChange', function(col, type) {
                     if(type == "edit"){
                         self.data = this.getData()
-                        Arbiter.publish("edit/mix", self.data);
+                        Arbiter.publish("edit/background", self.data);
                     }
                 });
 
@@ -114,9 +114,7 @@ ElectricityDataTable.prototype = _.create(
                 });
 
 
-            }else{
-
-            }
+            } 
         }
 
     });
@@ -242,6 +240,11 @@ function Results(data) {
         self.update();
     } );
 
+    Arbiter.subscribe("edit/background",function(json) {
+        self.loadBackground(json);
+        self.update();
+    } );
+
     Arbiter.subscribe("edit/investments",function(json) {
         self.setInvestments(json);
         self.updateResults();
@@ -270,7 +273,13 @@ Results.prototype = _.create(
 
 
         loadMix: function(json) {
+
             this.data.electricity_mix.data = json;
+        },
+
+        loadBackground: function(json) {
+
+            this.data.background = json;
         },
 
         update: function() {
@@ -289,6 +298,7 @@ Results.prototype = _.create(
                 this.data.user["target year"] - this.data.user["starting year"] + endOfyear));
 
             this.setShares( this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
+            this.setFFShares( this.energyScenario.getFossilFuelsShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
             this.updateResults();
 
         },
@@ -297,10 +307,14 @@ Results.prototype = _.create(
 
             this.summary = this.res.summarise(this.res.getLifeTimeSpread(this.shares,this.investments ));
 
+            this.res.addComparisons(this.ffshares,this.shares );
+
             this.updateShares(_.first(this.shares));
             this.updateMoneyToInvest(this.investments);
             this.updateInstalledCapacity(this.shares);
             this.updateImpact(this.shares,this.investments);
+
+
 
             Arbiter.publish("update/investments", this.investments);
             Arbiter.publish("update/shares", this.shares);
@@ -311,7 +325,13 @@ Results.prototype = _.create(
         },
 
         setShares: function(shares){
+
             this.shares = shares;
+        },
+
+        setFFShares: function(ffshares){
+
+            this.ffshares = ffshares;
         },
 
 
@@ -336,13 +356,9 @@ Results.prototype = _.create(
             }
 
             $("#gigawatts").text(numeral(installed / 1000000).format('0.00'));
-
             $("#coalPlants").text(numeral(installed / coalPlant).format('0a'));
             $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0a'));
-
-
         },
-
 
 
 
@@ -355,6 +371,19 @@ Results.prototype = _.create(
 
         updateImpact: function(shares,investments) {
             var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
+            var c02g = 0;
+            var worldGHG = 45914 * 1000000  ;
+            var worldUS  = 6135 * 1000000  ;
+
+            for(var i = 0; i < shares.length; i++)
+            {
+                c02g     += shares[i].c02Saved;
+            }
+
+
+            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
+            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
+
 
             $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0a')+'H');
             $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
@@ -362,8 +391,6 @@ Results.prototype = _.create(
             $("#twhImpact .start").text(this.data.user["starting year"]);
             $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
 
-
-            debugger;
 
         }
     });
@@ -715,17 +742,14 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                             return this.getRelativeShare(year)[this.electricityMix.FOSSILFUELS];
                                         },
 
-
                                         getFossilFuelsShares : function(start, end) {
                                             var shares = [];
                                             for(var i = 0; i < end - start; i++)
                                             {
-                                                shares.push(this.getFossilFuelsShare(start + i )[this.electricityMix.FOSSILFUELS]);
+                                                shares.push(this.getRelativeShare(start + i )[this.electricityMix.FOSSILFUELS]);
                                             }
                                             return shares;
                                         },
-
-
 
                                         getRenewableEnergyShares : function(start, end) {
                                             var shares = [];
@@ -13336,6 +13360,15 @@ RES.prototype = _.create(
 
         },
 
+
+        addComparisons: function(ffShares, reShares) {
+
+            for(var i = 0; i < ffShares.length; i++)
+            {
+                this.addLifetimeEmissions(reShares[i]);
+                this.addComparison(ffShares[i], reShares[i]);
+            }
+        },
 
         // Total lifetime output * Existing energy mix world fossil fuels only
         addComparison : function(ffShare, reShare) {

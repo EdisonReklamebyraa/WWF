@@ -205,6 +205,15 @@ RES.prototype = _.create(
         },
 
 
+        addComparisons: function(ffShares, reShares) {
+
+            for(var i = 0; i < ffShares.length; i++)
+            {
+                this.addLifetimeEmissions(reShares[i]);
+                this.addComparison(ffShares[i], reShares[i]);
+            }
+        },
+
         // Total lifetime output * Existing energy mix world fossil fuels only
         addComparison : function(ffShare, reShare) {
             var ffC02 = 0;
