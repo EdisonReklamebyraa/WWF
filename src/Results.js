@@ -42,6 +42,7 @@ Results.prototype = _.create(
         energyScenario: null,
         investments: null,
         shares:null,
+        ffshares:null,
         summary: null,
 
         loadData: function(json) {
@@ -110,13 +111,24 @@ Results.prototype = _.create(
 
         updateInstalledCapacity: function(shares) {
             var installed = 0 ;
+            var coalPlant = 667000;
+            var nuclearReactor = 905000;
+
+
             for(var i = 0; i < shares.length; i++)
             {
                 installed     += shares[i].totalLifetimeOutput;
             }
 
             $("#gigawatts").text(numeral(installed / 1000000).format('0.00'));
+
+            $("#coalPlants").text(numeral(installed / coalPlant).format('0a'));
+            $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0a'));
+
+
         },
+
+
 
 
         updateMoneyToInvest: function(investments) {
@@ -134,6 +146,9 @@ Results.prototype = _.create(
             $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
             $("#twhImpact .start").text(this.data.user["starting year"]);
             $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+
+
+            debugger;
 
         }
     });
