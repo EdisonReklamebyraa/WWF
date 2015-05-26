@@ -18,13 +18,14 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                         getYear : function(year)
                                         {
                                             var prevYear = this.getPreviousYear(year);
-
+                                            var arrYear;
                                             if(year === _.first(prevYear))
-                                              return prevYear;
+                                              arrYear = prevYear;
                                             else{
-                                                return this.getProjectedYear(year, prevYear, this.getNextYear(year));
-
+                                                arrYear = this.getProjectedYear(year, prevYear, this.getNextYear(year));
                                             }
+
+                                            return _.slice(arrYear,2);
                                         },
 
 
@@ -78,7 +79,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                                 for(j = 0; j < this.electricityMix.groups[i].members.length; j++)
                                                 {
                                                     var id = this.electricityMix.groups[i].members[j];
-                                                    var needed = yearData[id] - prevYear[id];
+                                                    var needed = yearData[id ] - prevYear[id];
 
                                                     result.members.push({
                                                         id: id,

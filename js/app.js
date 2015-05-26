@@ -61,7 +61,168 @@ BackgroundDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":10,"lodash":11}],2:[function(require,module,exports){
+},{"arbiter-subpub":11,"lodash":12}],2:[function(require,module,exports){
+var Arbiter = require('arbiter-subpub');
+var _ = require("lodash");
+
+
+module.exports = Charts;
+
+function Charts(data) {
+
+    var self = this;
+
+    Arbiter.subscribe("update/shares",function(json) {
+        self.updateShares(json);
+    } );
+
+    Arbiter.subscribe("update/investments",function(json) {
+        self.updateInvestments(json);
+    } );
+
+    Arbiter.subscribe("changed/user",function(json) {
+        self.updateUser(json);
+    } );
+
+    Arbiter.subscribe("update/user",function(json) {
+        self.updateUser(json);
+    } );
+
+    Arbiter.subscribe("changed/impact",function(json) {
+        self.updateImpact(json);
+    } );
+
+    google.load('visualization', '1.0', {'packages':['corechart',"bar"]});
+    google.setOnLoadCallback(function() {
+        self.loadedGoogle();
+    });
+
+
+
+}
+
+Charts.prototype = _.create(
+    Charts.prototype,
+    {
+        shares: null,
+        investments: null,
+        impact: null,
+        user: null,
+        gLoaded: false,
+
+        updateShares: function(json) {
+            this.shares = (json)?json: this.shares;
+            this.update();
+        },
+
+        updateUser: function(json) {
+
+            this.user = (json)?json: this.user;
+            this.update();
+        },
+
+
+        updateInvestments: function(json) {
+            this.investments = (json)?json: this.investments;
+            this.update();
+        },
+
+         update: function(json) {
+
+             this.pieChart();
+             this.investmentsChart();
+             this.impactChart();
+        },
+
+
+        updateImpact: function(json) {
+            this.impact = (json)?json: this.impact;
+            this.update();
+        },
+
+        loadedGoogle: function() {
+            this.gLoaded = true;
+            this.update();
+        },
+
+        impactChart: function() {
+
+            if(this.impact && this.gLoaded && this.user){
+
+                var arrData = [ ['Year', 'Energy']];
+
+                for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
+                {
+                    arrData.push([(this.user["starting year"] + i) + "", this.impact.yearlyTotalPowerGeneration[i]]);
+                }
+
+                 var data = google.visualization.arrayToDataTable(arrData);
+
+                var options = {
+                    chart: {
+                        title: 'Annual and cumulative investment.'
+                    }
+                };
+
+
+                var chart = new google.charts.Bar(document.getElementById('ImpactChart'));
+
+                chart.draw(data, options);
+            }
+        },
+
+
+        investmentsChart: function() {
+
+            if(this.investments && this.gLoaded && this.user){
+                var arrData = [ ['Year', 'Invested', 'Cumulative investment']];
+                var total = 0;
+
+                for(var i = 0; i < this.investments.length; i++)
+                {
+                    total += this.investments[i];
+                    arrData.push([(this.user["starting year"] + i) + "", this.investments[i],total]);
+                }
+
+                 var data = google.visualization.arrayToDataTable(arrData);
+
+                var options = {
+                    chart: {
+                        title: 'Annual and cumulative investment.'
+                    }
+                };
+
+
+                var chart = new google.charts.Bar(document.getElementById('InvestmentsChart'));
+
+                chart.draw(data, options);
+            }
+        },
+
+        pieChart: function() {
+            if(this.shares && this.gLoaded ){
+                var data = new google.visualization.DataTable();
+                var pieData = [];
+
+                data.addColumn('string', 'Type');
+                data.addColumn('number', 'Percentage');
+
+                for(var i = 0; i < this.shares[0].members.length; i++)
+                {
+                    pieData.push([this.shares[0].members[i].title,this.shares[0].members[i].percent* 100]);
+                }
+                data.addRows(pieData );
+                // Set chart options
+                var options = {'title':'Relative share that each technology has WITHIN its category' };
+
+                var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
+                chart.draw(data, options);
+            }
+        }
+
+    }
+);
+},{"arbiter-subpub":11,"lodash":12}],3:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -99,7 +260,7 @@ ElectricityDataTable.prototype = _.create(
                 this.table = new Handsontable(container, {
                     data: this.data.data,
                     rowHeaders: true,
-                    colHeaders: this.data.cols,
+                    colHeaders: _.union(["year"], this.data.cols),
                     stretchH: "all",
                     columns: [{type: 'numeric', format: '0'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}],
                     contextMenu: true
@@ -114,12 +275,12 @@ ElectricityDataTable.prototype = _.create(
                 });
 
 
-            } 
+            }
         }
 
     });
 
-},{"arbiter-subpub":10,"lodash":11}],3:[function(require,module,exports){
+},{"arbiter-subpub":11,"lodash":12}],4:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -210,14 +371,11 @@ InvestmentDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":10,"lodash":11}],4:[function(require,module,exports){
+},{"arbiter-subpub":11,"lodash":12}],5:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
-
 var _ = require("lodash");
-
-
 
 module.exports = Results;
 
@@ -380,10 +538,10 @@ Results.prototype = _.create(
                 c02g     += shares[i].c02Saved;
             }
 
+            Arbiter.publish("changed/impact",impact );
 
             $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
             $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
-
 
             $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0a')+'H');
             $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
@@ -394,7 +552,7 @@ Results.prototype = _.create(
 
         }
     });
-},{"./energyScenario.js":8,"./res.js":12,"arbiter-subpub":10,"lodash":11}],5:[function(require,module,exports){
+},{"./energyScenario.js":9,"./res.js":13,"arbiter-subpub":11,"lodash":12}],6:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -527,7 +685,7 @@ SharesDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":10,"lodash":11}],6:[function(require,module,exports){
+},{"arbiter-subpub":11,"lodash":12}],7:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -601,7 +759,7 @@ UIs.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":10,"lodash":11}],7:[function(require,module,exports){
+},{"arbiter-subpub":11,"lodash":12}],8:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -637,7 +795,7 @@ Data.prototype = _.create(
         }
     });
 
-},{"./energyScenario.js":8,"./res.js":12,"arbiter-subpub":10,"lodash":11}],8:[function(require,module,exports){
+},{"./energyScenario.js":9,"./res.js":13,"arbiter-subpub":11,"lodash":12}],9:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -658,13 +816,14 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                         getYear : function(year)
                                         {
                                             var prevYear = this.getPreviousYear(year);
-
+                                            var arrYear;
                                             if(year === _.first(prevYear))
-                                              return prevYear;
+                                              arrYear = prevYear;
                                             else{
-                                                return this.getProjectedYear(year, prevYear, this.getNextYear(year));
-
+                                                arrYear = this.getProjectedYear(year, prevYear, this.getNextYear(year));
                                             }
+
+                                            return _.slice(arrYear,2);
                                         },
 
 
@@ -718,7 +877,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                                 for(j = 0; j < this.electricityMix.groups[i].members.length; j++)
                                                 {
                                                     var id = this.electricityMix.groups[i].members[j];
-                                                    var needed = yearData[id] - prevYear[id];
+                                                    var needed = yearData[id ] - prevYear[id];
 
                                                     result.members.push({
                                                         id: id,
@@ -819,12 +978,12 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype,
                                     }
                                    );
 
-},{"lodash":11}],9:[function(require,module,exports){
+},{"lodash":12}],10:[function(require,module,exports){
 var WWF = require('./wwf.js');
 var wwf = new WWF();
 
 $(document).foundation();
-},{"./wwf.js":13}],10:[function(require,module,exports){
+},{"./wwf.js":14}],11:[function(require,module,exports){
 /*
 Arbiter.js
   by Matt Kruse
@@ -983,7 +1142,7 @@ var Arbiter = (function () {
 
 module.exports = Arbiter;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -13153,7 +13312,7 @@ module.exports = Arbiter;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -13486,7 +13645,7 @@ function zeroArray(w){
     return Array.apply(null, new Array(w)).map(Number.prototype.valueOf,0);
 }
 
-},{"lodash":11}],13:[function(require,module,exports){
+},{"lodash":12}],14:[function(require,module,exports){
 var _ = require('lodash');
 
 var EnergyScenario = require('./energyScenario.js');
@@ -13499,6 +13658,9 @@ var ElectricityDataTable = require("./ElectricityDataTable.js");
 var BackgroundDataTable = require("./BackgroundDataTable.js");
 var InvestmentDataTable = require("./InvestmentDataTable.js");
 var SharesDataTable = require("./SharesDataTable.js");
+var Charts = require("./Charts.js");
+
+
 
 
 var _ = require("lodash");
@@ -13517,6 +13679,7 @@ function WWF() {
     this.backgroundDataTable = new BackgroundDataTable();
     this.investmentDataTable = new InvestmentDataTable();
     this.sharesDataTable = new SharesDataTable();
+    this.sharesDataTable = new Charts();
 }
 
 
@@ -13525,4 +13688,4 @@ WWF.prototype = _.create(WWF.prototype, {
     ui: null
 });
 
-},{"./BackgroundDataTable.js":1,"./ElectricityDataTable.js":2,"./InvestmentDataTable.js":3,"./Results.js":4,"./SharesDataTable.js":5,"./UI.js":6,"./data.js":7,"./energyScenario.js":8,"./res.js":12,"lodash":11}]},{},[9]);
+},{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./InvestmentDataTable.js":4,"./Results.js":5,"./SharesDataTable.js":6,"./UI.js":7,"./data.js":8,"./energyScenario.js":9,"./res.js":13,"lodash":12}]},{},[10]);

@@ -1,10 +1,7 @@
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
-
 var _ = require("lodash");
-
-
 
 module.exports = Results;
 
@@ -167,10 +164,10 @@ Results.prototype = _.create(
                 c02g     += shares[i].c02Saved;
             }
 
+            Arbiter.publish("changed/impact",impact );
 
             $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
             $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
-
 
             $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0a')+'H');
             $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));

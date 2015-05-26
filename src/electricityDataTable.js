@@ -35,7 +35,7 @@ ElectricityDataTable.prototype = _.create(
                 this.table = new Handsontable(container, {
                     data: this.data.data,
                     rowHeaders: true,
-                    colHeaders: this.data.cols,
+                    colHeaders: _.union(["year"], this.data.cols),
                     stretchH: "all",
                     columns: [{type: 'numeric', format: '0'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}],
                     contextMenu: true
@@ -50,7 +50,7 @@ ElectricityDataTable.prototype = _.create(
                 });
 
 
-            } 
+            }
         }
 
     });

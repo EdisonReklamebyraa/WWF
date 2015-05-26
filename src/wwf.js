@@ -10,6 +10,9 @@ var ElectricityDataTable = require("./ElectricityDataTable.js");
 var BackgroundDataTable = require("./BackgroundDataTable.js");
 var InvestmentDataTable = require("./InvestmentDataTable.js");
 var SharesDataTable = require("./SharesDataTable.js");
+var Charts = require("./Charts.js");
+
+
 
 
 var _ = require("lodash");
@@ -28,6 +31,7 @@ function WWF() {
     this.backgroundDataTable = new BackgroundDataTable();
     this.investmentDataTable = new InvestmentDataTable();
     this.sharesDataTable = new SharesDataTable();
+    this.sharesDataTable = new Charts();
 }
 
 
