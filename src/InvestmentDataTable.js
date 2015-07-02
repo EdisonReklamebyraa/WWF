@@ -47,43 +47,41 @@ InvestmentDataTable.prototype = _.create(
             return [this.data];
         },
 
-        updateTable: function() {
-            var self = this;
+        updateTable:  _.debounce(function() {
+                          var self = this;
 
+                          if(!this.data)
+                            return;
 
-            if(!this.data)
-              return;
+                          if(!this.table){
+                              var container = document.getElementById('InvestmentDataTable');
+                              var colHeaders = [];
 
-            if(!this.table){
-                var container = document.getElementById('InvestmentDataTable');
-                var colHeaders = [];
+                              for(var i = this.userData["starting year"]; i <= this.userData["target year"]; i++)
+                              {
+                                  colHeaders.push(i);
+                              }
 
-                for(var i = this.userData["starting year"]; i <= this.userData["target year"]; i++)
-                {
-                    colHeaders.push(i);
-                }
+                              this.table = new Handsontable(container, {
+                                  data: self.tableData(),
+                                  stretchH: "all",
+                                  colHeaders: true,
+                                  colHeaders: colHeaders,
+                                  contextMenu: true,
+                                  cells: function(row,cell,prop) {
+                                      this.type = "numeric";
+                                      this.format = "000.000 a"
+                                  }
+                              });
 
-                this.table = new Handsontable(container, {
-                    data: self.tableData(),
-                    stretchH: "all",
-                    colHeaders: true,
-                    colHeaders: colHeaders,
-                    contextMenu: true,
-                    cells: function(row,cell,prop) {
-                        this.type = "numeric";
-                        this.format = "000.000 a"
-                    }
-                });
-
-                this.table.addHook('afterChange', function(col, type) {
-                    if(type == "edit"){
-                        self.data = this.getData()[0];
-                        Arbiter.publish("edit/investments", self.data);
-                    }
-                });
-            }else{
-                this.table.loadData(self.tableData());
-            }
-        }
-
+                              this.table.addHook('afterChange', function(col, type) {
+                                  if(type == "edit"){
+                                      self.data = this.getData()[0];
+                                      Arbiter.publish("edit/investments", self.data);
+                                  }
+                              });
+                          }else{
+                              this.table.loadData(self.tableData());
+                          }
+                      }, 200)
     });

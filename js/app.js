@@ -25,39 +25,47 @@ BackgroundDataTable.prototype = _.create(
             this.updateTable();
         },
 
-        updateTable: function() {
-            var self = this;
-            if(!this.table){
+        updateTable:  _.debounce(function() {
+                          var self = this;
+                          if(!this.table){
 
-                var container = document.getElementById('BackgroundData');
-                this.table = new Handsontable(container, {
-                    data: this.data,
-                    rowHeaders: true,
-                    colHeaders: ["type","years", "overnight capital cost", "min hours", "max hours", "average hours", "emissions", "employment a", "employment b" ],
+                              var container = document.getElementById('BackgroundData');
+                              this.table = new Handsontable(container, {
+                                  data: this.data,
+                                  rowHeaders: true,
+                                  colHeaders: ["type",
+                                               "years",
+                                               "overnight capital cost",
+                                               "min hours",
+                                               "max hours",
+                                               "average hours",
+                                               "emissions",
+                                               "employment a",
+                                               "employment b" ],
 
-                    stretchH: "all",
-                    contextMenu: true,
-                    cells: function(row,cell,prop) {
+                                  stretchH: "all",
+                                  contextMenu: true,
+                                  cells: function(row,cell,prop) {
 
-                        if(cell > 0){
-                            this.type = "numeric";
-                            this.format = "0,00.0' a";
-                        }
-                    }
-                });
+                                      if(cell > 0){
+                                          this.type = "numeric";
+                                          this.format = "0,00.0' a";
+                                      }
+                                  }
+                              });
 
-                this.table.addHook('afterChange', function(col, type) {
-                    if(type == "edit"){
-                        self.data = this.getData()
-                        Arbiter.publish("edit/background", self.data);
-                    }
-                });
+                              this.table.addHook('afterChange', function(col, type) {
+                                  if(type == "edit"){
+                                      self.data = this.getData()
+                                      Arbiter.publish("edit/background", self.data);
+                                  }
+                              });
 
 
-            }else{
+                          }else{
 
-            }
-        }
+                          }
+                      }, 200)
 
     });
 
@@ -250,19 +258,29 @@ ElectricityDataTable.prototype = _.create(
             this.updateTable();
         },
 
-
-        updateTable: function() {
+        updateTable:
+        _.debounce(function() {
             var self = this;
-
             if(!this.table){
-
                 var container = document.getElementById('EMix');
                 this.table = new Handsontable(container, {
                     data: this.data.data,
                     rowHeaders: true,
                     colHeaders: _.union(["year"], this.data.cols),
                     stretchH: "all",
-                    columns: [{type: 'numeric', format: '0'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}],
+                    columns: [
+                        {type: 'numeric', format: '0'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'}],
                     contextMenu: true
                 });
 
@@ -273,10 +291,8 @@ ElectricityDataTable.prototype = _.create(
                         Arbiter.publish("edit/mix", self.data);
                     }
                 });
-
-
             }
-        }
+        }, 150)
 
     });
 
@@ -330,45 +346,43 @@ InvestmentDataTable.prototype = _.create(
             return [this.data];
         },
 
-        updateTable: function() {
-            var self = this;
+        updateTable:  _.debounce(function() {
+                          var self = this;
 
+                          if(!this.data)
+                            return;
 
-            if(!this.data)
-              return;
+                          if(!this.table){
+                              var container = document.getElementById('InvestmentDataTable');
+                              var colHeaders = [];
 
-            if(!this.table){
-                var container = document.getElementById('InvestmentDataTable');
-                var colHeaders = [];
+                              for(var i = this.userData["starting year"]; i <= this.userData["target year"]; i++)
+                              {
+                                  colHeaders.push(i);
+                              }
 
-                for(var i = this.userData["starting year"]; i <= this.userData["target year"]; i++)
-                {
-                    colHeaders.push(i);
-                }
+                              this.table = new Handsontable(container, {
+                                  data: self.tableData(),
+                                  stretchH: "all",
+                                  colHeaders: true,
+                                  colHeaders: colHeaders,
+                                  contextMenu: true,
+                                  cells: function(row,cell,prop) {
+                                      this.type = "numeric";
+                                      this.format = "000.000 a"
+                                  }
+                              });
 
-                this.table = new Handsontable(container, {
-                    data: self.tableData(),
-                    stretchH: "all",
-                    colHeaders: true,
-                    colHeaders: colHeaders,
-                    contextMenu: true,
-                    cells: function(row,cell,prop) {
-                        this.type = "numeric";
-                        this.format = "000.000 a"
-                    }
-                });
-
-                this.table.addHook('afterChange', function(col, type) {
-                    if(type == "edit"){
-                        self.data = this.getData()[0];
-                        Arbiter.publish("edit/investments", self.data);
-                    }
-                });
-            }else{
-                this.table.loadData(self.tableData());
-            }
-        }
-
+                              this.table.addHook('afterChange', function(col, type) {
+                                  if(type == "edit"){
+                                      self.data = this.getData()[0];
+                                      Arbiter.publish("edit/investments", self.data);
+                                  }
+                              });
+                          }else{
+                              this.table.loadData(self.tableData());
+                          }
+                      }, 200)
     });
 
 },{"arbiter-subpub":11,"lodash":12}],5:[function(require,module,exports){
@@ -647,7 +661,7 @@ SharesDataTable.prototype = _.create(
             return out;
         },
 
-        updateTable: function() {
+        updateTable:  _.debounce(function() {
             var self = this;
 
             if(!this.data)
@@ -680,7 +694,7 @@ SharesDataTable.prototype = _.create(
                 var d = this.getData();
                 this.table.loadData(d.data);
             }
-        }
+        }, 200)
 
     });
 

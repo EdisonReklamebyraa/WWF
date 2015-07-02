@@ -25,19 +25,29 @@ ElectricityDataTable.prototype = _.create(
             this.updateTable();
         },
 
-
-        updateTable: function() {
+        updateTable:
+        _.debounce(function() {
             var self = this;
-
             if(!this.table){
-
                 var container = document.getElementById('EMix');
                 this.table = new Handsontable(container, {
                     data: this.data.data,
                     rowHeaders: true,
                     colHeaders: _.union(["year"], this.data.cols),
                     stretchH: "all",
-                    columns: [{type: 'numeric', format: '0'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}, {type: 'numeric', format: '0,0.00 a'},{type: 'numeric', format: '0,0.00 a'}],
+                    columns: [
+                        {type: 'numeric', format: '0'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'},
+                        {type: 'numeric', format: '0,0.00 a'}],
                     contextMenu: true
                 });
 
@@ -48,9 +58,7 @@ ElectricityDataTable.prototype = _.create(
                         Arbiter.publish("edit/mix", self.data);
                     }
                 });
-
-
             }
-        }
+        }, 150)
 
     });

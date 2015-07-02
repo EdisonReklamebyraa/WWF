@@ -93,7 +93,7 @@ SharesDataTable.prototype = _.create(
             return out;
         },
 
-        updateTable: function() {
+        updateTable:  _.debounce(function() {
             var self = this;
 
             if(!this.data)
@@ -126,6 +126,6 @@ SharesDataTable.prototype = _.create(
                 var d = this.getData();
                 this.table.loadData(d.data);
             }
-        }
+        }, 200)
 
     });
