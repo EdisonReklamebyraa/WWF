@@ -541,29 +541,31 @@ Results.prototype = _.create(
             $("#budget1").text(numeral(investment).format('($ 0.00 a)') );
         },
 
-        updateImpact: function(shares,investments) {
-            var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
-            var c02g = 0;
-            var worldGHG = 45914 * 1000000  ;
-            var worldUS  = 6135 * 1000000  ;
+        updateImpact:  _.debounce(function(shares,investments) {
+                           var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
+                           var c02g = 0;
+                           var worldGHG = 45914 * 1000000  ;
+                           var worldUS  = 6135 * 1000000  ;
 
-            for(var i = 0; i < shares.length; i++)
-            {
-                c02g     += shares[i].c02Saved;
-            }
+                           for(var i = 0; i < shares.length; i++)
+                           {
+                               c02g     += shares[i].c02Saved;
+                           }
 
-            Arbiter.publish("changed/impact",impact );
-            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
-            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
+                           Arbiter.publish("changed/impact",impact );
+                           $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
+                           $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
 
-            $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0a')+'H');
-            $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
-            $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
-            $("#twhImpact .start").text(this.data.user["starting year"]);
-            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0a')+'H');
+                           $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
+                           $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
+                           $("#twhImpact .start").text(this.data.user["starting year"]);
+                           $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+
+                           $("#Years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
 
-        }
+                       }, 150)
     });
 },{"./energyScenario.js":9,"./res.js":13,"arbiter-subpub":11,"lodash":12}],6:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
