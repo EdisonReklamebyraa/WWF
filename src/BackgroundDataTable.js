@@ -46,9 +46,13 @@ BackgroundDataTable.prototype = _.create(
                                   contextMenu: true,
                                   cells: function(row,cell,prop) {
 
-                                      if(cell > 0){
+                                      if(cell > 1 && cell != 2){
                                           this.type = "numeric";
                                           this.format = "0,00.0' a";
+                                      }
+
+                                      else if(cell === 1 || cell === 2){
+                                          this.type = "numeric";
                                       }
                                   }
                               });
@@ -59,10 +63,8 @@ BackgroundDataTable.prototype = _.create(
                                       Arbiter.publish("edit/background", self.data);
                                   }
                               });
-
-
                           }else{
-
+                              this.table.loadData(self.data);
                           }
                       }, 200)
 

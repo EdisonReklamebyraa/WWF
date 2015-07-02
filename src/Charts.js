@@ -63,12 +63,12 @@ Charts.prototype = _.create(
             this.update();
         },
 
-         update: function(json) {
+        update: _.debounce(function() {
 
              this.pieChart();
              this.investmentsChart();
              this.impactChart();
-        },
+         }, 200),
 
 
         updateImpact: function(json) {
