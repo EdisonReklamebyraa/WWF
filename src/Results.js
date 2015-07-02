@@ -165,7 +165,6 @@ Results.prototype = _.create(
             }
 
             Arbiter.publish("changed/impact",impact );
-
             $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
             $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
 

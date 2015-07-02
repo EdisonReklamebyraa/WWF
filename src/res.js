@@ -230,18 +230,18 @@ RES.prototype = _.create(
 
         addJobsCreated : function(share) {
 
-                                                       var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                                                       for(var i = 0; i < share.members.length; i++)
-                                                       {
-                                                           var data = this.backgroundData[ share.members[i].id];
-                                                           share.members[i].jobsCreated =  share.members[i].lifetimeOutput * data.employment_1 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
-                                                           totalJobsCreated += share.members[i].jobsCreated;
-                                                       }
+            for(var i = 0; i < share.members.length; i++)
+            {
+                var data = this.backgroundData[ share.members[i].id];
+                share.members[i].jobsCreated =  share.members[i].lifetimeOutput * data.employment_1 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
+                totalJobsCreated += share.members[i].jobsCreated;
+            }
 
-                                                       share.totalJobsCreated = totalJobsCreated;
-                                                       return share;
-                                                   },
+            share.totalJobsCreated = totalJobsCreated;
+            return share;
+        },
 
 
 
@@ -250,42 +250,42 @@ RES.prototype = _.create(
         //hack
         addJobsCreatedWithFF : function(ffShare, reShare) {
 
-                          var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                          for(var i = 0; i < ffShare.members.length; i++)
-                          {
-                              var data = this.backgroundData[ ffShare.members[i].id];
-                              // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
-                              ffShare.members[i].REJobs =
-                                (reShare.totalLifetimeOutput
-                              * 0.000001)
-                            * data.employment_1
-                            * (ffShare.members[i].relativeShare
-                            + (ffShare.members[1].relativeShare/2)) ;
+            for(var i = 0; i < ffShare.members.length; i++)
+            {
+                var data = this.backgroundData[ ffShare.members[i].id];
+                // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
+                ffShare.members[i].REJobs =
+                  (reShare.totalLifetimeOutput
+                * 0.000001)
+              * data.employment_1
+              * (ffShare.members[i].relativeShare
+              + (ffShare.members[1].relativeShare/2)) ;
 
-                              totalJobsCreated += ffShare.members[i].REJobs;
-                          }
-                          ffShare.totalREJobsCreated = totalJobsCreated;
-                          return ffShare;
-                      },
+                totalJobsCreated += ffShare.members[i].REJobs;
+            }
+            ffShare.totalREJobsCreated = totalJobsCreated;
+            return ffShare;
+        },
 
 
 
 
         addUSDJobsCreated : function(share) {
 
-                        var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                        for(var i = 0; i < share.members.length; i++)
-                        {
-                            var data = this.backgroundData[ share.members[i].id];
-                            share.members[i].jobsUSDCreated =  share.members[i].money * data.employment_2 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
-                            totalJobsCreated += share.members[i].jobsCreated;
-                        }
+            for(var i = 0; i < share.members.length; i++)
+            {
+                var data = this.backgroundData[ share.members[i].id];
+                share.members[i].jobsUSDCreated =  share.members[i].money * data.employment_2 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
+                totalJobsCreated += share.members[i].jobsCreated;
+            }
 
-                        share.totalUSDJobsCreated = totalJobsCreated;
-                        return share;
-                    },
+            share.totalUSDJobsCreated = totalJobsCreated;
+            return share;
+        },
 
 
 
@@ -294,23 +294,23 @@ RES.prototype = _.create(
         //hack
         addUSDJobsCreatedWithFF : function(ffShare, reShare) {
 
-                            var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                            for(var i = 0; i < ffShare.members.length; i++)
-                            {
-                                var data = this.backgroundData[ ffShare.members[i].id];
-                                // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
-                                ffShare.members[i].REUSDJobs =
-                                  (reShare.investment * 0.000001)
-                                  * data.employment_2
-                                  * (ffShare.members[i].relativeShare
-                                  + (ffShare.members[1].relativeShare/2)) ;
-                                totalJobsCreated += ffShare.members[i].REUSDJobs;
-                            }
+            for(var i = 0; i < ffShare.members.length; i++)
+            {
+                var data = this.backgroundData[ ffShare.members[i].id];
+                // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
+                ffShare.members[i].REUSDJobs =
+                  (reShare.investment * 0.000001)
+              * data.employment_2
+              * (ffShare.members[i].relativeShare
+              + (ffShare.members[1].relativeShare/2)) ;
+                totalJobsCreated += ffShare.members[i].REUSDJobs;
+            }
 
-                            ffShare.totalUSDREJobsCreated = totalJobsCreated;
-                            return ffShare;
-                        }
+            ffShare.totalUSDREJobsCreated = totalJobsCreated;
+            return ffShare;
+        }
 
     });
 

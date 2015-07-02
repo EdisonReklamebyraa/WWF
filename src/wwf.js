@@ -31,7 +31,7 @@ function WWF() {
     this.backgroundDataTable = new BackgroundDataTable();
     this.investmentDataTable = new InvestmentDataTable();
     this.sharesDataTable = new SharesDataTable();
-    this.sharesDataTable = new Charts();
+    this.charts = new Charts();
 }
 
 

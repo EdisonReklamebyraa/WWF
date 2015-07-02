@@ -539,7 +539,6 @@ Results.prototype = _.create(
             }
 
             Arbiter.publish("changed/impact",impact );
-
             $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
             $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
 
@@ -808,174 +807,172 @@ function EnergyScenario(data) {
     this.electricityMix = data;
 }
 
-EnergyScenario.prototype = _.create(EnergyScenario.prototype,
-                                    {
-                                        this : null,
-                                        electricityMix: null,
+EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
+    this : null,
+    electricityMix: null,
 
-                                        getYear : function(year)
-                                        {
-                                            var prevYear = this.getPreviousYear(year);
-                                            var arrYear;
-                                            if(year === _.first(prevYear))
-                                              arrYear = prevYear;
-                                            else{
-                                                arrYear = this.getProjectedYear(year, prevYear, this.getNextYear(year));
-                                            }
+    getYear : function(year)
+    {
+        var prevYear = this.getPreviousYear(year);
+        var arrYear;
+        if(year === _.first(prevYear))
+          arrYear = prevYear;
+        else{
+            arrYear = this.getProjectedYear(year, prevYear, this.getNextYear(year));
+        }
 
-                                            return _.slice(arrYear,2);
-                                        },
-
-
-                                        getAnnualVariationInCapacity : function(year) {
-                                            var currYear = this.getYear(year)
-                                              , prevYear = this.getYear(year - 1)
-                                              , results = [];
-
-                                            for(var i = 1; i < currYear.length; i++)
-                                            {
-                                                results.push(currYear[i] - prevYear[i]);
-                                            }
-
-                                            return results;
-                                        },
-
-                                        getShare : function(year) {
-                                            var yearData = this.getYear(year)
-                                              , results = [];
+        return _.slice(arrYear,1);
+    },
 
 
-                                            for(var i = 2; i < yearData.length; i++)
-                                            {
-                                                results.push(yearData[i]/ yearData[1] );
-                                            }
+    getAnnualVariationInCapacity : function(year) {
+        var currYear = this.getYear(year)
+          , prevYear = this.getYear(year - 1)
+          , results = [];
 
-                                            return results;
-                                        },
+        for(var i = 1; i < currYear.length; i++)
+        {
+            results.push(currYear[i] - prevYear[i]);
+        }
 
-                                        getRelativeShare : function(year) {
-                                            var yearData = this.getYear(year),
-                                                prevYear = this.getYear(year - 1)
-                                              , results = {};
+        return results;
+    },
+
+    getShare : function(year) {
+        var yearData = this.getYear(year)
+          , results = [];
+
+        for(var i = 2; i < yearData.length; i++)
+        {
+            results.push(yearData[i]/ yearData[1] );
+        }
+
+        return results;
+    },
+
+    getRelativeShare : function(year) {
+        var yearData = this.getYear(year),
+            prevYear = this.getYear(year - 1)
+          , results = {};
 
 
-                                            for(var i = 0; i < this.electricityMix.groups.length; i++)
-                                            {
-                                                var totalInstalled = 0;
-                                                var total = 0;
-                                                var result = {title:this.electricityMix.groups[i].title, total : 0, members:[] };
+        for(var i = 0; i < this.electricityMix.groups.length; i++)
+        {
+            var totalInstalled = 0;
+            var total = 0;
+            var result = {title:this.electricityMix.groups[i].title, total : 0, members:[] };
 
-                                                for(var j = 0; j < this.electricityMix.groups[i].members.length; j++)
-                                                {
-                                                    var id = this.electricityMix.groups[i].members[j];
-                                                    totalInstalled += yearData[id] - prevYear[id];
-                                                    total += yearData[id];
-                                                }
+            for(var j = 0; j < this.electricityMix.groups[i].members.length; j++)
+            {
+                var id = this.electricityMix.groups[i].members[j];
+                totalInstalled += yearData[id] - prevYear[id];
+                total += yearData[id];
+            }
 
-                                                result["total"] = total;
+            result["total"] = total;
 
-                                                for(j = 0; j < this.electricityMix.groups[i].members.length; j++)
-                                                {
-                                                    var id = this.electricityMix.groups[i].members[j];
-                                                    var needed = yearData[id ] - prevYear[id];
+            for(j = 0; j < this.electricityMix.groups[i].members.length; j++)
+            {
+                var id = this.electricityMix.groups[i].members[j];
+                var needed = yearData[id ] - prevYear[id];
 
-                                                    result.members.push({
-                                                        id: id,
-                                                        percent: (totalInstalled > 0)?needed/totalInstalled:0,
-                                                        relativeShare: yearData[id]/total,
-                                                        needed: needed,
-                                                        title: this.electricityMix.cols[id]
-                                                    });
-                                                }
-                                                results[result.title] = result;
-                                            }
+                result.members.push({
+                    id: id,
+                    percent: (totalInstalled > 0)?needed/totalInstalled:0,
+                    relativeShare: yearData[id]/total,
+                    needed: needed,
+                    title: this.electricityMix.cols[id]
+                });
+            }
+            results[result.title] = result;
+        }
 
-                                            return results;
-                                        },
+        return results;
+    },
 
-                                        getRenewableEnergyShare : function(year) {
-                                            return this.getRelativeShare(year)[this.electricityMix.RENEWABLEENERGY];
-                                        },
+    getRenewableEnergyShare : function(year) {
+        return this.getRelativeShare(year)[this.electricityMix.RENEWABLEENERGY];
+    },
 
-                                        getFossilFuelsShare : function(year) {
-                                            return this.getRelativeShare(year)[this.electricityMix.FOSSILFUELS];
-                                        },
+    getFossilFuelsShare : function(year) {
+        return this.getRelativeShare(year)[this.electricityMix.FOSSILFUELS];
+    },
 
-                                        getFossilFuelsShares : function(start, end) {
-                                            var shares = [];
-                                            for(var i = 0; i < end - start; i++)
-                                            {
-                                                shares.push(this.getRelativeShare(start + i )[this.electricityMix.FOSSILFUELS]);
-                                            }
-                                            return shares;
-                                        },
+    getFossilFuelsShares : function(start, end) {
+        var shares = [];
+        for(var i = 0; i < end - start; i++)
+        {
+            shares.push(this.getRelativeShare(start + i )[this.electricityMix.FOSSILFUELS]);
+        }
+        return shares;
+    },
 
-                                        getRenewableEnergyShares : function(start, end) {
-                                            var shares = [];
-                                            for(var i = 0; i < end - start; i++)
-                                            {
-                                                shares.push(this.getRelativeShare(start + i )[this.electricityMix.RENEWABLEENERGY]);
-                                            }
-                                            return shares;
-                                        },
+    getRenewableEnergyShares : function(start, end) {
+        var shares = [];
+        for(var i = 0; i < end - start; i++)
+        {
+            shares.push(this.getRelativeShare(start + i )[this.electricityMix.RENEWABLEENERGY]);
+        }
+        return shares;
+    },
 
 
 
-                                        getPreviousYear: function(year)
-                                        {
-                                            return _.findLast(this.electricityMix.data, function(y) {
-                                                       return year >= _.first(y);
-                                                   });
-                                        },
+    getPreviousYear: function(year)
+    {
+        return _.findLast(this.electricityMix.data, function(y) {
+                   return year >= _.first(y);
+               });
+    },
 
 
-                                        getNextYear: function (year)
-                                        {
-                                            return _.find(this.electricityMix.data, function(y) {
-                                                       return year <= _.first(y);
-                                                   });
-                                        },
+    getNextYear: function (year)
+    {
+        return _.find(this.electricityMix.data, function(y) {
+                   return year <= _.first(y);
+               });
+    },
 
 
-                                        getProjectedYear: function (year, prevYear, nextYear)
-                                        {
-                                            var projectedValues;
+    getProjectedYear: function (year, prevYear, nextYear)
+    {
+        var projectedValues;
 
 
-                                            if(!prevYear && !nextYear){
-                                                projectedValues = _.clone(_.first(this.electricityMix.data));
-                                                projectedValues[0] = year;
-                                            }
-                                            else if(prevYear && !nextYear){
-                                                projectedValues = _.clone(prevYear);
-                                                projectedValues[0] = year;
-                                            }
-                                            else if(!prevYear && nextYear){
-                                                projectedValues = _.clone(nextYear);
-                                                projectedValues[0] = year;
-                                            }
-                                            else{
-                                                projectedValues  = this.projectYear(year, prevYear, nextYear);
-                                            }
+        if(!prevYear && !nextYear){
+            projectedValues = _.clone(_.first(this.electricityMix.data));
+            projectedValues[0] = year;
+        }
+        else if(prevYear && !nextYear){
+            projectedValues = _.clone(prevYear);
+            projectedValues[0] = year;
+        }
+        else if(!prevYear && nextYear){
+            projectedValues = _.clone(nextYear);
+            projectedValues[0] = year;
+        }
+        else{
+            projectedValues  = this.projectYear(year, prevYear, nextYear);
+        }
 
-                                            return projectedValues;
-                                        },
+        return projectedValues;
+    },
 
 
-                                        projectYear: function (year, prevYear, nextYear)
-                                        {
-                                            var projectedValues = [year]
-                                          , yearsDifference =  _.first(nextYear) - _.first(prevYear)
-                                          , yearsFromPrev = year - _.first(prevYear);
+    projectYear: function (year, prevYear, nextYear)
+    {
+        var projectedValues = [year]
+          , yearsDifference =  _.first(nextYear) - _.first(prevYear)
+          , yearsFromPrev = year - _.first(prevYear);
 
-                                            for(var i = 1; i < prevYear.length; i++)
-                                            {
-                                                projectedValues[i] = ((nextYear[i] - prevYear[i]) / yearsDifference) * yearsFromPrev + prevYear[i];
-                                            }
+        for(var i = 1; i < prevYear.length; i++)
+        {
+            projectedValues[i] = ((nextYear[i] - prevYear[i]) / yearsDifference) * yearsFromPrev + prevYear[i];
+        }
 
-                                            return projectedValues;
-                                        }
-                                    }
+        return projectedValues;
+    }
+}
                                    );
 
 },{"lodash":12}],10:[function(require,module,exports){
@@ -13545,18 +13542,18 @@ RES.prototype = _.create(
 
         addJobsCreated : function(share) {
 
-                                                       var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                                                       for(var i = 0; i < share.members.length; i++)
-                                                       {
-                                                           var data = this.backgroundData[ share.members[i].id];
-                                                           share.members[i].jobsCreated =  share.members[i].lifetimeOutput * data.employment_1 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
-                                                           totalJobsCreated += share.members[i].jobsCreated;
-                                                       }
+            for(var i = 0; i < share.members.length; i++)
+            {
+                var data = this.backgroundData[ share.members[i].id];
+                share.members[i].jobsCreated =  share.members[i].lifetimeOutput * data.employment_1 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
+                totalJobsCreated += share.members[i].jobsCreated;
+            }
 
-                                                       share.totalJobsCreated = totalJobsCreated;
-                                                       return share;
-                                                   },
+            share.totalJobsCreated = totalJobsCreated;
+            return share;
+        },
 
 
 
@@ -13565,42 +13562,42 @@ RES.prototype = _.create(
         //hack
         addJobsCreatedWithFF : function(ffShare, reShare) {
 
-                          var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                          for(var i = 0; i < ffShare.members.length; i++)
-                          {
-                              var data = this.backgroundData[ ffShare.members[i].id];
-                              // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
-                              ffShare.members[i].REJobs =
-                                (reShare.totalLifetimeOutput
-                              * 0.000001)
-                            * data.employment_1
-                            * (ffShare.members[i].relativeShare
-                            + (ffShare.members[1].relativeShare/2)) ;
+            for(var i = 0; i < ffShare.members.length; i++)
+            {
+                var data = this.backgroundData[ ffShare.members[i].id];
+                // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
+                ffShare.members[i].REJobs =
+                  (reShare.totalLifetimeOutput
+                * 0.000001)
+              * data.employment_1
+              * (ffShare.members[i].relativeShare
+              + (ffShare.members[1].relativeShare/2)) ;
 
-                              totalJobsCreated += ffShare.members[i].REJobs;
-                          }
-                          ffShare.totalREJobsCreated = totalJobsCreated;
-                          return ffShare;
-                      },
+                totalJobsCreated += ffShare.members[i].REJobs;
+            }
+            ffShare.totalREJobsCreated = totalJobsCreated;
+            return ffShare;
+        },
 
 
 
 
         addUSDJobsCreated : function(share) {
 
-                        var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                        for(var i = 0; i < share.members.length; i++)
-                        {
-                            var data = this.backgroundData[ share.members[i].id];
-                            share.members[i].jobsUSDCreated =  share.members[i].money * data.employment_2 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
-                            totalJobsCreated += share.members[i].jobsCreated;
-                        }
+            for(var i = 0; i < share.members.length; i++)
+            {
+                var data = this.backgroundData[ share.members[i].id];
+                share.members[i].jobsUSDCreated =  share.members[i].money * data.employment_2 * 0.000001; //NB: GWh and not kWh (= divide per 1 000 000)
+                totalJobsCreated += share.members[i].jobsCreated;
+            }
 
-                        share.totalUSDJobsCreated = totalJobsCreated;
-                        return share;
-                    },
+            share.totalUSDJobsCreated = totalJobsCreated;
+            return share;
+        },
 
 
 
@@ -13609,23 +13606,23 @@ RES.prototype = _.create(
         //hack
         addUSDJobsCreatedWithFF : function(ffShare, reShare) {
 
-                            var totalJobsCreated = 0;
+            var totalJobsCreated = 0;
 
-                            for(var i = 0; i < ffShare.members.length; i++)
-                            {
-                                var data = this.backgroundData[ ffShare.members[i].id];
-                                // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
-                                ffShare.members[i].REUSDJobs =
-                                  (reShare.investment * 0.000001)
-                                  * data.employment_2
-                                  * (ffShare.members[i].relativeShare
-                                  + (ffShare.members[1].relativeShare/2)) ;
-                                totalJobsCreated += ffShare.members[i].REUSDJobs;
-                            }
+            for(var i = 0; i < ffShare.members.length; i++)
+            {
+                var data = this.backgroundData[ ffShare.members[i].id];
+                // hack: We need to exclude oil, because we lack data. So we allocate the share of oil to coal and gas.
+                ffShare.members[i].REUSDJobs =
+                  (reShare.investment * 0.000001)
+              * data.employment_2
+              * (ffShare.members[i].relativeShare
+              + (ffShare.members[1].relativeShare/2)) ;
+                totalJobsCreated += ffShare.members[i].REUSDJobs;
+            }
 
-                            ffShare.totalUSDREJobsCreated = totalJobsCreated;
-                            return ffShare;
-                        }
+            ffShare.totalUSDREJobsCreated = totalJobsCreated;
+            return ffShare;
+        }
 
     });
 
@@ -13679,7 +13676,7 @@ function WWF() {
     this.backgroundDataTable = new BackgroundDataTable();
     this.investmentDataTable = new InvestmentDataTable();
     this.sharesDataTable = new SharesDataTable();
-    this.sharesDataTable = new Charts();
+    this.charts = new Charts();
 }
 
 
