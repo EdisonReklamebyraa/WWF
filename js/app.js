@@ -11,6 +11,11 @@ function BackgroundDataTable(data) {
     Arbiter.subscribe("update/background",function(json) {
         self.loadData(json);
     } );
+
+    $(".accordion").click(_.debounce(function() {
+        if(self.table)
+          self.table.render();
+    }, 100));
 }
 
 BackgroundDataTable.prototype = _.create(
@@ -32,29 +37,37 @@ BackgroundDataTable.prototype = _.create(
                               var container = document.getElementById('BackgroundData');
                               this.table = new Handsontable(container, {
                                   data: this.data,
-                                  rowHeaders: true,
-                                  colHeaders: ["type",
-                                               "years",
-                                               "overnight capital cost",
-                                               "min hours",
-                                               "max hours",
-                                               "average hours",
-                                               "emissions",
-                                               "employment a",
-                                               "employment b" ],
+                                  rowHeaders: false,
+                                  colHeaders: ["IPCC 2014<hr>Res Technologies",
+                                               "Lifetime <hr>years",
+                                               "Overnight capital cost <hr>USD 2011 / kW",
+                                               "&nbsp;<hr>Min hours",
+                                               "<div class='wide'>Full Load Hours (capacity)</div><hr> Max hours",
+                                               "&nbsp;<hr>Average hours",
+                                               "Emissions <hr> LCA life-cycle assessment<hr>grams CO2eq/kWh",
+                                               "Employment <hr>jobs / GWh",
+                                               "Employment <hr>jobs / 1 million $" ],
 
                                   stretchH: "all",
                                   contextMenu: true,
                                   cells: function(row,cell,prop) {
-
-                                      if(cell > 1 && cell != 2){
+                                      switch(cell) {
+                                          case 0:
+                                          break;
+                                          case 1:
+                                          case 2:
+                                          case 3:
+                                          case 4:
+                                          case 5:
                                           this.type = "numeric";
+                                          break;
+
+
+                                          default:
                                           this.format = "0,00.0' a";
-                                      }
-
-                                      else if(cell === 1 || cell === 2){
                                           this.type = "numeric";
                                       }
+
                                   }
                               });
 
@@ -245,6 +258,12 @@ function ElectricityDataTable(data) {
     Arbiter.subscribe("update/mix",function(json) {
         self.loadData(json);
     } );
+
+  $(".accordion").click(_.debounce(function() {
+        if(self.table)
+          self.table.render();
+    }, 100));
+
 }
 
 ElectricityDataTable.prototype = _.create(
@@ -318,10 +337,16 @@ function InvestmentDataTable() {
 
         self.loadUser(json);
     });
+
     Arbiter.subscribe("update", function(json) {
         self.loadUser(json.user);
     });
 
+    $(".accordion").click(
+        _.debounce(function() {
+            if(self.table)
+              self.table.render();
+        }, 100));
 
 }
 
@@ -589,6 +614,11 @@ function SharesDataTable() {
     Arbiter.subscribe("update", function(json) {
         self.loadUser(json.user);
     });
+
+    $(".accordion").click(_.debounce(function() {
+        if(self.table)
+          self.table.render();
+    }, 100));
 }
 
 SharesDataTable.prototype = _.create(

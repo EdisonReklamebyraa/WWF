@@ -10,6 +10,12 @@ function ElectricityDataTable(data) {
     Arbiter.subscribe("update/mix",function(json) {
         self.loadData(json);
     } );
+
+  $(".accordion").click(_.debounce(function() {
+        if(self.table)
+          self.table.render();
+    }, 100));
+
 }
 
 ElectricityDataTable.prototype = _.create(

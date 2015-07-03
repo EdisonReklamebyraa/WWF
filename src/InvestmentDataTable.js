@@ -17,10 +17,16 @@ function InvestmentDataTable() {
 
         self.loadUser(json);
     });
+
     Arbiter.subscribe("update", function(json) {
         self.loadUser(json.user);
     });
 
+    $(".accordion").click(
+        _.debounce(function() {
+            if(self.table)
+              self.table.render();
+        }, 100));
 
 }
 

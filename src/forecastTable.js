@@ -11,6 +11,11 @@ function ForecastTable(data) {
         self.update();
     } );
 
+  $(".accordion").click(_.debounce(function() {
+        if(self.table)
+          self.table.render();
+    }, 100));
+
 }
 
 ForecastTable.prototype = _.create(

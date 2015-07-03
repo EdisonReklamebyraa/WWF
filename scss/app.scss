@@ -258,8 +258,9 @@ header .fundBox {
 }
 
 #globes {
-	margin-bottom: 1.25rem,
+	margin-bottom: 1.25rem;
 }
+ 
 #globes img {
 	max-width: 3.5rem;
 }
@@ -267,6 +268,7 @@ header .fundBox {
 #BackgroundData, #EMix, #InvestmentDataTable{
     position: relative;
 }
+
 
 /* Table styles
 --------------------------------------------------------------------- */
@@ -279,6 +281,28 @@ header .fundBox {
 
 table {
 	width: 100%;
+}
+
+
+.handsontable thead th{
+    vertical-align: top;
+    overflow: visible;
+    padding: 10px 4px;
+    .wide{
+        position: relative;
+        left: 50%;
+        width: 200px;
+        margin: -12px 0 -4px -108px;
+        background: #EEE;
+        padding: 8px;
+    }
+}
+
+.colHeader{
+    hr
+    {
+        margin: 5px 0; 
+    }
 }
 
 /* Animations

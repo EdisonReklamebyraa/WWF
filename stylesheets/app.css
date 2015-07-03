@@ -9516,27 +9516,48 @@ header .fundBox {
   margin-bottom: 1.25rem;
 }
 
-/* line 263, ../scss/app.scss */
+/* line 264, ../scss/app.scss */
 #globes img {
   max-width: 3.5rem;
 }
 
-/* line 267, ../scss/app.scss */
+/* line 268, ../scss/app.scss */
 #BackgroundData, #EMix, #InvestmentDataTable {
   position: relative;
 }
 
 /* Table styles
 --------------------------------------------------------------------- */
-/* line 274, ../scss/app.scss */
+/* line 276, ../scss/app.scss */
 .accordion-navigation a:before {
   content: "+";
   margin-right: 0.2rem;
 }
 
-/* line 280, ../scss/app.scss */
+/* line 282, ../scss/app.scss */
 table {
   width: 100%;
+}
+
+/* line 287, ../scss/app.scss */
+.handsontable thead th {
+  vertical-align: top;
+  overflow: visible;
+  padding: 10px 4px;
+}
+/* line 291, ../scss/app.scss */
+.handsontable thead th .wide {
+  position: relative;
+  left: 50%;
+  width: 200px;
+  margin: -12px 0 -4px -108px;
+  background: #EEE;
+  padding: 8px;
+}
+
+/* line 302, ../scss/app.scss */
+.colHeader hr {
+  margin: 5px 0;
 }
 
 /* Animations
@@ -9565,78 +9586,78 @@ table {
   font-style: normal;
 }
 @media only screen and (min-width: 72rem) {
-  /* line 313, ../scss/app.scss */
+  /* line 337, ../scss/app.scss */
   .noLeftPadd {
     padding-left: 0;
   }
 
-  /* line 316, ../scss/app.scss */
+  /* line 340, ../scss/app.scss */
   .noRightPadd {
     padding-right: 0;
   }
 }
 @media only screen and (max-width: 72rem) {
-  /* line 323, ../scss/app.scss */
+  /* line 347, ../scss/app.scss */
   header h1, header h1 input[type="text"] {
     font-size: 2.75rem;
   }
 
-  /* line 326, ../scss/app.scss */
+  /* line 350, ../scss/app.scss */
   header .whitewrap {
     padding-bottom: 2rem;
   }
 
-  /* line 329, ../scss/app.scss */
+  /* line 353, ../scss/app.scss */
   header .upndownBox {
     top: 0.95rem;
     width: 1.8rem;
   }
 
-  /* line 333, ../scss/app.scss */
+  /* line 357, ../scss/app.scss */
   header .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2rem;
   }
 
-  /* line 337, ../scss/app.scss */
+  /* line 361, ../scss/app.scss */
   header .downBtn {
     border-width: 14px 8px 0 8px;
   }
 
-  /* line 344, ../scss/app.scss */
+  /* line 368, ../scss/app.scss */
   header .whitewrap {
     min-height: 0;
   }
 }
 @media only screen and (max-width: 64.063rem) {
-  /* line 349, ../scss/app.scss */
+  /* line 373, ../scss/app.scss */
   header .large-2 {
     width: 8rem;
   }
 
-  /* line 352, ../scss/app.scss */
+  /* line 376, ../scss/app.scss */
   header .large-2 .whitewrap {
     padding: 0 0.5rem;
   }
 
-  /* line 355, ../scss/app.scss */
+  /* line 379, ../scss/app.scss */
   h2 input[type="text"] {
     font-size: 3rem;
     width: 7rem;
   }
 
-  /* line 360, ../scss/app.scss */
+  /* line 384, ../scss/app.scss */
   .earthBox .upndownBox {
     top: 1.4rem;
     width: 1.8rem;
     left: -2.15rem;
   }
-  /* line 365, ../scss/app.scss */
+  /* line 389, ../scss/app.scss */
   .earthBox .upndownBox .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2.5rem;
   }
-  /* line 369, ../scss/app.scss */
+  /* line 393, ../scss/app.scss */
   .earthBox .upndownBox .downBtn {
     border-width: 14px 8px 0 8px;
   }

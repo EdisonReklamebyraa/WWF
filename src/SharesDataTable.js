@@ -17,6 +17,11 @@ function SharesDataTable() {
     Arbiter.subscribe("update", function(json) {
         self.loadUser(json.user);
     });
+
+    $(".accordion").click(_.debounce(function() {
+        if(self.table)
+          self.table.render();
+    }, 100));
 }
 
 SharesDataTable.prototype = _.create(
