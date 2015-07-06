@@ -167,7 +167,7 @@ Results.prototype = _.create(
                 installed     += shares[i].totalLifetimeOutput;
             }
 
-            $("#gigawatts").text(numeral(installed / 1000000).format('0.00'));
+            $("#gigawatts").text(numeral(installed).format('0.00a'));
             $("#coalPlants").text(numeral(installed / coalPlant).format('0a'));
             $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0a'));
         },
