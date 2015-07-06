@@ -183,7 +183,7 @@ Charts.prototype = _.create(
 
                 var options = {
                     chart: {
-                        title: 'Annual and cumulative investment.'
+                        title: 'Annual investment'
                     }
                 };
 
