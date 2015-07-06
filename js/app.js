@@ -799,6 +799,7 @@ Results.prototype = _.create(
         },
 
         updateImpact:  _.debounce(function(shares,investments) {
+
                            var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
@@ -810,6 +811,9 @@ Results.prototype = _.create(
                            }
 
                            Arbiter.publish("changed/impact",impact );
+
+
+
                            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
                            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
 
@@ -872,22 +876,18 @@ SharesDataTable.prototype = _.create(
         },
 
         getData: function() {
-            var out = {cols: [""], data: []};
 
-
+            var start =  this.userData["starting year"];
+            var out = {cols:_.map(new Array(200), function(val, i){return start + i }), data: [], format: []};
             var rows = [];
+            var format = [] ;
             var inc = 1;
-            var clump = 5;
+            var clump = 6;
 
 
             for(var i = 0; i < this.data.length; i++)
             {
                 var members = this.data[i].members;
-
-
-                out.cols.push(this.userData["starting year"] + i);
-
-
 
                 for(var j = 0; j < members.length; j++)
                 {
@@ -895,26 +895,45 @@ SharesDataTable.prototype = _.create(
                     var member = members[j];
                     var index = clump * j;
 
-
                     for(var k = 0; k <  clump; k++)
                     {
-                        if(!rows[index + k ])
-                          rows[index + k] = [];
+                        if(!rows[index + k ]){
+                            rows[index + k] = [];
+                            format[index + k]  = [] ;
+                        }
+
                     }
 
-                    rows[index][i] = "";
+
                     rows[index][i+1] = "";
-                    rows[index][0] = member.title;
-                    rows[index + 1][0] = "Investments";
-                    rows[index + 2][0] = "Annual Output";
-                    rows[index + 3][0] = "Lifetime Output";
+                    rows[index][0] = member.title.charAt(0).toUpperCase() + member.title.slice(1);
+                    rows[index + 1][0] = "Annual investment (USD)";
+                    rows[index + 2][0] = "Electricity output, annual (W)";
+                    rows[index + 3][0] = "Electricity output, lifetime (W)";
+                    rows[index + 4][0] = "Installed capacity (W)";
                     rows[index+1][i+1] = member.money;
                     rows[index+2][i+1] = member.annualOutput;
                     rows[index+3][i+1] = member.lifetimeOutput;
+                    rows[index+4][i+1] = member.installed;
+
+
+
+
+                    format[index][i] = { };
+                    format[index][i+1] = { };
+                    format[index][0] = { };
+                    format[index + 1][0] = { };
+                    format[index + 2][0] = { };
+                    format[index + 3][0] = { };
+                    format[index+1][i+1] = {type: "numeric", format: "$ 000,000"};
+                    format[index+2][i+1] = {type: "numeric", format: "000,000 a"};
+                    format[index+3][i+1] = {type: "numeric", format: "000,000 a"};
+                    format[index+4][i+1] = {type: "numeric", format: "000,000.00 a"};
                 }
 
 
             }
+            out.format = format;
             out.data = rows;
 
             return out;
@@ -935,11 +954,7 @@ SharesDataTable.prototype = _.create(
                     colHeaders: d.cols,
                     contextMenu: true,
                     cells: function(row,cell,prop) {
-
-                        if(cell > 0){
-                            this.type = "numeric";
-                            this.format = "000.000 a";
-                        }
+                        _.assign(this,d.format[row][cell] );
                     }
                 });
 

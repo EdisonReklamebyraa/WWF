@@ -78,7 +78,7 @@
             "wind",
             "geothermal",
             "solar pv",
-            "csp",
+            "Concentrated solar power",
             "marine"
         ],
         "FOSSILFUELS": "Fossil fuels",
@@ -215,7 +215,7 @@
             "employment_2": 16.4356257360935
         },
         {
-            "type": "CSP",
+            "type": "Concentrated solar power",
             "years": 20,
             "overnightCapitalCost": 5202,
             "minHours": 2200,
