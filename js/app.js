@@ -992,7 +992,7 @@ UIs.prototype = _.create(
 
         updateUI: function(json) {
             $("input[name=startYear]").val(this.user["starting year"] );
-            $("input[name=totalFund]").val(numeral(this.user["investment"] ).format('$ 0,0 a')  );
+            $("input[name=totalFund]").val(numeral(this.user["investment"] ).format('$ 0,000')  );
             $("input[name=endYear]").val(this.user["target year"] );
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
         },
@@ -1018,7 +1018,9 @@ UIs.prototype = _.create(
                 self.interaction();
             });
 
-            $("input").change(function() {
+            $("input").focusout(function() {
+                self.interaction();
+            }).change(function() {
                 self.interaction();
             }).focus(function() {
                 $(this).val(numeral().unformat($(this).val()));
