@@ -96,7 +96,7 @@ Charts.prototype = _.create(
 
                 var options = {
                     chart: {
-                        title: 'Annual investment'
+                        title: 'Annual and cumulative investment.'
                     }
                 };
 
@@ -111,7 +111,7 @@ Charts.prototype = _.create(
         investmentsChart: function() {
 
             if(this.investments && this.gLoaded && this.user){
-                var arrData = [ ['Year', 'Invested', 'Cumulative investment']];
+                var arrData = [ ['Year', 'Annual investment', 'Cumulative investment']];
                 var total = 0;
 
                 for(var i = 0; i < this.investments.length; i++)
