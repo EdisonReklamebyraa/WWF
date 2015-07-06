@@ -9226,35 +9226,35 @@ h3, .accordion .accordion-navigation a {
   font-size: 1.2rem;
 }
 
-/* line 64, ../scss/app.scss */
+/* line 65, ../scss/app.scss */
 .larger {
   font-size: 1.8rem;
 }
 
-/* line 67, ../scss/app.scss */
+/* line 68, ../scss/app.scss */
 header.row {
   margin-bottom: 1.875rem;
 }
 
-/* line 70, ../scss/app.scss */
+/* line 71, ../scss/app.scss */
 .sidebar p {
   font-size: 0.8rem;
   line-height: 1.2;
 }
 
-/* line 74, ../scss/app.scss */
+/* line 75, ../scss/app.scss */
 .icon {
   height: 1.3rem;
   margin: 0 0.2rem 0.3rem;
 }
 
-/* line 78, ../scss/app.scss */
+/* line 79, ../scss/app.scss */
 .modifier {
   color: #ff9600;
   border-bottom: 4px solid #ff9600;
 }
 
-/* line 83, ../scss/app.scss */
+/* line 84, ../scss/app.scss */
 a.modalLink {
   text-transform: lowercase;
   color: #ff9600;
@@ -9267,30 +9267,30 @@ a.modalLink {
   display: inline-block;
 }
 
-/* line 95, ../scss/app.scss */
+/* line 96, ../scss/app.scss */
 a.modalLink:hover {
   color: white;
   background: #ff9600;
 }
 
-/* line 100, ../scss/app.scss */
+/* line 101, ../scss/app.scss */
 .greened {
   color: #6ac82b;
 }
 
-/* line 101, ../scss/app.scss */
+/* line 102, ../scss/app.scss */
 .darkgreened {
   color: #007925;
 }
 
-/* line 102, ../scss/app.scss */
+/* line 103, ../scss/app.scss */
 .blued {
   color: #0e6e8d;
 }
 
 /* Main layout
 --------------------------------------------------------------------- */
-/* line 108, ../scss/app.scss */
+/* line 109, ../scss/app.scss */
 h1 input[type="text"], h2 input[type="text"] {
   display: inline;
   color: #FFA500;
@@ -9301,7 +9301,7 @@ h1 input[type="text"], h2 input[type="text"] {
   border-bottom: 4px solid #FFA500;
 }
 
-/* line 118, ../scss/app.scss */
+/* line 119, ../scss/app.scss */
 h1 input[type="text"] {
   font-size: 3.5rem;
   text-align: right;
@@ -9310,13 +9310,13 @@ h1 input[type="text"] {
   margin-bottom: 0;
 }
 
-/* line 125, ../scss/app.scss */
+/* line 126, ../scss/app.scss */
 h1 input[type="text"]:last-child {
   width: auto;
   max-width: 23rem;
 }
 
-/* line 130, ../scss/app.scss */
+/* line 131, ../scss/app.scss */
 h2 input[type="text"] {
   font-size: 4rem;
   padding: 0 0.5rem 0.4rem 0.5rem;
@@ -9325,7 +9325,7 @@ h2 input[type="text"] {
   background-color: rgba(255, 255, 255, 0.85);
 }
 
-/* line 138, ../scss/app.scss */
+/* line 139, ../scss/app.scss */
 .upndownBox {
   display: inline-block;
   width: 2rem;
@@ -9335,18 +9335,18 @@ h2 input[type="text"] {
   border-bottom: 4px solid #FFA500;
 }
 
-/* line 146, ../scss/app.scss */
+/* line 147, ../scss/app.scss */
 h2 .upndownBox {
   top: 1.65rem;
   left: -2.5rem;
 }
 
-/* line 150, ../scss/app.scss */
+/* line 151, ../scss/app.scss */
 .upndownBox a {
   position: absolute;
 }
 
-/* line 153, ../scss/app.scss */
+/* line 154, ../scss/app.scss */
 .upBtn {
   bottom: 2.5rem;
   left: 0.5rem;
@@ -9357,7 +9357,7 @@ h2 .upndownBox {
   border-color: transparent transparent #ff9500 transparent;
 }
 
-/* line 162, ../scss/app.scss */
+/* line 163, ../scss/app.scss */
 .downBtn {
   bottom: 0.75rem;
   left: 0.5rem;
@@ -9368,43 +9368,43 @@ h2 .upndownBox {
   border-color: #ff9500 transparent transparent transparent;
 }
 
-/* line 172, ../scss/app.scss */
+/* line 173, ../scss/app.scss */
 h2 .upndownBox .upBtn {
   bottom: 3rem;
 }
 
-/* line 176, ../scss/app.scss */
+/* line 177, ../scss/app.scss */
 h2 .upndownBox .downBtn {
   bottom: 1.25rem;
 }
 
-/* line 179, ../scss/app.scss */
+/* line 180, ../scss/app.scss */
 .sidebar {
   text-align: center;
   padding: 2rem 0;
 }
 
-/* line 183, ../scss/app.scss */
+/* line 184, ../scss/app.scss */
 .whitewrap {
   background: white;
 }
 
-/* line 187, ../scss/app.scss */
+/* line 188, ../scss/app.scss */
 .techBox, .earthBox {
   position: relative;
 }
 
-/* line 190, ../scss/app.scss */
+/* line 191, ../scss/app.scss */
 .techBox p, .earthBox h2 {
   position: absolute;
 }
 
-/* line 193, ../scss/app.scss */
+/* line 194, ../scss/app.scss */
 .earthBox {
   padding-top: 0.9375rem;
 }
 
-/* line 196, ../scss/app.scss */
+/* line 197, ../scss/app.scss */
 .earthBox h2 {
   top: 40%;
   left: 34%;
@@ -9414,64 +9414,64 @@ h2 .upndownBox .downBtn {
   z-index: 9;
 }
 
-/* line 204, ../scss/app.scss */
+/* line 205, ../scss/app.scss */
 .techBox p {
   line-height: 1;
 }
 
-/* line 207, ../scss/app.scss */
+/* line 208, ../scss/app.scss */
 .techBox p span {
   font-size: 1.5rem;
 }
 
-/* line 210, ../scss/app.scss */
+/* line 211, ../scss/app.scss */
 #hydro {
   top: 53%;
   left: 13%;
 }
 
-/* line 211, ../scss/app.scss */
+/* line 212, ../scss/app.scss */
 #bio {
   top: 54%;
   left: 26%;
 }
 
-/* line 212, ../scss/app.scss */
+/* line 213, ../scss/app.scss */
 #wind {
   top: 36%;
   left: 43%;
 }
 
-/* line 213, ../scss/app.scss */
+/* line 214, ../scss/app.scss */
 #geo {
   top: 33%;
   left: 56%;
 }
 
-/* line 214, ../scss/app.scss */
+/* line 215, ../scss/app.scss */
 #solarpv {
   top: 35%;
   left: 68%;
 }
 
-/* line 215, ../scss/app.scss */
+/* line 216, ../scss/app.scss */
 #solarp {
   top: 29%;
   left: 80%;
 }
 
-/* line 217, ../scss/app.scss */
+/* line 218, ../scss/app.scss */
 .papered {
   background: url("../img/paper.jpg");
   padding: 0;
 }
 
-/* line 222, ../scss/app.scss */
+/* line 223, ../scss/app.scss */
 header .whitewrap {
   min-height: 16.65rem;
 }
 
-/* line 226, ../scss/app.scss */
+/* line 227, ../scss/app.scss */
 header .fundBox {
   min-height: 0;
   padding: 1rem 1.9rem 0.8rem;
@@ -9479,7 +9479,7 @@ header .fundBox {
   border-bottom: 4px solid #808080;
 }
 
-/* line 233, ../scss/app.scss */
+/* line 234, ../scss/app.scss */
 .fundBox input[type="text"] {
   display: inline;
   width: auto;
@@ -9489,7 +9489,7 @@ header .fundBox {
   margin: 0 0 0 1rem;
 }
 
-/* line 242, ../scss/app.scss */
+/* line 243, ../scss/app.scss */
 .dollas img {
   position: absolute;
   width: 34%;
@@ -9497,7 +9497,7 @@ header .fundBox {
   left: 34%;
 }
 
-/* line 248, ../scss/app.scss */
+/* line 249, ../scss/app.scss */
 .dollas h3 {
   position: absolute;
   width: 18%;
@@ -9505,47 +9505,50 @@ header .fundBox {
   left: 45%;
 }
 
-/* line 255, ../scss/app.scss */
+/* line 256, ../scss/app.scss */
 .graphs {
   border: 1px solid lightgray;
   margin-bottom: 1.25rem;
 }
 
-/* line 260, ../scss/app.scss */
+/* line 261, ../scss/app.scss */
 #globes {
   margin-bottom: 1.25rem;
 }
 
-/* line 264, ../scss/app.scss */
+/* line 265, ../scss/app.scss */
 #globes img {
   max-width: 3.5rem;
 }
 
-/* line 268, ../scss/app.scss */
+/* line 269, ../scss/app.scss */
 #BackgroundData, #EMix, #InvestmentDataTable {
   position: relative;
 }
 
 /* Table styles
 --------------------------------------------------------------------- */
-/* line 276, ../scss/app.scss */
+/* line 277, ../scss/app.scss */
 .accordion-navigation a:before {
   content: "+";
   margin-right: 0.2rem;
 }
 
-/* line 282, ../scss/app.scss */
+/* line 283, ../scss/app.scss */
 table {
   width: 100%;
 }
 
-/* line 287, ../scss/app.scss */
+/* line 288, ../scss/app.scss */
 .handsontable thead th {
   vertical-align: top;
   overflow: visible;
   padding: 10px 4px;
+  max-width: 150px;
+  word-wrap: normal;
+  white-space: normal;
 }
-/* line 291, ../scss/app.scss */
+/* line 295, ../scss/app.scss */
 .handsontable thead th .wide {
   position: relative;
   left: 50%;
@@ -9555,7 +9558,7 @@ table {
   padding: 8px;
 }
 
-/* line 302, ../scss/app.scss */
+/* line 306, ../scss/app.scss */
 .colHeader hr {
   margin: 5px 0;
 }
@@ -9586,78 +9589,78 @@ table {
   font-style: normal;
 }
 @media only screen and (min-width: 72rem) {
-  /* line 337, ../scss/app.scss */
+  /* line 341, ../scss/app.scss */
   .noLeftPadd {
     padding-left: 0;
   }
 
-  /* line 340, ../scss/app.scss */
+  /* line 344, ../scss/app.scss */
   .noRightPadd {
     padding-right: 0;
   }
 }
 @media only screen and (max-width: 72rem) {
-  /* line 347, ../scss/app.scss */
+  /* line 351, ../scss/app.scss */
   header h1, header h1 input[type="text"] {
     font-size: 2.75rem;
   }
 
-  /* line 350, ../scss/app.scss */
+  /* line 354, ../scss/app.scss */
   header .whitewrap {
     padding-bottom: 2rem;
   }
 
-  /* line 353, ../scss/app.scss */
+  /* line 357, ../scss/app.scss */
   header .upndownBox {
     top: 0.95rem;
     width: 1.8rem;
   }
 
-  /* line 357, ../scss/app.scss */
+  /* line 361, ../scss/app.scss */
   header .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2rem;
   }
 
-  /* line 361, ../scss/app.scss */
+  /* line 365, ../scss/app.scss */
   header .downBtn {
     border-width: 14px 8px 0 8px;
   }
 
-  /* line 368, ../scss/app.scss */
+  /* line 372, ../scss/app.scss */
   header .whitewrap {
     min-height: 0;
   }
 }
 @media only screen and (max-width: 64.063rem) {
-  /* line 373, ../scss/app.scss */
+  /* line 377, ../scss/app.scss */
   header .large-2 {
     width: 8rem;
   }
 
-  /* line 376, ../scss/app.scss */
+  /* line 380, ../scss/app.scss */
   header .large-2 .whitewrap {
     padding: 0 0.5rem;
   }
 
-  /* line 379, ../scss/app.scss */
+  /* line 383, ../scss/app.scss */
   h2 input[type="text"] {
     font-size: 3rem;
     width: 7rem;
   }
 
-  /* line 384, ../scss/app.scss */
+  /* line 388, ../scss/app.scss */
   .earthBox .upndownBox {
     top: 1.4rem;
     width: 1.8rem;
     left: -2.15rem;
   }
-  /* line 389, ../scss/app.scss */
+  /* line 393, ../scss/app.scss */
   .earthBox .upndownBox .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2.5rem;
   }
-  /* line 393, ../scss/app.scss */
+  /* line 397, ../scss/app.scss */
   .earthBox .upndownBox .downBtn {
     border-width: 14px 8px 0 8px;
   }

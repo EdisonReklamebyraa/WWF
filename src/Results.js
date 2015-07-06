@@ -34,6 +34,15 @@ function Results(data) {
         self.updateResults();
     } );
 
+
+    Arbiter.subscribe("edit/annualGrowthRates",function(json) {
+        self.setAnnualGrowthRates(json);
+        self.updateProjections();
+        self.updateInvestments();
+        self.updateResults();
+    } );
+
+
 }
 
 Results.prototype = _.create(
@@ -43,7 +52,9 @@ Results.prototype = _.create(
         res: null,
         energyScenario: null,
         investments: null,
+        projections: null,
         shares:null,
+        annualGrowthRates: null,
         ffshares:null,
         summary: null,
 
@@ -66,20 +77,29 @@ Results.prototype = _.create(
             this.data.background = json;
         },
 
-        update: function() {
+        update: _.debounce(function() {
             this.res = new RES(this.data.background);
             this.energyScenario = new EnergyScenario(this.data.electricity_mix);
+            this.updateAnnualGrowthRates();
+            this.updateProjections();
             this.updateInvestments();
+        },100),
+
+        updateProjections : function() {
+            this.setProjections(this.res.projectIvestments( this.data.user["investment"], this.annualGrowthRates, this.data.user["target year"] - this.data.user["starting year"]));
         },
+
+        updateAnnualGrowthRates : function() {
+            this.setAnnualGrowthRates(this.res.getAnnualGrowthRates( this.data.user["annual growth rate"],
+                                                                           this.data.user["target year"] - this.data.user["starting year"]));
+        },
+
 
         updateInvestments : function() {
 
-            var endOfyear  = 1;
-            this.setInvestments( this.res.getInvestments(
-                this.data.user["investment"],
-                this.data.user["annual growth rate"],
-                this.data.user["target"],
-                this.data.user["target year"] - this.data.user["starting year"] + endOfyear));
+           var endOfyear = 1;
+
+            this.setInvestments( this.res.getInvestments( this.projections, this.data.user["target"]));
 
             this.setShares( this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
             this.setFFShares( this.energyScenario.getFossilFuelsShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
@@ -98,10 +118,18 @@ Results.prototype = _.create(
             this.updateInstalledCapacity(this.shares);
             this.updateImpact(this.shares,this.investments);
 
-
-
+            Arbiter.publish("update/growthRates", this.annualGrowthRates);
+            Arbiter.publish("update/projections", this.projections);
             Arbiter.publish("update/investments", this.investments);
             Arbiter.publish("update/shares", this.shares);
+        },
+
+        setAnnualGrowthRates: function(annualGrowthRates) {
+            this.annualGrowthRates = annualGrowthRates;
+        },
+
+        setProjections: function(projections){
+            this.projections = projections;
         },
 
         setInvestments: function(investments){

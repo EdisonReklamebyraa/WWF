@@ -75,17 +75,12 @@ SharesDataTable.prototype = _.create(
                           rows[index + k] = [];
                     }
 
-
                     rows[index][i] = "";
                     rows[index][i+1] = "";
-
                     rows[index][0] = member.title;
-
                     rows[index + 1][0] = "investments";
                     rows[index + 2][0] = "annual Output";
                     rows[index + 3][0] = "lifetime Output";
-
-
                     rows[index+1][i+1] = member.money;
                     rows[index+2][i+1] = member.annualOutput;
                     rows[index+3][i+1] = member.lifetimeOutput;

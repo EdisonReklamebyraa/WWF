@@ -11,6 +11,12 @@ function UIs(data) {
         self.update(json);
         self.updateUI(json);
     } );
+
+    Arbiter.subscribe("changed/user", function(json) {
+        self.update(json);
+        self.updateUI(json);
+    });
+
 }
 
 UIs.prototype = _.create(
@@ -63,8 +69,6 @@ UIs.prototype = _.create(
             this.user["target year"] = Math.max(2013,this.user["starting year"] + 1 ,numeral().unformat($("input[name=endYear]").val()));
             this.user["target"] = numeral().unformat($("input[name=investPercentage]").val());
             this.user["investment"] = numeral().unformat($("input[name=totalFund]").val());
-            this.updateUI();
-
             Arbiter.publish("changed/user",this.user);
         }
 

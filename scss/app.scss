@@ -61,6 +61,7 @@ h1 {
 h3, .accordion .accordion-navigation a {
 	font-size: 1.2rem;
 }
+
 .larger {
 	font-size: 1.8rem;
 }
@@ -288,6 +289,9 @@ table {
     vertical-align: top;
     overflow: visible;
     padding: 10px 4px;
+    max-width: 150px;
+    word-wrap: normal;
+    white-space: normal;
     .wide{
         position: relative;
         left: 50%;

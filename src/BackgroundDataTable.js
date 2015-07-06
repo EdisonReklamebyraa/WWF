@@ -44,8 +44,8 @@ BackgroundDataTable.prototype = _.create(
                                                "<div class='wide'>Full Load Hours (capacity)</div><hr> Max hours",
                                                "&nbsp;<hr>Average hours",
                                                "Emissions <hr> LCA life-cycle assessment<hr>grams CO2eq/kWh",
-                                               "Employment <hr>jobs / GWh",
-                                               "Employment <hr>jobs / 1 million $" ],
+                                               "Employment <hr>Jobs / GWh",
+                                               "Employment <hr>Jobs / 1 million $" ],
 
                                   stretchH: "all",
                                   contextMenu: true,

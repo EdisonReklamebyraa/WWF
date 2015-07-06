@@ -37,24 +37,41 @@ RES.prototype = _.create(
             return  annualGrowthRate*target/(Math.pow((1+annualGrowthRate),years)-1) ;
         },
 
-        getInvestments : function(investment, annualGrowthRate, targetPercent ,years)
+        getAnnualGrowthRates: function( annualGrowthRate,years){
+            var gr =  _.fill(Array(years), annualGrowthRate);
+            gr.unshift(0);
+            return gr;
+        },
+
+        getInvestments : function(projections, targetPercent)
         {
             var payments = []
-              , yearlyPercentage = targetPercent/years
+              , yearlyPercentage = targetPercent/(projections.length)
               , cumulativePercentage = 0
               , current = 0
               , payed = 0;
 
-            for(var i = 0; i < years; i++)
+            for(var i = 0; i < projections.length; i++)
             {
                 cumulativePercentage += yearlyPercentage;
-                investment =  this.growInvestment(investment,annualGrowthRate );
-                current = (investment*cumulativePercentage) ;
+                current = (projections[i]*cumulativePercentage) ;
                 payments.push(current - payed);
                 payed = current;
             }
 
             return payments;
+        },
+
+        projectIvestments: function(investment, annualGrowthRates,years){
+
+            var investmentProjection = [];
+
+            for(var i = 0; i < annualGrowthRates.length; i++)
+            {
+                investmentProjection.push(investment = this.growInvestment(investment,annualGrowthRates[i]));
+            }
+
+            return investmentProjection;
         },
 
 

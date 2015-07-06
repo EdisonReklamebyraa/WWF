@@ -45,8 +45,8 @@ BackgroundDataTable.prototype = _.create(
                                                "<div class='wide'>Full Load Hours (capacity)</div><hr> Max hours",
                                                "&nbsp;<hr>Average hours",
                                                "Emissions <hr> LCA life-cycle assessment<hr>grams CO2eq/kWh",
-                                               "Employment <hr>jobs / GWh",
-                                               "Employment <hr>jobs / 1 million $" ],
+                                               "Employment <hr>Jobs / GWh",
+                                               "Employment <hr>Jobs / 1 million $" ],
 
                                   stretchH: "all",
                                   contextMenu: true,
@@ -84,7 +84,7 @@ BackgroundDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":11,"lodash":12}],2:[function(require,module,exports){
+},{"arbiter-subpub":12,"lodash":13}],2:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -245,7 +245,7 @@ Charts.prototype = _.create(
 
     }
 );
-},{"arbiter-subpub":11,"lodash":12}],3:[function(require,module,exports){
+},{"arbiter-subpub":12,"lodash":13}],3:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -317,7 +317,211 @@ ElectricityDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":11,"lodash":12}],4:[function(require,module,exports){
+},{"arbiter-subpub":12,"lodash":13}],4:[function(require,module,exports){
+var Arbiter = require('arbiter-subpub');
+var _ = require("lodash");
+
+module.exports = GrowthRateDataTable;
+
+function GrowthRateDataTable() {
+
+    var self = this;
+
+
+    Arbiter.subscribe("update/growthRates",function(json) {
+
+        self.loadGrowthRates(json);
+    } );
+
+
+    Arbiter.subscribe("update/investments",function(json) {
+
+        self.loadData(json);
+    } );
+
+    Arbiter.subscribe("update/projections",function(json) {
+
+        self.loadProjections(json);
+    } );
+
+    Arbiter.subscribe("update/user", function(json) {
+
+        self.loadUser(json);
+    });
+
+    Arbiter.subscribe("update", function(json) {
+        self.loadUser(json.user);
+    });
+
+    $(".accordion").click(
+        _.debounce(function() {
+            if(self.table)
+              self.table.render();
+        }, 100));
+
+}
+
+GrowthRateDataTable.prototype = _.create(
+
+    GrowthRateDataTable.prototype,
+    {
+        data: null,
+        table: null,
+        userData: null,
+        projections: null,
+        annualGrowthRates: null,
+
+        loadData: function(json) {
+            this.data = json;
+            this.updateTable();
+        },
+
+        loadProjections: function(json) {
+
+            this.projections = json;
+            this.updateTable();
+        },
+
+        loadUser: function(json) {
+
+            this.userData = json;
+            this.updateTable();
+        },
+
+        loadGrowthRates: function(json) {
+            this.annualGrowthRates = json;
+            this.updateTable();
+        },
+
+        tableData: function() {
+            var total = 0;
+            var arrData = [];
+
+            for(var i = 0; i < this.data.length; i++)
+            {
+                total += this.data[i];
+                arrData.push([
+                    (this.userData["starting year"] + i) ,
+                    (i == 0)?this.userData["investment"]:"",
+                    this.annualGrowthRates[i],
+                    this.projections[i],
+                    (i == 0)?this.userData["target"]:"",
+                    this.data[i],
+                    total
+                    ]);
+            }
+
+            return arrData;
+        },
+
+        updateTable:  _.debounce(function() {
+                          var self = this;
+
+                          if(!this.data || !this.userData || !this.projections || !this.annualGrowthRates)
+                            return;
+
+
+                          if(!this.table){
+                              var container = document.getElementById('GrowthRateDataTable');
+                              var colHeaders = [
+                                  "Year",
+                                  "Latest size of the investor",
+                                  "Expected annual growth rate of the investor",
+                                  "Investor's size year by year (can be overriden if the forecast is provided by the investor)",
+                                  "Target investment in Res",
+                                  "Annual investment",
+                                  "Cumulative investments"];
+
+
+
+                              this.table = new Handsontable(container, {
+                                  data: self.tableData(),
+                                  stretchH: "all",
+                                  colHeaders: true,
+                                  colHeaders: colHeaders,
+                                  contextMenu: true,
+                                  cells: function(row,cell,prop) {
+                                      switch(cell) {
+                                          case 0:
+                                          this.type = "numeric";
+                                          break;
+                                          case 2:
+                                          case 4:
+                                          this.type = "numeric";
+                                          this.format = "aaa 0%"
+                                          break;
+                                          default:
+                                          this.type = "numeric";
+                                          this.format = "$ 0,000"
+                                      }
+
+
+                                  }
+                              });
+
+
+                              this.table.addHook('afterChange', function(changes, type) {
+                                  if(type == "edit"){
+                                      var data  = this.getData();
+                                      for(var i = 0; i < changes.length; i++)
+                                      {
+                                          switch(changes[i][1]) {
+                                              case 1:
+                                              self.updateInvestment(data);
+                                              break;
+                                              case 2:
+                                              self.updateGrowthrate(data);
+                                              break;
+                                              case 3:
+                                              self.updateSizeOfInvestment(changes[i], data);
+                                              break;
+                                              case 4:
+                                              self.updateTarget(data);
+                                              break;
+                                          }
+
+                                      }
+                                  }
+                              });
+
+                          }else{
+                              this.table.loadData(self.tableData());
+                          }
+                      }, 200),
+
+        updateInvestment: function(data) {
+            this.userData.investment = data[0][1];
+            Arbiter.publish("changed/user",this.userData);
+        },
+
+        updateGrowthrate: function(data) {
+            Arbiter.publish("edit/annualGrowthRates",this.getGrowthrate(data));
+
+        },
+
+        updateSizeOfInvestment: function(change, data) {
+            var gr = this.getGrowthrate(data);
+            var investment = (change[0] === 0)?this.userData.investment: data[change[0] -1][3];
+            gr[change[0]] = (data[change[0]][3] / investment ) - 1;
+            Arbiter.publish("edit/annualGrowthRates",gr);
+        },
+        
+        getGrowthrate: function(data) {
+            return _.map(data,function(row) {
+                return row[2]
+            });
+        },
+
+        updateTarget: function(data) {
+             this.userData.target = data[0][4];
+            Arbiter.publish("changed/user",this.userData);
+        }
+
+
+
+    });
+
+},{"arbiter-subpub":12,"lodash":13}],5:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -412,7 +616,7 @@ InvestmentDataTable.prototype = _.create(
                       }, 200)
     });
 
-},{"arbiter-subpub":11,"lodash":12}],5:[function(require,module,exports){
+},{"arbiter-subpub":12,"lodash":13}],6:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -449,6 +653,15 @@ function Results(data) {
         self.updateResults();
     } );
 
+
+    Arbiter.subscribe("edit/annualGrowthRates",function(json) {
+        self.setAnnualGrowthRates(json);
+        self.updateProjections();
+        self.updateInvestments();
+        self.updateResults();
+    } );
+
+
 }
 
 Results.prototype = _.create(
@@ -458,7 +671,9 @@ Results.prototype = _.create(
         res: null,
         energyScenario: null,
         investments: null,
+        projections: null,
         shares:null,
+        annualGrowthRates: null,
         ffshares:null,
         summary: null,
 
@@ -481,20 +696,29 @@ Results.prototype = _.create(
             this.data.background = json;
         },
 
-        update: function() {
+        update: _.debounce(function() {
             this.res = new RES(this.data.background);
             this.energyScenario = new EnergyScenario(this.data.electricity_mix);
+            this.updateAnnualGrowthRates();
+            this.updateProjections();
             this.updateInvestments();
+        },100),
+
+        updateProjections : function() {
+            this.setProjections(this.res.projectIvestments( this.data.user["investment"], this.annualGrowthRates, this.data.user["target year"] - this.data.user["starting year"]));
         },
+
+        updateAnnualGrowthRates : function() {
+            this.setAnnualGrowthRates(this.res.getAnnualGrowthRates( this.data.user["annual growth rate"],
+                                                                           this.data.user["target year"] - this.data.user["starting year"]));
+        },
+
 
         updateInvestments : function() {
 
-            var endOfyear  = 1;
-            this.setInvestments( this.res.getInvestments(
-                this.data.user["investment"],
-                this.data.user["annual growth rate"],
-                this.data.user["target"],
-                this.data.user["target year"] - this.data.user["starting year"] + endOfyear));
+           var endOfyear = 1;
+
+            this.setInvestments( this.res.getInvestments( this.projections, this.data.user["target"]));
 
             this.setShares( this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
             this.setFFShares( this.energyScenario.getFossilFuelsShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
@@ -513,10 +737,18 @@ Results.prototype = _.create(
             this.updateInstalledCapacity(this.shares);
             this.updateImpact(this.shares,this.investments);
 
-
-
+            Arbiter.publish("update/growthRates", this.annualGrowthRates);
+            Arbiter.publish("update/projections", this.projections);
             Arbiter.publish("update/investments", this.investments);
             Arbiter.publish("update/shares", this.shares);
+        },
+
+        setAnnualGrowthRates: function(annualGrowthRates) {
+            this.annualGrowthRates = annualGrowthRates;
+        },
+
+        setProjections: function(projections){
+            this.projections = projections;
         },
 
         setInvestments: function(investments){
@@ -594,7 +826,7 @@ Results.prototype = _.create(
 
                        }, 150)
     });
-},{"./energyScenario.js":9,"./res.js":13,"arbiter-subpub":11,"lodash":12}],6:[function(require,module,exports){
+},{"./energyScenario.js":10,"./res.js":14,"arbiter-subpub":12,"lodash":13}],7:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -672,17 +904,12 @@ SharesDataTable.prototype = _.create(
                           rows[index + k] = [];
                     }
 
-
                     rows[index][i] = "";
                     rows[index][i+1] = "";
-
                     rows[index][0] = member.title;
-
                     rows[index + 1][0] = "investments";
                     rows[index + 2][0] = "annual Output";
                     rows[index + 3][0] = "lifetime Output";
-
-
                     rows[index+1][i+1] = member.money;
                     rows[index+2][i+1] = member.annualOutput;
                     rows[index+3][i+1] = member.lifetimeOutput;
@@ -732,7 +959,7 @@ SharesDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":11,"lodash":12}],7:[function(require,module,exports){
+},{"arbiter-subpub":12,"lodash":13}],8:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -746,6 +973,12 @@ function UIs(data) {
         self.update(json);
         self.updateUI(json);
     } );
+
+    Arbiter.subscribe("changed/user", function(json) {
+        self.update(json);
+        self.updateUI(json);
+    });
+
 }
 
 UIs.prototype = _.create(
@@ -798,15 +1031,13 @@ UIs.prototype = _.create(
             this.user["target year"] = Math.max(2013,this.user["starting year"] + 1 ,numeral().unformat($("input[name=endYear]").val()));
             this.user["target"] = numeral().unformat($("input[name=investPercentage]").val());
             this.user["investment"] = numeral().unformat($("input[name=totalFund]").val());
-            this.updateUI();
-
             Arbiter.publish("changed/user",this.user);
         }
 
 
     });
 
-},{"arbiter-subpub":11,"lodash":12}],8:[function(require,module,exports){
+},{"arbiter-subpub":12,"lodash":13}],9:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -842,7 +1073,7 @@ Data.prototype = _.create(
         }
     });
 
-},{"./energyScenario.js":9,"./res.js":13,"arbiter-subpub":11,"lodash":12}],9:[function(require,module,exports){
+},{"./energyScenario.js":10,"./res.js":14,"arbiter-subpub":12,"lodash":13}],10:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -1023,12 +1254,12 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
 }
                                    );
 
-},{"lodash":12}],10:[function(require,module,exports){
+},{"lodash":13}],11:[function(require,module,exports){
 var WWF = require('./wwf.js');
 var wwf = new WWF();
 
 $(document).foundation();
-},{"./wwf.js":14}],11:[function(require,module,exports){
+},{"./wwf.js":15}],12:[function(require,module,exports){
 /*
 Arbiter.js
   by Matt Kruse
@@ -1187,7 +1418,7 @@ var Arbiter = (function () {
 
 module.exports = Arbiter;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -13357,7 +13588,7 @@ module.exports = Arbiter;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -13397,24 +13628,41 @@ RES.prototype = _.create(
             return  annualGrowthRate*target/(Math.pow((1+annualGrowthRate),years)-1) ;
         },
 
-        getInvestments : function(investment, annualGrowthRate, targetPercent ,years)
+        getAnnualGrowthRates: function( annualGrowthRate,years){
+            var gr =  _.fill(Array(years), annualGrowthRate);
+            gr.unshift(0);
+            return gr;
+        },
+
+        getInvestments : function(projections, targetPercent)
         {
             var payments = []
-              , yearlyPercentage = targetPercent/years
+              , yearlyPercentage = targetPercent/(projections.length)
               , cumulativePercentage = 0
               , current = 0
               , payed = 0;
 
-            for(var i = 0; i < years; i++)
+            for(var i = 0; i < projections.length; i++)
             {
                 cumulativePercentage += yearlyPercentage;
-                investment =  this.growInvestment(investment,annualGrowthRate );
-                current = (investment*cumulativePercentage) ;
+                current = (projections[i]*cumulativePercentage) ;
                 payments.push(current - payed);
                 payed = current;
             }
 
             return payments;
+        },
+
+        projectIvestments: function(investment, annualGrowthRates,years){
+
+            var investmentProjection = [];
+
+            for(var i = 0; i < annualGrowthRates.length; i++)
+            {
+                investmentProjection.push(investment = this.growInvestment(investment,annualGrowthRates[i]));
+            }
+
+            return investmentProjection;
         },
 
 
@@ -13690,7 +13938,7 @@ function zeroArray(w){
     return Array.apply(null, new Array(w)).map(Number.prototype.valueOf,0);
 }
 
-},{"lodash":12}],14:[function(require,module,exports){
+},{"lodash":13}],15:[function(require,module,exports){
 var _ = require('lodash');
 
 var EnergyScenario = require('./energyScenario.js');
@@ -13703,6 +13951,9 @@ var ElectricityDataTable = require("./ElectricityDataTable.js");
 var BackgroundDataTable = require("./BackgroundDataTable.js");
 var InvestmentDataTable = require("./InvestmentDataTable.js");
 var SharesDataTable = require("./SharesDataTable.js");
+var GrowthRateDataTable = require("./GrowthRateDataTable.js");
+
+
 var Charts = require("./Charts.js");
 
 
@@ -13722,8 +13973,9 @@ function WWF() {
     this.data = new Data();
     this.electricityDataTable = new ElectricityDataTable();
     this.backgroundDataTable = new BackgroundDataTable();
-    this.investmentDataTable = new InvestmentDataTable();
+//    this.investmentDataTable = new InvestmentDataTable();
     this.sharesDataTable = new SharesDataTable();
+    this.growthRateDataTable = new GrowthRateDataTable();
     this.charts = new Charts();
 }
 
@@ -13733,4 +13985,4 @@ WWF.prototype = _.create(WWF.prototype, {
     ui: null
 });
 
-},{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./InvestmentDataTable.js":4,"./Results.js":5,"./SharesDataTable.js":6,"./UI.js":7,"./data.js":8,"./energyScenario.js":9,"./res.js":13,"lodash":12}]},{},[10]);
+},{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./GrowthRateDataTable.js":4,"./InvestmentDataTable.js":5,"./Results.js":6,"./SharesDataTable.js":7,"./UI.js":8,"./data.js":9,"./energyScenario.js":10,"./res.js":14,"lodash":13}]},{},[11]);
