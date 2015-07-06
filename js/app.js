@@ -795,7 +795,7 @@ Results.prototype = _.create(
             var investment = _.reduce(investments,
                 function(previousValue, currentValue) {return previousValue + currentValue;})
 
-            $("#budget1").text(numeral(investment).format('($ 0.00 a)') );
+            $("#budget1").text(numeral(investment).format('($ 0,00)') );
         },
 
         updateImpact:  _.debounce(function(shares,investments) {
@@ -905,9 +905,9 @@ SharesDataTable.prototype = _.create(
                     rows[index][i] = "";
                     rows[index][i+1] = "";
                     rows[index][0] = member.title;
-                    rows[index + 1][0] = "investments";
-                    rows[index + 2][0] = "annual Output";
-                    rows[index + 3][0] = "lifetime Output";
+                    rows[index + 1][0] = "Investments";
+                    rows[index + 2][0] = "Annual Output";
+                    rows[index + 3][0] = "Lifetime Output";
                     rows[index+1][i+1] = member.money;
                     rows[index+2][i+1] = member.annualOutput;
                     rows[index+3][i+1] = member.lifetimeOutput;

@@ -178,7 +178,7 @@ Results.prototype = _.create(
             var investment = _.reduce(investments,
                 function(previousValue, currentValue) {return previousValue + currentValue;})
 
-            $("#budget1").text(numeral(investment).format('($ 0.00 a)') );
+            $("#budget1").text(numeral(investment).format('($ 0,00)') );
         },
 
         updateImpact:  _.debounce(function(shares,investments) {
