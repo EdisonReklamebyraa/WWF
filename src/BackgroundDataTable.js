@@ -37,15 +37,15 @@ BackgroundDataTable.prototype = _.create(
                               this.table = new Handsontable(container, {
                                   data: this.data,
                                   rowHeaders: false,
-                                  colHeaders: ["IPCC 2014<hr>Res Technologies",
-                                               "Lifetime <hr>years",
-                                               "Overnight capital cost <hr>USD 2011 / kW",
+                                  colHeaders: ["<strong>Type of technology</strong>",
+                                               "<strong>Lifetime</strong> <hr>years",
+                                               "<strong>Overnight capital cost</strong> <hr>USD 2011 / kW",
                                                "&nbsp;<hr>Min hours",
-                                               "<div class='wide'>Full Load Hours (capacity)</div><hr> Max hours",
+                                               "<div class='wide'><strong>Full Load Hours (capacity)</strong></div><hr> Max hours",
                                                "&nbsp;<hr>Average hours",
-                                               "Emissions <hr> LCA life-cycle assessment<hr>grams CO2eq/kWh",
-                                               "Employment <hr>Jobs / GWh",
-                                               "Employment <hr>Jobs / 1 million $" ],
+                                               "<strong>Emissions</strong> <hr>(LCA life-cycle assessment)<hr>grams CO2eq/kWh",
+                                               "<strong>Employment</strong> <hr>Jobs / GWh",
+                                               "<strong>Employment</strong> <hr>Jobs / 1 million $" ],
 
                                   stretchH: "all",
                                   contextMenu: true,
@@ -58,15 +58,13 @@ BackgroundDataTable.prototype = _.create(
                                           case 3:
                                           case 4:
                                           case 5:
+                                          case 6:
                                           this.type = "numeric";
                                           break;
-
-
                                           default:
                                           this.format = "0,00.0' a";
                                           this.type = "numeric";
                                       }
-
                                   }
                               });
 
