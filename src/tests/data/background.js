@@ -2,8 +2,6 @@
 
 
 module.exports =  [
-    {"type": "year"},
-    {"type": "total"},
     {
         "type": "Coal",
         "years": 40,

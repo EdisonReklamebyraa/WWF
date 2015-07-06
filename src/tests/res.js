@@ -35,22 +35,27 @@ test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
     t.isEquivalent(res.yearlyInvestmentWithInterest(0.02, 5, 55204.040160000004),
                    10607.91970521611,
                    "Should calculate the annual target ammount");
+    var annualGrowthRates;
 
+   t.isEquivalent(annualGrowthRates = res.getAnnualGrowthRates( 0.05, 5 ),
+                   [0.05, 0.05,0.05,0.05,0.05,0.05],
+                   "Should calculate getAnnualGrowthRates");
 
+    var projectIvestments;
+   t.isEquivalent( projectIvestments = res.projectIvestments(1000000, annualGrowthRates ),
+                   [ 1050000, 1102500, 1157625, 1215506.25, 1276281.5625, 1340095.640625 ],
+                   "Should calculate project investments");
 
-    t.isEquivalent(res.getInvestments(1000000, 0.02, 0.05 ,5),
-                   [10200, 10608, 11028.239999999998, 11461.0464, 11906.753760000007],
+    var investments;
+    t.isEquivalent(investments = res.getInvestments(projectIvestments, 0.05  ),
+                   [8750, 9625, 10565.625, 11576.25, 12661.5234375, 13826.383593749997  ],
                    "Should calculate Annual investment in Res");
 
 
-    t.isEquivalent(res.getInvestments(1000000, 0.02, 0.05 ,5),
-                   [10200, 10608, 11028.239999999998, 11461.0464, 11906.753760000007],
-                   "Should calculate Annual investment in Res");
 
-    t.isEquivalent(res.getInvestments(1000000, 0.02, 0.05 ,5).reduce(
-        function(previousValue, currentValue) {return previousValue + currentValue;}) ,
-                   (res.growInvestmentInYears(1000000, 0.02, 5) * 0.05 ) ,
-                   "Should calculate Annual investment in Res");
+    t.isEquivalent(Math.round(_.sum(investments) / _.last(projectIvestments)*100)  , 5,
+                   "Should be the target");
+
 
 
     t.end();
@@ -63,19 +68,23 @@ test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
 
 test('Test POWER GENERATION', function(t) {
 
-    var share =  energyScenario.getRenewableEnergyShare(2016);
-    var investments = res.getInvestments(1000000, 0.02, 0.05 ,5);
-    var shares = energyScenario.getRenewableEnergyShares(2016, 2021);
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
+    var projectIvestments  = res.projectIvestments(10000, annualGrowthRates );
 
-    t.isEquivalent(_.map(res.addAllocatedMoney(share, investments[0]).members, function(a) {
+    var share =  energyScenario.getRenewableEnergyShare(2016);
+    var investments = res.getInvestments(projectIvestments, 0.05);
+    var shares = energyScenario.getRenewableEnergyShares(2016, 2020);
+
+
+    t.isEquivalent(_.map(res.addAllocatedMoney(share, 10000).members, function(a) {
                        return a.money;
-                   }), [2879.533841586141, 569.4094549552538, 3606.465608456669, 75.375814639928, 2946.578248306094, 116.73880454850924, 5.898227507405625],
+                   }), [ 20.568098868472436, 4.067210392537526, 25.76046863183335, 0.5383986759994857, 21.04698748790067, 0.8338486039179231, 0.042130196481468755 ],
                    "Should allocate the money");
 
     t.isEquivalent(_.map(res.addCapacityInstalled(share).members, function(a) {
                        return a.installed;
                    }),
-                   [1.4858275756378436, 0.16581521693513504, 1.0879232604695834, 0.014779571498025097, 0.902750688819269, 0.022441138898214003, 0.001070847405120847 ]
+                   [ 0.16581521693513504, 1.0879232604695834, 0.014779571498025097, 0.902750688819269, 0.022441138898214003, 0.001070847405120847 ]
                  ,"Annual new installed capacity kW, (Money allocated (USD) / overnight capital cost)");
 
     t.isEquivalent(_.map(res.addAnnualOutput(share).members, function(a) {
@@ -91,7 +100,6 @@ test('Test POWER GENERATION', function(t) {
                    }),
                    [360313.1870921771, 32823.12219230998, 80234.34045963179, 2926.355156608969, 40623.780996867106, 1279.1449171981983, 78.17186057382183 ]
                  ,"Annual output (kWh) * lifetime (years).");
-
 
     t.isEquivalent( _.map(res.getLifeTimeSpread(shares,investments ), function(a) {
                         return _.reduce(a,function(total, n) { return total + n;  });
@@ -118,7 +126,15 @@ test('Test POWER GENERATION', function(t) {
 test('Test EMISSIONS CALCULATIONS', function(t) {
     var share =  energyScenario.getRenewableEnergyShare(2016);
     var ffShare = energyScenario.getFossilFuelsShare(2016);
-    var investments = res.getInvestments(1000000, 0.02, 0.05 ,5);
+
+
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
+    var projectIvestments  = res.projectIvestments(1000000, annualGrowthRates );
+
+    var investments = res.getInvestments(projectIvestments, 0.05);
+    var shares = energyScenario.getRenewableEnergyShares(2016, 2021);
+
+
     res.addInvestmentLifetimeOutput(share,investments[0]);
 
     t.isEquivalent(_.map(res.addLifetimeEmissions(share).members, function(a) {
@@ -154,7 +170,12 @@ test('Test JOBS CREATION - Method 1: based on GWh produced', function(t) {
 
     var share =  energyScenario.getRenewableEnergyShare(2016);
     var ffShare = energyScenario.getFossilFuelsShare(2016);
-    var investments = res.getInvestments(1000000, 0.02, 0.05 ,5);
+
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
+    var projectIvestments  = res.projectIvestments(1000000, annualGrowthRates );
+
+    var investments = res.getInvestments(projectIvestments, 0.05);
+    var shares = energyScenario.getRenewableEnergyShares(2016, 2021);
     res.addInvestmentLifetimeOutput(share,investments[0]);
 
 
@@ -186,7 +207,11 @@ test('Test JOBS CREATION - Method 2: based on USD invested', function(t) {
 
    var share =  energyScenario.getRenewableEnergyShare(2016);
     var ffShare = energyScenario.getFossilFuelsShare(2016);
-    var investments = res.getInvestments(1000000, 0.02, 0.05 ,5);
+
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
+    var projectIvestments  = res.projectIvestments(1000000, annualGrowthRates );
+
+    var investments = res.getInvestments(projectIvestments, 0.05);
     res.addInvestmentLifetimeOutput(share,investments[0]);
 
 

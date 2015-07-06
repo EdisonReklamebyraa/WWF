@@ -47,7 +47,9 @@ SharesDataTable.prototype = _.create(
         getData: function() {
 
             var start =  this.userData["starting year"];
-            var out = {cols:_.map(new Array(200), function(val, i){return start + i }), data: [], format: []};
+            var cols = _.map(new Array(200), function(val, i){return start + i });
+            cols.unshift("");
+            var out = {cols:cols, data: [], format: []};
             var rows = [];
             var format = [] ;
             var inc = 1;

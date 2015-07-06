@@ -182,7 +182,7 @@ Results.prototype = _.create(
         },
 
         updateImpact:  _.debounce(function(shares,investments) {
-
+                           var million = 1000000;
                            var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
@@ -193,10 +193,10 @@ Results.prototype = _.create(
                                c02g     += shares[i].c02Saved;
                            }
 
+
                            Arbiter.publish("changed/impact",impact );
 
-
-
+                           $("#EmissionsAvoided").text(numeral(c02g/million).format('0,0'));
                            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
                            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
 

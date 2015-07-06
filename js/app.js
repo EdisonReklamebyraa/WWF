@@ -799,7 +799,7 @@ Results.prototype = _.create(
         },
 
         updateImpact:  _.debounce(function(shares,investments) {
-
+                           var million = 1000000;
                            var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
@@ -810,10 +810,10 @@ Results.prototype = _.create(
                                c02g     += shares[i].c02Saved;
                            }
 
+
                            Arbiter.publish("changed/impact",impact );
 
-
-
+                           $("#EmissionsAvoided").text(numeral(c02g/million).format('0,0'));
                            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
                            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
 
@@ -878,7 +878,9 @@ SharesDataTable.prototype = _.create(
         getData: function() {
 
             var start =  this.userData["starting year"];
-            var out = {cols:_.map(new Array(200), function(val, i){return start + i }), data: [], format: []};
+            var cols = _.map(new Array(200), function(val, i){return start + i });
+            cols.unshift("");
+            var out = {cols:cols, data: [], format: []};
             var rows = [];
             var format = [] ;
             var inc = 1;
@@ -1124,7 +1126,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
           , prevYear = this.getYear(year - 1)
           , results = [];
 
-        for(var i = 1; i < currYear.length; i++)
+        for(var i = 0; i < currYear.length; i++)
         {
             results.push(currYear[i] - prevYear[i]);
         }
@@ -1134,11 +1136,12 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
 
     getShare : function(year) {
         var yearData = this.getYear(year)
-          , results = [];
+          , results = []
+          , total = _.sum(yearData);
 
-        for(var i = 2; i < yearData.length; i++)
+        for(var i = 0; i < yearData.length; i++)
         {
-            results.push(yearData[i]/ yearData[1] );
+            results.push(yearData[i]/ total );
         }
 
         return results;
@@ -1148,7 +1151,6 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
         var yearData = this.getYear(year),
             prevYear = this.getYear(year - 1)
           , results = {};
-
 
         for(var i = 0; i < this.electricityMix.groups.length; i++)
         {
@@ -1259,7 +1261,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
           , yearsDifference =  _.first(nextYear) - _.first(prevYear)
           , yearsFromPrev = year - _.first(prevYear);
 
-        for(var i = 1; i < prevYear.length; i++)
+        for(var i = 0; i < prevYear.length; i++)
         {
             projectedValues[i] = ((nextYear[i] - prevYear[i]) / yearsDifference) * yearsFromPrev + prevYear[i];
         }
@@ -13644,8 +13646,7 @@ RES.prototype = _.create(
         },
 
         getAnnualGrowthRates: function( annualGrowthRate,years){
-            var gr =  _.fill(Array(years), annualGrowthRate);
-            gr.unshift(0);
+            var gr =  _.fill(Array(years + 1), annualGrowthRate);
             return gr;
         },
 
@@ -13668,7 +13669,7 @@ RES.prototype = _.create(
             return payments;
         },
 
-        projectIvestments: function(investment, annualGrowthRates,years){
+        projectIvestments: function(investment, annualGrowthRates){
 
             var investmentProjection = [];
 
@@ -13755,15 +13756,16 @@ RES.prototype = _.create(
             var lifeTime = this.getInvestmentLifetime() ;
             var totalYearsReturns = lifeTime + investments.length - 1  ;
 
-            var matrix = makeMatrix(_.first(shares).members.length, totalYearsReturns)
+            var matrix = makeMatrix(_.first(shares).members.length, totalYearsReturns);
 
-            for(var i = 0; i < investments.length; i++)
+            for(var i = 0; i < Math.min(investments.length, shares.length); i++)
             {
                 var share = shares[i];
                 this.addInvestmentLifetimeOutput(share, investments[i]);
 
                 for(var j = 0; j < share.members.length; j++)
                 {
+
                     var data = this.backgroundData[ share.members[j].id];
 
                     for(var k = 0; k < (data.years); k++)

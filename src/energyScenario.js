@@ -33,7 +33,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
           , prevYear = this.getYear(year - 1)
           , results = [];
 
-        for(var i = 1; i < currYear.length; i++)
+        for(var i = 0; i < currYear.length; i++)
         {
             results.push(currYear[i] - prevYear[i]);
         }
@@ -43,11 +43,12 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
 
     getShare : function(year) {
         var yearData = this.getYear(year)
-          , results = [];
+          , results = []
+          , total = _.sum(yearData);
 
-        for(var i = 2; i < yearData.length; i++)
+        for(var i = 0; i < yearData.length; i++)
         {
-            results.push(yearData[i]/ yearData[1] );
+            results.push(yearData[i]/ total );
         }
 
         return results;
@@ -57,7 +58,6 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
         var yearData = this.getYear(year),
             prevYear = this.getYear(year - 1)
           , results = {};
-
 
         for(var i = 0; i < this.electricityMix.groups.length; i++)
         {
@@ -168,7 +168,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
           , yearsDifference =  _.first(nextYear) - _.first(prevYear)
           , yearsFromPrev = year - _.first(prevYear);
 
-        for(var i = 1; i < prevYear.length; i++)
+        for(var i = 0; i < prevYear.length; i++)
         {
             projectedValues[i] = ((nextYear[i] - prevYear[i]) / yearsDifference) * yearsFromPrev + prevYear[i];
         }
