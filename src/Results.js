@@ -200,7 +200,7 @@ Results.prototype = _.create(
                            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
                            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
 
-                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0a')+'H');
+                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0.000a')+'H');
                            $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
                            $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
                            $("#twhImpact .start").text(this.data.user["starting year"]);
