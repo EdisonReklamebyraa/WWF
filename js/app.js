@@ -13647,7 +13647,8 @@ RES.prototype = _.create(
         },
 
         getAnnualGrowthRates: function( annualGrowthRate,years){
-            var gr =  _.fill(Array(years + 1), annualGrowthRate);
+            var gr =  _.fill(Array(years), annualGrowthRate);
+            gr.unshift(0);
             return gr;
         },
 
