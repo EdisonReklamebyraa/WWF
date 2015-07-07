@@ -1038,7 +1038,8 @@ UIs.prototype = _.create(
             }).change(function() {
                 self.interaction();
             }).focus(function() {
-                $(this).val(numeral().unformat($(this).val()));
+                if(!$(this).hasClass("string"))
+                  $(this).val(numeral().unformat($(this).val()));
             });
         },
 
@@ -13700,6 +13701,7 @@ RES.prototype = _.create(
             var totalInstalled = 0;
             for(var i = 0; i < share.members.length; i++)
             {
+
                 var data = this.backgroundData[ share.members[i].id];
                 share.members[i].installed =   share.members[i].money / data.overnightCapitalCost;
 

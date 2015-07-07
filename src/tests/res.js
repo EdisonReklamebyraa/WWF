@@ -69,14 +69,14 @@ test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
 test('Test POWER GENERATION', function(t) {
 
     var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
-    var projectIvestments  = res.projectIvestments(10000, annualGrowthRates );
+    var projectIvestments  = res.projectIvestments(100000, annualGrowthRates );
 
     var share =  energyScenario.getRenewableEnergyShare(2016);
     var investments = res.getInvestments(projectIvestments, 0.05);
     var shares = energyScenario.getRenewableEnergyShares(2016, 2020);
 
 
-    t.isEquivalent(_.map(res.addAllocatedMoney(share, 10000).members, function(a) {
+    t.isEquivalent(_.map(res.addAllocatedMoney(share,investments[0]).members, function(a) {
                        return a.money;
                    }), [ 20.568098868472436, 4.067210392537526, 25.76046863183335, 0.5383986759994857, 21.04698748790067, 0.8338486039179231, 0.042130196481468755 ],
                    "Should allocate the money");

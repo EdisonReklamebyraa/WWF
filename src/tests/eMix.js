@@ -31,7 +31,7 @@ test('Test ENERGY SCENARIO per year', function(t) {
 
     t.isEquivalent(energyScenario.getAnnualVariationInCapacity(2013),
                    [24282800, -10312712.5, 45425787.5, 7937875, 33417512.5, 6608100, 41853687.5, 874750, 34195575, 1354775, 68450],
-                   "Should get annual Variation in capacity in capacity ")
+                   "Should get annual Variation in capacity")
 
 
     t.isEquivalent(energyScenario.getShare(2013),
@@ -39,7 +39,62 @@ test('Test ENERGY SCENARIO per year', function(t) {
                    "Should get the calcuated annual variation in capacity ");
 
 
-    t.isEquivalent(energyScenario.getRelativeShare(2013),{ "Fossil fuels": { "title": "Fossil fuels", "total": 3768327675, "members": [ { "id": 0, "percent": 0.4088297377553576, "relativeShare": 0.4853170047108496, "needed": 24282800, "title": "coal" }, { "id": 1, "percent": -0.1736267459651028, "relativeShare": 0.11455534781751696, "needed": -10312712.5, "title": "oil" }, { "id": 2, "percent": 0.7647970082097452, "relativeShare": 0.40012764747163343, "needed": 45425787.5, "title": "gas" } ] }, "Nuclear": { "title": "Nuclear", "total": 402177875, "members": [ { "id": 3, "percent": 1, "relativeShare": 1, "needed": 7937875, "title": "nuclear" } ] }, "Renewable energy": { "title": "Renewable energy", "total": 1698692150, "members": [ { "id": 4, "percent": 0.2823072393711903, "relativeShare": 0.6581614641004846, "needed": 33417512.5, "title": "hydro" }, { "id": 5, "percent": 0.05582445636816213, "relativeShare": 0.06357485080507377, "needed": 6608100, "title": "bioenergy" }, { "id": 6, "percent": 0.3535750596526146, "relativeShare": 0.1906546089001471, "needed": 41853687.5, "title": "wind" }, { "id": 7, "percent": 0.0073897857490125484, "relativeShare": 0.007151001433661773, "needed": 874750, "title": "geothermal" }, { "id": 8, "percent": 0.28888022042216605, "relativeShare": 0.07776033756322474, "needed": 34195575, "title": "solar pv" }, { "id": 9, "percent": 0.01144498083808914, "relativeShare": 0.002342140098781289, "needed": 1354775, "title": "csp (concentrated solar power.)" }, { "id": 10, "percent": 0.0005782575987652574, "relativeShare": 0.00035559709862672883, "needed": 68450, "title": "marine" } ] } },
+    t.isEquivalent(energyScenario.getRelativeShare(2016)["Renewable energy"],
+                   {
+                       "title": "Renewable energy",
+                       "total": 2053810700,
+                       "members": [
+                           {
+                               "id": 4,
+                               "percent": 0.28230723937119,
+                               "relativeShare": 0.5931735821612,
+                               "needed": 33417512.5,
+                               "title": "hydro"
+                           },
+                           {
+                               "id": 5,
+                               "percent": 0.055824456368162,
+                               "relativeShare": 0.062234752209636,
+                               "needed": 6608100,
+                               "title": "bioenergy"
+                           },
+                           {
+                               "id": 6,
+                               "percent": 0.35357505965261,
+                               "relativeShare": 0.21882471933757,
+                               "needed": 41853687.5,
+                               "title": "wind"
+                           },
+                           {
+                               "id": 7,
+                               "percent": 0.0073897857490125,
+                               "relativeShare": 0.0071922889485384,
+                               "needed": 874750,
+                               "title": "geothermal"
+                           },
+                           {
+                               "id": 8,
+                               "percent": 0.28888022042217,
+                               "relativeShare": 0.1142644743257,
+                               "needed": 34195575,
+                               "title": "solar pv"
+                           },
+                           {
+                               "id": 9,
+                               "percent": 0.011444980838089,
+                               "relativeShare": 0.0039160863267486,
+                               "needed": 1354775,
+                               "title": "csp (concentrated solar power.)"
+                           },
+                           {
+                               "id": 10,
+                               "percent": 0.00057825759876526,
+                               "relativeShare": 0.00039409669060542,
+                               "needed": 68450,
+                               "title": "marine"
+                           }
+                       ]
+                   },
                    "Table 2b - Relative share that each technology has WITHIN its category (fossil, nuclear, Res)");
 
 

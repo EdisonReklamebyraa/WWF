@@ -92,6 +92,7 @@ RES.prototype = _.create(
             var totalInstalled = 0;
             for(var i = 0; i < share.members.length; i++)
             {
+
                 var data = this.backgroundData[ share.members[i].id];
                 share.members[i].installed =   share.members[i].money / data.overnightCapitalCost;
 

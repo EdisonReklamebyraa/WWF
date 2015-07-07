@@ -127,6 +127,13 @@ h1 input[type="text"] {
     max-width: 5rem;
     margin-bottom: 0;
 }
+
+h1 input[type="text"].string {
+    max-width: 28rem;
+    text-transform: uppercase;
+    color: #FFA500;
+}
+
 h1 input[type="text"]:last-child {
 	width: auto;
 	max-width: 23rem;

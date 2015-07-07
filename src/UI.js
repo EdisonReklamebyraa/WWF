@@ -61,7 +61,8 @@ UIs.prototype = _.create(
             }).change(function() {
                 self.interaction();
             }).focus(function() {
-                $(this).val(numeral().unformat($(this).val()));
+                if(!$(this).hasClass("string"))
+                  $(this).val(numeral().unformat($(this).val()));
             });
         },
 

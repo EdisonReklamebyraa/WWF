@@ -41,7 +41,7 @@
       </div>
       <div class="large-10 columns noRightPadd">
 	      <div class="whitewrap">
-		  	  <h1>What if all of UNPRI's 1300+ signatories invested <input type="text" name="investPercentage" ><div data-min="0.002"  data-inc="0.01" data-format="0%"  data-target="investPercentage" class="upndownBox"><a class="upBtn" href="">Up</a><a class="downBtn" href="">Down</a></div> of the total fund of <div class="inline-box"><span class="modifier"></span><input type="text" name="totalFund" data-format="0,000"   value="100000000" /></div> in renewable energy?</h1>
+		  	  <h1>WHAT IF <input type="text" class="string" name="investor" placeholder="name of the investor" > INVESTED <input type="text" name="investPercentage" ><div data-min="0.002"  data-inc="0.01" data-format="0%"  data-target="investPercentage" class="upndownBox"><a class="upBtn" href="">Up</a><a class="downBtn" href="">Down</a></div> of the total fund of <div class="inline-box"><span class="modifier"></span><input type="text" name="totalFund" data-format="0,000"   value="100000000" /></div> in renewable energy?</h1>
 	      </div>
       </div>
     </header>
@@ -64,9 +64,13 @@
 		    <div class="large-12 columns techBox">
 			    <h3 class="text-center">The dividing of investments in the various technologies<a href="#" data-reveal-id="techModal" class="modalLink">i</a></h3>
 					<div id="techModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-					  <h2 id="modalTitle">The dividing of investments in the various technologies</h2>
-					  <p class="lead">Your couch.  It is mine.</p>
-					  <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+					  <h2 id="modalTitle">The investment is allocated to various technologiess</h2>
+					  <p>The default mix of renewable power technologies is based on the latest energy scenarios of the
+              International Energy Agency (IEA, World Energy Outlook 2014).The figures are based on what is
+              needed to be installed worldwide, and refer to the first year of the chosen period.
+              Data is based on the IEA’s New Policy Scenario until 2020, and the 450 scenario until 2040.
+              For more info on the scenarios,
+              see: <a target="_blank" href="http://www.iea.org/publications/scenariosandprojections/">http://www.iea.org/publications/scenariosandprojections/</a></p>
 					  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 					</div>
 			    <img src="img/SVG/techs.svg" />
@@ -82,20 +86,106 @@
     <div class="row papered">
       <div class="large-12 columns sidebar whitewrap">
 	  	  
-		    <div class="medium-4 columns">
-			    <h3>How much new capacity would be installed?</h3>
+		    <div class="medium-6 columns">
+			    <h3>How much new capacity would be installed? 
+            <a href="#" data-reveal-id="impactModal" class="modalLink">i</a> 
+          </h3>
+
+	        <div id="impactModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+					  <h2 id="modalTitle">How much new capacity would be installed?</h2>
+					  <p>
+              The model estimates how much new capacity is installed, given the chosen amount of investment and the energy mix.
+              This estimate is calculated using IPCC’s  figures “overnight costs” (in USD/kW),
+              which indicates the capital cost, excluding finance cost for construction.
+              In short, it indicates the cost of building a power plant overnight as if no interest were incurred.
+              Please refer to the report for a detailed explanations of the methodology, and the limits of the estimate.
+              <br>Source of data:
+              <a targe="_blank" href="http://www.ipcc.ch/pdf/assessment-report/ar5/wg3/ipcc_wg3_ar5_annex-iii.pdf">
+                http://www.ipcc.ch/pdf/assessment-report/ar5/wg3/ipcc_wg3_ar5_annex-iii.pdf
+              </a>
+            </p>
+            
+            <p>
+              The result is compared with the average capacity of existing and under construction nuclear reactors in the world, which is 922 MW (1th june 2015).
+              <br>Source: European Nuclear Association
+              <a targe="_blank" href="http://www.euronuclear.org/info/encyclopedia/n/nuclear-power-plant-world-wide.htm">
+                http://www.euronuclear.org/info/encyclopedia/n/nuclear-power-plant-world-wide.htm
+              </a>
+            </p>
+
+            <p>
+              The result is also compared with the average nameplate capacity of a coal unit in the US, which is 272 MW (2013).
+              <br>Source: US’s Energy Information Administration,
+              <a targe="_blank" href="http://www.eia.gov/electricity/annual/">
+                http://www.eia.gov/electricity/annual/ (Table 4.3)
+              </a>              
+            </p>
+            
+					  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+					</div>
+
+
+          
+
+          
+          
 			    <h3 class="greened larger"><img class="icon" src="img/SVG/bolt.svg" alt="Bolt" /><span id="gigawatts"></span> watts<img class="icon" src="img/SVG/bolt.svg" alt="Bolt" /></h3>
 			    <p>Equivalent (on average) to the installed capacity of <span class="greened" id="nuclearReactors">950</span> nuclear reactors or <span class="greened" id="coalPlants">1300</span> coal-fired power plants.</p>
 			    <img src="img/SVG/town.svg" />
 		    </div>
-		    <div class="medium-4 columns">
-			    <h3>What would the impact of <span id="Years">5</span> years of investment be?</h3>
-			    <h3 class="blued" id="twhImpact"><span class="start">2016</span> - <span class="larger amount">2200 TWh</span> -<span class="end">2069</span> </h3>
-			    <p><span class="blued" id="wAnnually">2200</span> watt hours (<span id="wAnnuallyType"></span>Wh) annually, every year for <span class="blued">50</span> years.</p>
+		    <div class="medium-6 columns">
+			    <h3>What would the impact of <span id="Years">5</span> years of investment be? <a href="#" data-reveal-id="installedModal" class="modalLink">i</a> </h3>
+          
+          <div id="installedModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+					  <h2 id="modalTitle">What would the impact of X years of investment be?</h2>
+					  <p>
+              The installed capacity, multiplied for the number of hours that a power plan is working,
+              will give the amount of electricity (in Wh) generated in one year.
+              Every technology has a different lifetime (see background table),
+              so we take this into account to calculate the total impact of the investment, over the whole period of operation.
+              For example, an hydropower plant is in operation for 50 years on average,
+              while a wind mill for 25 years. Data is taken from IPCC.           
+            </p>
+            
+					  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+					</div>
+
+
+
+
+
+
+          
+			    <h3 class="blued" id="twhImpact"><span class="start">2016</span> -
+            <span class="larger amount">2200 TWh</span> -<span class="end">2069</span> </h3>
+			    <p><span class="blued" id="wAnnually">2200</span> watt hours (<span id="wAnnuallyType"></span>Wh) annually,
+            every year for <span class="blued">50</span> years.</p>
 				  <p>The same electricity consumption of half of the United States, every year for <span class="blued" id="elYears">50</span> years.</p>
 		    </div>
-		    <div class="medium-4 columns">
-			    <h3>Renewable vs coal and gas</h3>
+
+      </div>
+      <hr />
+
+      
+      <div class="large-12 columns sidebar whitewrap">
+		    <div class="medium-6 columns">
+			    <h3>Renewable vs coal and gas <a href="#" data-reveal-id="RenewableModal" class="modalLink">i</a> </h3>
+          
+          <div id="RenewableModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+					  <h2 id="modalTitle">Renewable vs coal and gas</h2>
+					  <p>
+              To illustrate the potential effect on greenhouse gas emissions we ask the following question:
+              what are the associated emissions if the electricity generated from the
+              investment would have been generated by a mix of fossil fuels?
+              The calculations are based on the emissions factors provided by IPCC (in grams CO2eq. /kWh).
+              The results are based on life-cycle emissions generated by the power plants funded by the investor.          
+            </p>
+            
+					  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+					</div>
+
+
+          
 			    <h3 class="darkgreened larger">Emissions avoided <span id="EmissionsAvoided"></span>t CO2</h3>
 			    <div id="globes">
 				    <img src="img/SVG/globe.svg" width="20%" />
@@ -104,6 +194,35 @@
 				    <img src="img/SVG/globe.svg" width="20%" />
 			    </div>
 			    <p>Investing in renewable power instead of coal and gas would avoid a level of emissions the scale of <span id="timesWorld" class="darkgreened">4</span> times the world's annual emissions, or <span id="timesUS" class="darkgreened">3+0</span> times the annual emisions of the US.</p>
+		    </div>
+
+
+         <div class="medium-6 columns">
+			    <h3>How many jobs can be created? <a href="#" data-reveal-id="jobsModal" class="modalLink">i</a> </h3>
+          
+          <div id="jobsModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+					  <h2 id="modalTitle">How many jobs can be created?</h2>
+					  <p>
+              This estimate refers to the number of jobs required during all phases of a power plant,
+              from the construction to the end of its life. It is based on one of the most complete
+              and updated dataset available to our knowledge, which is kindly provided by the UK Energy Research Center (UKERC). The report is titled
+              “Low carbon jobs: The evidence for net job creation from policy support for energy efficiency and renewable energy”.
+              Please note that this is only a rough estimate, since there are many geographical variations.
+              Please read WWF’s report (LINK) for a complete and detailed discussion of this topic.</p>
+
+            <p>We chose to run two different estimates of how many jobs are created: the first one is based on the amount of electricity produced;
+              the second is based on the money invested, which provides a fairer comparison between different technology types.
+              The two results are compared with a scenario in which you invest only in fossil fuels (coal and gas).</p>
+
+            <p>In general, many studies indicate that 2-4 times more jobs are created by investing in a mix of renewable energy technologies,
+              instead of a mix of coal/gas for electricity generation.          
+            </p>
+            
+					  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+					</div>
+          
+			    <h3 class="blued" id="twhImpact"> </h3>
+			    <p>__</p>
 		    </div>
 
       </div>
@@ -124,8 +243,6 @@
             <div id="GrowthRateDataTable">
               
             </div>
-
-
             
             <h2>Background data</h2>
             <div id="BackgroundData">
@@ -136,8 +253,7 @@
             <div id="EMix">
               
             </div>
-            
-          
+                        
             
 	        </div>
 	      </li>
@@ -145,7 +261,7 @@
 	      <li class="accordion-navigation">
 	        <a href="#panel2a">Key results</a>
 	        <div id="panel2a" class="content">
-        
+            
             
             <h2>Key results</h2>
             <div id="SharesDataTable">              
@@ -159,35 +275,73 @@
     <!-- Explanatory area -->
 	  <div class="row whitewrap margTop bigPaddBot">
 		  <div class="large-10 columns large-offset-1 margTop">
-			  <h2 class="margTop">Explanation</h2>
-			  <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
+			  <h2 class="margTop">INTRODUCTION</h2>
+        
+			  <p>Welcome to WWF-Norway’s web-calculator, based on the report titled “xxxxx”.
+          The report presents a model and some hypothetical case studies in which large institutional investors
+          (pension funds, sovereign wealth fund, etc) invest a given amount of money in renewable energy infrastructure:
+          solar and wind parks, geothermal plants, hydropower, etc.</p>
+
+
+        <p>With this tool, you can easily build your own case. The model uses all the latest and most updated data from the most authoritative sources,
+          in particular the <a target="_blank" href="http://www.iea.org/">International Energy Agency (IEA)</a>
+          and the <a target="_blank" href="http://www.ipcc.ch/">Intergovernmental Panel on Climate Change (IPCC)</a>.</p>
+
+        <p>We recommend to read the report first (LINK),
+          which presents in a clear and short way the methodology used.
+          In the web-calculator, all you need is to give a name to the investor you want to test,
+          choose how much money should be invested in a mix of renewable energy over a period of time,
+          and you will get the following results:</p>
+        <ul>
+          <li>Installed capacity annual and total</li>
+          <li>Electricity generation, annual and total</li>
+          <li>Emission saved by not investing in fossil fuels instead</li>
+          <li>Rough estimate of the number of jobs created</li>            
+        </ul>
+        
+        <p>
+          All default background data is editable, for instance if you want to make your own scenario and invest only in one technology
+          (solar power, for example). All graphs are downloadable. Enjoy!</p>
+
+        <h2 class="margTop">Who we are</h2>
+        <p>WWF works worldwide to promote solutions, and renewable energy is one of these.
+          WWF-Norway is asking the Norwegian sovereign wealth fund
+          - the world’s largest with over USD 850 billion
+          - to invest at least 5% in renewable energy infrastructure.
+          For more information on our work, the report, and the web-calculator, please contact:
+          Lars Erik Mangset, Advisor sustainable industries. <a href="mailto:lemangset@wwf.no">lemangset@wwf.no</a>
+          Stefano Esposito, Advisor sustainable finance.  <a href="mailto:sesposito@wwf.no">sesposito@wwf.no</a></p>
+        
+    </div></div>
+
+     <div class="row whitewrap margTop bigPaddBot">
+		   <div class="large-10 columns large-offset-1 margTop">
+
+         
+			  <h2 class="margTop">GRAPHS (RESULTS PAGE)</h2>
+        
         <div id="InvestmentsChart">
           
         </div>
 
-			  <p>Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.</p>
-			  <p>Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.</p>
-		  </div>
-		  <div class="large-5 columns large-offset-1">
-			  <h2>More information explaining things</h2>
-			  <p>Objectively innovate empowered manufactured products whereas parallel platforms. Holisticly predominate extensible testing procedures for reliable supply chains. Dramatically engage top-line web services vis-a-vis cutting-edge deliverables.</p>
-			  <p>Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.</p>
-		  </div>
-		  <div class="large-5 columns" id="PieDist" >
-			 
-		  </div>
-      <div class="large-10 columns large-offset-1 left-floater">
-			  <h2 class="margTop">Some final explanation</h2>
-			  <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
+        <p><strong>The first graph</strong> shows how much money is invested annually, and how this amount increases until the target is reached (X%).</p>
+
+        <div  id="PieDist" >
+			    
+		    </div>
+
+        <p>T<strong>he second graph</strong> visualizes the energy mix which is used to allocate the investment in every technology. In short, the money invested every year are allocated to different technologies for the generation of renewable energy, according to this scheme. This default allocation is based on the International Energy Agency’s scenario for the investmed needed in the next years. Until 2020, the central scenario is used (New Policy Scenario), while after 2020 and until 2040 we chose the 450 scenario, which shows the path needed to limit global warming to 2-degrees Celsius. This is the goal that almost all countries in the world have agreed upon.</p>
+
         <div id="ImpactChart">
           
         </div>
-			  <p>Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. Dramatically maintain clicks-and-mortar solutions without functional solutions.</p>
-			  <p>Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.</p>
-		  </div>
-		  
+
+        <p><strong>The third graph shows</strong> the amount of electricity generated every year for the lifetime of the power plants. In fact, every technology has a different life-cycle (see background table above). For example, an hydropower plant is in operation for 50 years, while a wind mill for 25 years. The source for this data is IPCC, and the user can edit it.
+This graph compares the annual electricity generation to a number of your choice. For example, one can choose to compare it to the annual electricity generation of a country, or a city, or a power plant.</p>
+
+	      
+	    </div>
 	  </div>
-	  
 	  <!-- Footer -->
 	  <footer class="row margTop">Footer.</footer>
 	  
