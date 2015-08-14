@@ -53,7 +53,7 @@ SharesDataTable.prototype = _.create(
             var rows = [];
             var format = [] ;
             var inc = 1;
-            var clump = 6;
+            var clump = 7;
 
 
             for(var i = 0; i < this.data.length; i++)
@@ -75,31 +75,36 @@ SharesDataTable.prototype = _.create(
 
                     }
 
-
+                    var title = "<strong>" +  member.title.charAt(0).toUpperCase() + member.title.slice(1)+ "</strong>";
                     rows[index][i+1] = "";
-                    rows[index][0] = member.title.charAt(0).toUpperCase() + member.title.slice(1);
+                    rows[index][0] = title;
                     rows[index + 1][0] = "Annual investment (USD)";
                     rows[index + 2][0] = "Electricity output, annual (W)";
                     rows[index + 3][0] = "Electricity output, lifetime (W)";
                     rows[index + 4][0] = "Installed capacity (W)";
+                    rows[index + 5][0] = "Relative share within the category " + title;
+
                     rows[index+1][i+1] = member.money;
                     rows[index+2][i+1] = member.annualOutput;
                     rows[index+3][i+1] = member.lifetimeOutput;
                     rows[index+4][i+1] = member.installed;
-
+                    rows[index+5][i+1] = member.percent;
 
 
 
                     format[index][i] = { };
                     format[index][i+1] = { };
-                    format[index][0] = { };
+                    format[index][0] = { renderer: "html"};
                     format[index + 1][0] = { };
                     format[index + 2][0] = { };
-                    format[index + 3][0] = { };
+                    format[index + 5][0] = {renderer: "html"};
+
+
                     format[index+1][i+1] = {type: "numeric", format: "$ 000,000"};
                     format[index+2][i+1] = {type: "numeric", format: "000,000 a"};
                     format[index+3][i+1] = {type: "numeric", format: "000,000 a"};
                     format[index+4][i+1] = {type: "numeric", format: "000,000.00 a"};
+                    format[index+5][i+1] = {type: "numeric", format: "%"};
                 }
 
 
