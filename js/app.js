@@ -82,7 +82,7 @@ BackgroundDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":12,"lodash":13}],2:[function(require,module,exports){
+},{"arbiter-subpub":13,"lodash":14}],2:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -246,7 +246,7 @@ Charts.prototype = _.create(
 
     }
 );
-},{"arbiter-subpub":12,"lodash":13}],3:[function(require,module,exports){
+},{"arbiter-subpub":13,"lodash":14}],3:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -318,7 +318,7 @@ ElectricityDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":12,"lodash":13}],4:[function(require,module,exports){
+},{"arbiter-subpub":13,"lodash":14}],4:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -522,7 +522,97 @@ GrowthRateDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":12,"lodash":13}],5:[function(require,module,exports){
+},{"arbiter-subpub":13,"lodash":14}],5:[function(require,module,exports){
+var Arbiter = require('arbiter-subpub');
+var _ = require("lodash");
+
+module.exports = ImpactDataTable;
+
+function ImpactDataTable() {
+
+    var self = this;
+
+    Arbiter.subscribe("changed/impact",function(json) {
+        self.loadData(json);
+    } );
+
+
+    Arbiter.subscribe("update/user", function(json) {
+
+        self.loadUser(json);
+    });
+
+
+    $(".accordion").click(
+        _.debounce(function() {
+            if(self.table)
+              self.table.render();
+        }, 100));
+
+}
+
+ImpactDataTable.prototype = _.create(
+
+    ImpactDataTable.prototype,
+    {
+        data: null,
+        table: null,
+        userData: null,
+
+
+        loadData: function(json) {
+            this.data = json;
+            this.updateTable();
+        },
+
+        loadUser: function(json) {
+
+            this.userData = json;
+            this.updateTable();
+        },
+
+        getData: function() {
+            var start =  this.userData["starting year"];
+            var out = {cols:[], data: [], format: []};
+
+            for(var i = 0; i < this.data.yearlyTotalPowerGeneration.length; i++)
+            {
+
+                out.data.push(this.data.yearlyTotalPowerGeneration[i]);
+                out.cols.push( i + start);
+            }
+
+
+            return out;
+        },
+
+        updateTable:  _.debounce(function() {
+                          var self = this;
+
+                          if(!this.data)
+                            return;
+
+
+                          var container = document.getElementById('ImpactDataTable');
+                          var d = this.getData();
+                          container.innerHTML = "";
+                          this.table = new Handsontable(container, {
+                              data: [d.data],
+                              stretchH: "all",
+                              colHeaders: d.cols,
+                              cells: function(row,cell,prop) {
+                                     this.type = "numeric";
+                                  this.format = "$ 0 a"
+                                  }
+
+
+                          });
+
+                      }, 200)
+
+    });
+
+},{"arbiter-subpub":13,"lodash":14}],6:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -617,7 +707,7 @@ InvestmentDataTable.prototype = _.create(
                       }, 200)
     });
 
-},{"arbiter-subpub":12,"lodash":13}],6:[function(require,module,exports){
+},{"arbiter-subpub":13,"lodash":14}],7:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -831,7 +921,7 @@ Results.prototype = _.create(
 
                        }, 150)
     });
-},{"./energyScenario.js":10,"./res.js":14,"arbiter-subpub":12,"lodash":13}],7:[function(require,module,exports){
+},{"./energyScenario.js":11,"./res.js":15,"arbiter-subpub":13,"lodash":14}],8:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -978,7 +1068,7 @@ SharesDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":12,"lodash":13}],8:[function(require,module,exports){
+},{"arbiter-subpub":13,"lodash":14}],9:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -1059,7 +1149,7 @@ UIs.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":12,"lodash":13}],9:[function(require,module,exports){
+},{"arbiter-subpub":13,"lodash":14}],10:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -1095,7 +1185,7 @@ Data.prototype = _.create(
         }
     });
 
-},{"./energyScenario.js":10,"./res.js":14,"arbiter-subpub":12,"lodash":13}],10:[function(require,module,exports){
+},{"./energyScenario.js":11,"./res.js":15,"arbiter-subpub":13,"lodash":14}],11:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -1276,12 +1366,12 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
 }
                                    );
 
-},{"lodash":13}],11:[function(require,module,exports){
+},{"lodash":14}],12:[function(require,module,exports){
 var WWF = require('./wwf.js');
 var wwf = new WWF();
 
 $(document).foundation();
-},{"./wwf.js":15}],12:[function(require,module,exports){
+},{"./wwf.js":16}],13:[function(require,module,exports){
 /*
 Arbiter.js
   by Matt Kruse
@@ -1440,7 +1530,7 @@ var Arbiter = (function () {
 
 module.exports = Arbiter;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -13610,7 +13700,7 @@ module.exports = Arbiter;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -13962,7 +14052,7 @@ function zeroArray(w){
     return Array.apply(null, new Array(w)).map(Number.prototype.valueOf,0);
 }
 
-},{"lodash":13}],15:[function(require,module,exports){
+},{"lodash":14}],16:[function(require,module,exports){
 var _ = require('lodash');
 
 var EnergyScenario = require('./energyScenario.js');
@@ -13976,6 +14066,7 @@ var BackgroundDataTable = require("./BackgroundDataTable.js");
 var InvestmentDataTable = require("./InvestmentDataTable.js");
 var SharesDataTable = require("./SharesDataTable.js");
 var GrowthRateDataTable = require("./GrowthRateDataTable.js");
+var ImpactDataTable = require("./ImpactDataTable.js");
 
 
 var Charts = require("./Charts.js");
@@ -13997,7 +14088,7 @@ function WWF() {
     this.data = new Data();
     this.electricityDataTable = new ElectricityDataTable();
     this.backgroundDataTable = new BackgroundDataTable();
-//    this.investmentDataTable = new InvestmentDataTable();
+    this.impactDataTable = new ImpactDataTable();
     this.sharesDataTable = new SharesDataTable();
     this.growthRateDataTable = new GrowthRateDataTable();
     this.charts = new Charts();
@@ -14009,4 +14100,4 @@ WWF.prototype = _.create(WWF.prototype, {
     ui: null
 });
 
-},{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./GrowthRateDataTable.js":4,"./InvestmentDataTable.js":5,"./Results.js":6,"./SharesDataTable.js":7,"./UI.js":8,"./data.js":9,"./energyScenario.js":10,"./res.js":14,"lodash":13}]},{},[11]);
+},{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./GrowthRateDataTable.js":4,"./ImpactDataTable.js":5,"./InvestmentDataTable.js":6,"./Results.js":7,"./SharesDataTable.js":8,"./UI.js":9,"./data.js":10,"./energyScenario.js":11,"./res.js":15,"lodash":14}]},{},[12]);
