@@ -33,7 +33,9 @@ function Charts(data) {
         self.loadedGoogle();
     });
 
-
+    $("#ComparisonField").change(function() {
+         this.impactChart();
+    });
 
 }
 
@@ -85,11 +87,12 @@ Charts.prototype = _.create(
 
             if(this.impact && this.gLoaded && this.user){
 
-                var arrData = [ ['Year', 'Ref', 'Energy']];
+                var arrData = [ ['Year', 'Comparison field', 'Energy']];
+                var comp  = $("#ComparisonField").val() * 1;
 
                 for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
                 {
-                    arrData.push([(this.user["starting year"] + i) + "", 100000000, this.impact.yearlyTotalPowerGeneration[i]]);
+                    arrData.push([(this.user["starting year"] + i) + "", comp, this.impact.yearlyTotalPowerGeneration[i]]);
 
 
                 }
@@ -104,10 +107,6 @@ Charts.prototype = _.create(
 
 
                 var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
-
-
-
-
 
                 chart.draw(data, options);
             }

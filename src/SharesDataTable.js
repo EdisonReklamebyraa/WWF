@@ -90,15 +90,12 @@ SharesDataTable.prototype = _.create(
                     rows[index+4][i+1] = member.installed;
                     rows[index+5][i+1] = member.percent;
 
-
-
                     format[index][i] = { };
                     format[index][i+1] = { };
                     format[index][0] = { renderer: "html"};
                     format[index + 1][0] = { };
                     format[index + 2][0] = { };
                     format[index + 5][0] = {renderer: "html"};
-
 
                     format[index+1][i+1] = {type: "numeric", format: "$ 000,000"};
                     format[index+2][i+1] = {type: "numeric", format: "000,000 a"};

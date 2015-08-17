@@ -118,7 +118,9 @@ function Charts(data) {
         self.loadedGoogle();
     });
 
-
+    $("#ComparisonField").change(function() {
+         this.impactChart();
+    });
 
 }
 
@@ -170,11 +172,12 @@ Charts.prototype = _.create(
 
             if(this.impact && this.gLoaded && this.user){
 
-                var arrData = [ ['Year', 'Ref', 'Energy']];
+                var arrData = [ ['Year', 'Comparison field', 'Energy']];
+                var comp  = $("#ComparisonField").val() * 1;
 
                 for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
                 {
-                    arrData.push([(this.user["starting year"] + i) + "", 100000000, this.impact.yearlyTotalPowerGeneration[i]]);
+                    arrData.push([(this.user["starting year"] + i) + "", comp, this.impact.yearlyTotalPowerGeneration[i]]);
 
 
                 }
@@ -189,10 +192,6 @@ Charts.prototype = _.create(
 
 
                 var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
-
-
-
-
 
                 chart.draw(data, options);
             }
@@ -927,15 +926,12 @@ SharesDataTable.prototype = _.create(
                     rows[index+4][i+1] = member.installed;
                     rows[index+5][i+1] = member.percent;
 
-
-
                     format[index][i] = { };
                     format[index][i+1] = { };
                     format[index][0] = { renderer: "html"};
                     format[index + 1][0] = { };
                     format[index + 2][0] = { };
                     format[index + 5][0] = {renderer: "html"};
-
 
                     format[index+1][i+1] = {type: "numeric", format: "$ 000,000"};
                     format[index+2][i+1] = {type: "numeric", format: "000,000 a"};
