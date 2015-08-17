@@ -33,9 +33,7 @@ function Charts(data) {
         self.loadedGoogle();
     });
 
-    $("#ComparisonField").change(function() {
-         this.impactChart();
-    });
+    $("#ComparisonField").keyup(this.impactChart).change(this.impactChart);
 
 }
 
@@ -83,7 +81,7 @@ Charts.prototype = _.create(
             this.update();
         },
 
-        impactChart: function() {
+        impactChart: _.debounce( function() {
 
             if(this.impact && this.gLoaded && this.user){
 
@@ -110,7 +108,7 @@ Charts.prototype = _.create(
 
                 chart.draw(data, options);
             }
-        },
+        },200),
 
 
         investmentsChart: function() {
