@@ -24,6 +24,13 @@ function ImpactDataTable() {
               self.table.render();
         }, 100));
 
+
+    $("#DownloadImpactData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "impact.json");
+    });
+
 }
 
 ImpactDataTable.prototype = _.create(
@@ -48,16 +55,23 @@ ImpactDataTable.prototype = _.create(
 
         getData: function() {
             var start =  this.userData["starting year"];
-            var out = {cols:[], data: [], format: []};
+            var out = {cols:[], data: []};
+            var row  = [];
 
             for(var i = 0; i < this.data.yearlyTotalPowerGeneration.length; i++)
             {
 
-                out.data.push(this.data.yearlyTotalPowerGeneration[i]);
-                out.cols.push( i + start);
+                row.push(this.data.yearlyTotalPowerGeneration[i]);
+
+
+                if(i%5 === 4 ){
+                    out.data.push(row);
+                    row = [];
+
+                }
             }
 
-
+            out.data.push(row);
             return out;
         },
 
@@ -67,18 +81,15 @@ ImpactDataTable.prototype = _.create(
                           if(!this.data)
                             return;
 
-
                           var container = document.getElementById('ImpactDataTable');
                           var d = this.getData();
                           container.innerHTML = "";
                           this.table = new Handsontable(container, {
-                              data: [d.data],
-                              stretchH: "all",
-                              colHeaders: d.cols,
+                              data: d.data,
                               cells: function(row,cell,prop) {
-                                     this.type = "numeric";
-                                  this.format = "$ 0 a"
-                                  }
+                                  this.type = "numeric";
+                                  this.format = "0 a"
+                              }
 
 
                           });

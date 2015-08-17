@@ -15,6 +15,13 @@ function BackgroundDataTable(data) {
         if(self.table)
           self.table.render();
     }, 100));
+
+
+  $("#DownloadBackgroundData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Background data.json");
+    });
 }
 
 BackgroundDataTable.prototype = _.create(

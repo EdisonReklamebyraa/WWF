@@ -16,6 +16,13 @@ function ElectricityDataTable(data) {
           self.table.render();
     }, 100));
 
+
+  $("#DownloadEMixData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([ JSON.stringify(self.data.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Electricity Data Table.json");
+    });
+
 }
 
 ElectricityDataTable.prototype = _.create(

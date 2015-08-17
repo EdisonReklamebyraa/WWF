@@ -22,6 +22,14 @@ function SharesDataTable() {
                               if(self.table)
                                 self.table.render();
                           }, 100));
+
+
+
+    $("#DownloadSharesDataData").click(function(e) {
+                                     e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Key results.json");
+    });
 }
 
 SharesDataTable.prototype = _.create(

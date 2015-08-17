@@ -16,6 +16,13 @@ function BackgroundDataTable(data) {
         if(self.table)
           self.table.render();
     }, 100));
+
+
+  $("#DownloadBackgroundData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Background data.json");
+    });
 }
 
 BackgroundDataTable.prototype = _.create(
@@ -265,6 +272,13 @@ function ElectricityDataTable(data) {
           self.table.render();
     }, 100));
 
+
+  $("#DownloadEMixData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([ JSON.stringify(self.data.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Electricity Data Table.json");
+    });
+
 }
 
 ElectricityDataTable.prototype = _.create(
@@ -327,6 +341,14 @@ module.exports = GrowthRateDataTable;
 function GrowthRateDataTable() {
 
     var self = this;
+    this.colHeaders = [
+        "Year",
+        "Latest size of the investor",
+        "Expected annual growth rate of the investor",
+        "Investor's size year by year (can be overriden if the forecast is provided by the investor)",
+        "Target investment in Res",
+        "Annual investment",
+        "Cumulative investments"];
 
 
     Arbiter.subscribe("update/growthRates",function(json) {
@@ -359,6 +381,25 @@ function GrowthRateDataTable() {
             if(self.table)
               self.table.render();
         }, 100));
+
+
+    $("#DownloadGrowthRateData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([
+
+            JSON.stringify(
+            {
+                annualGrowthRates: self.annualGrowthRates,
+                investments: self.data,
+                projections: self.projections,
+                investor : self.userData
+
+            }, null, 4)
+
+
+        ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "impactData.json");
+    });
 
 }
 
@@ -424,14 +465,7 @@ GrowthRateDataTable.prototype = _.create(
 
                           if(!this.table){
                               var container = document.getElementById('GrowthRateDataTable');
-                              var colHeaders = [
-                                  "Year",
-                                  "Latest size of the investor",
-                                  "Expected annual growth rate of the investor",
-                                  "Investor's size year by year (can be overriden if the forecast is provided by the investor)",
-                                  "Target investment in Res",
-                                  "Annual investment",
-                                  "Cumulative investments"];
+
 
 
 
@@ -439,7 +473,7 @@ GrowthRateDataTable.prototype = _.create(
                                   data: self.tableData(),
                                   stretchH: "all",
                                   colHeaders: true,
-                                  colHeaders: colHeaders,
+                                  colHeaders: this.colHeaders,
                                   contextMenu: true,
                                   cells: function(row,cell,prop) {
                                       switch(cell) {
@@ -506,7 +540,7 @@ GrowthRateDataTable.prototype = _.create(
             gr[change[0]] = (data[change[0]][3] / investment ) - 1;
             Arbiter.publish("edit/annualGrowthRates",gr);
         },
-        
+
         getGrowthrate: function(data) {
             return _.map(data,function(row) {
                 return row[2]
@@ -549,6 +583,13 @@ function ImpactDataTable() {
               self.table.render();
         }, 100));
 
+
+    $("#DownloadImpactData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "impact.json");
+    });
+
 }
 
 ImpactDataTable.prototype = _.create(
@@ -573,16 +614,23 @@ ImpactDataTable.prototype = _.create(
 
         getData: function() {
             var start =  this.userData["starting year"];
-            var out = {cols:[], data: [], format: []};
+            var out = {cols:[], data: []};
+            var row  = [];
 
             for(var i = 0; i < this.data.yearlyTotalPowerGeneration.length; i++)
             {
 
-                out.data.push(this.data.yearlyTotalPowerGeneration[i]);
-                out.cols.push( i + start);
+                row.push(this.data.yearlyTotalPowerGeneration[i]);
+
+
+                if(i%5 === 4 ){
+                    out.data.push(row);
+                    row = [];
+
+                }
             }
 
-
+            out.data.push(row);
             return out;
         },
 
@@ -592,18 +640,15 @@ ImpactDataTable.prototype = _.create(
                           if(!this.data)
                             return;
 
-
                           var container = document.getElementById('ImpactDataTable');
                           var d = this.getData();
                           container.innerHTML = "";
                           this.table = new Handsontable(container, {
-                              data: [d.data],
-                              stretchH: "all",
-                              colHeaders: d.cols,
+                              data: d.data,
                               cells: function(row,cell,prop) {
-                                     this.type = "numeric";
-                                  this.format = "$ 0 a"
-                                  }
+                                  this.type = "numeric";
+                                  this.format = "0 a"
+                              }
 
 
                           });
@@ -642,6 +687,13 @@ function InvestmentDataTable() {
             if(self.table)
               self.table.render();
         }, 100));
+
+
+    $("#DownloadImpactData").click(function(e) {
+                                     e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.getData(), null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Investment Forecast.json");
+    });
 
 }
 
@@ -916,7 +968,7 @@ Results.prototype = _.create(
                            $("#twhImpact .start").text(this.data.user["starting year"]);
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
 
-                           $("#Years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
+                           $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
 
                        }, 150)
@@ -946,6 +998,14 @@ function SharesDataTable() {
                               if(self.table)
                                 self.table.render();
                           }, 100));
+
+
+
+    $("#DownloadSharesDataData").click(function(e) {
+                                     e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Key results.json");
+    });
 }
 
 SharesDataTable.prototype = _.create(

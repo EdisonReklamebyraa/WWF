@@ -28,6 +28,13 @@ function InvestmentDataTable() {
               self.table.render();
         }, 100));
 
+
+    $("#DownloadImpactData").click(function(e) {
+                                     e.preventDefault();
+        var blob = new Blob([JSON.stringify(self.getData(), null, 4)], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Investment Forecast.json");
+    });
+
 }
 
 InvestmentDataTable.prototype = _.create(

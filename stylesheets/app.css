@@ -9579,12 +9579,6 @@ table {
   max-width: 10em;
 }
 
-/* line 329, ../scss/app.scss */
-#panel3a {
-  overflow: auto;
-  max-width: 100%;
-}
-
 /* Animations
 --------------------------------------------------------------------- */
 /*.spin {
@@ -9611,78 +9605,78 @@ table {
   font-style: normal;
 }
 @media only screen and (min-width: 72rem) {
-  /* line 364, ../scss/app.scss */
+  /* line 360, ../scss/app.scss */
   .noLeftPadd {
     padding-left: 0;
   }
 
-  /* line 367, ../scss/app.scss */
+  /* line 363, ../scss/app.scss */
   .noRightPadd {
     padding-right: 0;
   }
 }
 @media only screen and (max-width: 72rem) {
-  /* line 374, ../scss/app.scss */
+  /* line 370, ../scss/app.scss */
   header h1, header h1 input[type="text"] {
     font-size: 2.75rem;
   }
 
-  /* line 377, ../scss/app.scss */
+  /* line 373, ../scss/app.scss */
   header .whitewrap {
     padding-bottom: 2rem;
   }
 
-  /* line 380, ../scss/app.scss */
+  /* line 376, ../scss/app.scss */
   header .upndownBox {
     top: 0.95rem;
     width: 1.8rem;
   }
 
-  /* line 384, ../scss/app.scss */
+  /* line 380, ../scss/app.scss */
   header .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2rem;
   }
 
-  /* line 388, ../scss/app.scss */
+  /* line 384, ../scss/app.scss */
   header .downBtn {
     border-width: 14px 8px 0 8px;
   }
 
-  /* line 395, ../scss/app.scss */
+  /* line 391, ../scss/app.scss */
   header .whitewrap {
     min-height: 0;
   }
 }
 @media only screen and (max-width: 64.063rem) {
-  /* line 400, ../scss/app.scss */
+  /* line 396, ../scss/app.scss */
   header .large-2 {
     width: 8rem;
   }
 
-  /* line 403, ../scss/app.scss */
+  /* line 399, ../scss/app.scss */
   header .large-2 .whitewrap {
     padding: 0 0.5rem;
   }
 
-  /* line 406, ../scss/app.scss */
+  /* line 402, ../scss/app.scss */
   h2 input[type="text"] {
     font-size: 3rem;
     width: 7rem;
   }
 
-  /* line 411, ../scss/app.scss */
+  /* line 407, ../scss/app.scss */
   .earthBox .upndownBox {
     top: 1.4rem;
     width: 1.8rem;
     left: -2.15rem;
   }
-  /* line 416, ../scss/app.scss */
+  /* line 412, ../scss/app.scss */
   .earthBox .upndownBox .upBtn {
     border-width: 0 8px 14px 8px;
     bottom: 2.5rem;
   }
-  /* line 420, ../scss/app.scss */
+  /* line 416, ../scss/app.scss */
   .earthBox .upndownBox .downBtn {
     border-width: 14px 8px 0 8px;
   }

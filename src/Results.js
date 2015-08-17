@@ -206,7 +206,7 @@ Results.prototype = _.create(
                            $("#twhImpact .start").text(this.data.user["starting year"]);
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
 
-                           $("#Years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
+                           $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
 
                        }, 150)

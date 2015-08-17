@@ -134,7 +134,7 @@
 			    <img src="img/SVG/town.svg" />
 		    </div>
 		    <div class="medium-6 columns">
-			    <h3>What would the impact of <span id="Years">5</span> years of investment be? <a href="#" data-reveal-id="installedModal" class="modalLink">i</a> </h3>
+			    <h3>What would the impact of <span class="years">5</span> years of investment be? <a href="#" data-reveal-id="installedModal" class="modalLink">i</a> </h3>
           
           <div id="installedModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
 					  <h2 id="modalTitle">What would the impact of X years of investment be?</h2>
@@ -239,21 +239,25 @@
 	        <a href="#panel1a">More advanced settings</a>
 	        <div id="panel1a" class="content">
 
-            <h2>Investment Forecast</h2>
+            <h2>Investment Forecast </h2>
             <div id="GrowthRateDataTable">
               
             </div>
+            <a id="DownloadGrowthRateData" href="#">Download data</a>
             
             <h2>Background data</h2>
             <div id="BackgroundData">
               
             </div>
+            <a id="DownloadBackgroundData" href="#">Download data</a>
 
             <h2>Electricity Data Table</h2>
             <div id="EMix">
               
             </div>
                         
+            <a id="DownloadEMixData" href="#">Download data</a>
+
             
 	        </div>
 	      </li>
@@ -266,6 +270,8 @@
             <h2>Key results</h2>
             <div id="SharesDataTable">              
             </div>
+
+            <a id="DownloadSharesDataData" href="#">Download data</a>
             
 	        </div>
 	      </li>
@@ -274,10 +280,10 @@
 	        <div id="panel3a" class="content">
             
             
-            <h2>Impact</h2>
+            <h2>Annual power generation from SPU <span class="years">5</span> years investments</h2>
             <div id="ImpactDataTable">              
             </div>
-            
+            <a id="DownloadImpactData" href="#">Download data</a>
 	        </div>
 	      </li>
 
@@ -371,6 +377,7 @@ This graph compares the annual electricity generation to a number of your choice
 
     <script src="js/handsontable.full.min.js"></script>
 
+    <script src="js/FileSaver.js"></script>
     <script src="js/app.js"></script>
     <script src="js/scale.fix.js"></script>
 

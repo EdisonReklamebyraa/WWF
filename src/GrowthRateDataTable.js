@@ -6,6 +6,14 @@ module.exports = GrowthRateDataTable;
 function GrowthRateDataTable() {
 
     var self = this;
+    this.colHeaders = [
+        "Year",
+        "Latest size of the investor",
+        "Expected annual growth rate of the investor",
+        "Investor's size year by year (can be overriden if the forecast is provided by the investor)",
+        "Target investment in Res",
+        "Annual investment",
+        "Cumulative investments"];
 
 
     Arbiter.subscribe("update/growthRates",function(json) {
@@ -38,6 +46,25 @@ function GrowthRateDataTable() {
             if(self.table)
               self.table.render();
         }, 100));
+
+
+    $("#DownloadGrowthRateData").click(function(e) {
+        e.preventDefault();
+        var blob = new Blob([
+
+            JSON.stringify(
+            {
+                annualGrowthRates: self.annualGrowthRates,
+                investments: self.data,
+                projections: self.projections,
+                investor : self.userData
+
+            }, null, 4)
+
+
+        ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "impactData.json");
+    });
 
 }
 
@@ -103,14 +130,7 @@ GrowthRateDataTable.prototype = _.create(
 
                           if(!this.table){
                               var container = document.getElementById('GrowthRateDataTable');
-                              var colHeaders = [
-                                  "Year",
-                                  "Latest size of the investor",
-                                  "Expected annual growth rate of the investor",
-                                  "Investor's size year by year (can be overriden if the forecast is provided by the investor)",
-                                  "Target investment in Res",
-                                  "Annual investment",
-                                  "Cumulative investments"];
+
 
 
 
@@ -118,7 +138,7 @@ GrowthRateDataTable.prototype = _.create(
                                   data: self.tableData(),
                                   stretchH: "all",
                                   colHeaders: true,
-                                  colHeaders: colHeaders,
+                                  colHeaders: this.colHeaders,
                                   contextMenu: true,
                                   cells: function(row,cell,prop) {
                                       switch(cell) {
@@ -185,7 +205,7 @@ GrowthRateDataTable.prototype = _.create(
             gr[change[0]] = (data[change[0]][3] / investment ) - 1;
             Arbiter.publish("edit/annualGrowthRates",gr);
         },
-        
+
         getGrowthrate: function(data) {
             return _.map(data,function(row) {
                 return row[2]
