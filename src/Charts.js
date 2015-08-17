@@ -85,14 +85,16 @@ Charts.prototype = _.create(
 
             if(this.impact && this.gLoaded && this.user){
 
-                var arrData = [ ['Year', 'Energy']];
+                var arrData = [ ['Year', 'Ref', 'Energy']];
 
                 for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
                 {
-                    arrData.push([(this.user["starting year"] + i) + "", this.impact.yearlyTotalPowerGeneration[i]]);
+                    arrData.push([(this.user["starting year"] + i) + "", 100000000, this.impact.yearlyTotalPowerGeneration[i]]);
+
+
                 }
 
-                 var data = google.visualization.arrayToDataTable(arrData);
+                var data = google.visualization.arrayToDataTable(arrData);
 
                 var options = {
                     chart: {
@@ -101,7 +103,11 @@ Charts.prototype = _.create(
                 };
 
 
-                var chart = new google.charts.Bar(document.getElementById('ImpactChart'));
+                var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
+
+
+
+
 
                 chart.draw(data, options);
             }

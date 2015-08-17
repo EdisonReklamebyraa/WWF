@@ -170,14 +170,16 @@ Charts.prototype = _.create(
 
             if(this.impact && this.gLoaded && this.user){
 
-                var arrData = [ ['Year', 'Energy']];
+                var arrData = [ ['Year', 'Ref', 'Energy']];
 
                 for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
                 {
-                    arrData.push([(this.user["starting year"] + i) + "", this.impact.yearlyTotalPowerGeneration[i]]);
+                    arrData.push([(this.user["starting year"] + i) + "", 100000000, this.impact.yearlyTotalPowerGeneration[i]]);
+
+
                 }
 
-                 var data = google.visualization.arrayToDataTable(arrData);
+                var data = google.visualization.arrayToDataTable(arrData);
 
                 var options = {
                     chart: {
@@ -186,7 +188,11 @@ Charts.prototype = _.create(
                 };
 
 
-                var chart = new google.charts.Bar(document.getElementById('ImpactChart'));
+                var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
+
+
+
+
 
                 chart.draw(data, options);
             }
@@ -850,9 +856,9 @@ function SharesDataTable() {
     });
 
     $(".accordion").click(_.debounce(function() {
-        if(self.table)
-          self.table.render();
-    }, 100));
+                              if(self.table)
+                                self.table.render();
+                          }, 100));
 }
 
 SharesDataTable.prototype = _.create(
@@ -947,35 +953,34 @@ SharesDataTable.prototype = _.create(
         },
 
         updateTable:  _.debounce(function() {
-            var self = this;
+                          var self = this;
 
-            if(!this.data)
-              return;
+                          if(!this.data)
+                            return;
 
-            if(!this.table){
-                var container = document.getElementById('SharesDataTable');
-                var d = this.getData();
-                this.table = new Handsontable(container, {
-                    data: d.data,
-                    stretchH: "all",
-                    colHeaders: d.cols,
-                    contextMenu: true,
-                    cells: function(row,cell,prop) {
-                        _.assign(this,d.format[row][cell] );
-                    }
-                });
 
-                this.table.addHook('afterChange', function(col, type) {
-                    if(type == "edit"){
-                        self.data = this.getData();
-                        Arbiter.publish("edit/shares", self.data);
-                    }
-                });
-            }else{
-                var d = this.getData();
-                this.table.loadData(d.data);
-            }
-        }, 200)
+                          var container = document.getElementById('SharesDataTable');
+                          var d = this.getData();
+
+                          container.innerHTML = "";
+                          this.table = new Handsontable(container, {
+                              data: d.data,
+                              stretchH: "all",
+                              colHeaders: d.cols,
+                              contextMenu: true,
+                              cells: function(row,cell,prop) {
+                                  _.assign(this,d.format[row][cell] );
+                              }
+                          });
+
+                          this.table.addHook('afterChange', function(col, type) {
+                              if(type == "edit"){
+                                  self.data = this.getData();
+                                  Arbiter.publish("edit/shares", self.data);
+                              }
+                          });
+
+                      }, 200)
 
     });
 
