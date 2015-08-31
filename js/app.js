@@ -1061,14 +1061,13 @@ SharesDataTable.prototype = _.create(
 
                     }
 
-                    var title = "<strong>" +  member.title.charAt(0).toUpperCase() + member.title.slice(1)+ "</strong>";
                     rows[index][i+1] = "";
-                    rows[index][0] = title;
+                    rows[index][0] = "<strong>" +  member.title.charAt(0).toUpperCase() + member.title.slice(1)+ "</strong>";
                     rows[index + 1][0] = "Annual investment (USD)";
                     rows[index + 2][0] = "Electricity output, annual (kWh)";
                     rows[index + 3][0] = "Electricity output, lifetime (kWh)";
                     rows[index + 4][0] = "Installed capacity (kW)";
-                    rows[index + 5][0] = "Relative share within the category " + title;
+                    rows[index + 5][0] = "<strong>" +  member.title.charAt(0).toUpperCase() + member.title.slice(1)+ "'s</strong>" + " share of investment";
 
                     rows[index+1][i+1] = member.money;
                     rows[index+2][i+1] = member.annualOutput;
