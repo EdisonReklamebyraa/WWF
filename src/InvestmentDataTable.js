@@ -83,7 +83,7 @@ InvestmentDataTable.prototype = _.create(
                                   contextMenu: true,
                                   cells: function(row,cell,prop) {
                                       this.type = "numeric";
-                                      this.format = "000.000 a"
+                                      this.format = "000, 000 a"
                                   }
                               });
 

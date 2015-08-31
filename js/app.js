@@ -70,7 +70,7 @@ BackgroundDataTable.prototype = _.create(
                                           this.type = "numeric";
                                           break;
                                           default:
-                                          this.format = "0,00.0' a";
+                                          this.format = "0,000.0' a";
                                           this.type = "numeric";
                                       }
                                   }
@@ -306,17 +306,17 @@ ElectricityDataTable.prototype = _.create(
                     stretchH: "all",
                     columns: [
                         {type: 'numeric', format: '0'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'}],
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'}],
                     contextMenu: true
                 });
 
@@ -483,7 +483,7 @@ GrowthRateDataTable.prototype = _.create(
                                           case 2:
                                           case 4:
                                           this.type = "numeric";
-                                          this.format = "aaa 0%"
+                                          this.format = "0%"
                                           break;
                                           default:
                                           this.type = "numeric";
@@ -743,7 +743,7 @@ InvestmentDataTable.prototype = _.create(
                                   contextMenu: true,
                                   cells: function(row,cell,prop) {
                                       this.type = "numeric";
-                                      this.format = "000.000 a"
+                                      this.format = "000, 000 a"
                                   }
                               });
 
@@ -929,7 +929,7 @@ Results.prototype = _.create(
                 installed     += shares[i].totalLifetimeOutput;
             }
 
-            $("#gigawatts").text(numeral(installed).format('0.00a'));
+            $("#gigawatts").text(numeral(installed).format('0, 00a'));
             $("#coalPlants").text(numeral(installed / coalPlant).format('0a'));
             $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0a'));
         },
@@ -940,7 +940,7 @@ Results.prototype = _.create(
             var investment = _.reduce(investments,
                 function(previousValue, currentValue) {return previousValue + currentValue;})
 
-            $("#budget1").text(numeral(investment).format('($ 0,00)') );
+            $("#budget1").text(numeral(investment).format('($ 0, 000)') );
         },
 
         updateImpact:  _.debounce(function(shares,investments) {
@@ -959,10 +959,10 @@ Results.prototype = _.create(
                            Arbiter.publish("changed/impact",impact );
 
                            $("#EmissionsAvoided").text(numeral(c02g/million).format('0,0'));
-                           $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
-                           $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
-                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0.000a')+'H');
-                           $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
+                           $("#timesWorld").text(numeral(c02g/worldGHG).format('0, 000a') );
+                           $("#timesUS").text(numeral(c02g /worldUS).format('0, 000a') );
+                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000a')+'H');
+                           $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000a'));
                            $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
                            $("#twhImpact .start").text(this.data.user["starting year"]);
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
@@ -1083,10 +1083,10 @@ SharesDataTable.prototype = _.create(
                     format[index + 2][0] = { };
                     format[index + 5][0] = {renderer: "html"};
 
-                    format[index+1][i+1] = {type: "numeric", format: "$ 000,000"};
-                    format[index+2][i+1] = {type: "numeric", format: "000,000 a"};
-                    format[index+3][i+1] = {type: "numeric", format: "000,000 a"};
-                    format[index+4][i+1] = {type: "numeric", format: "000,000.00 a"};
+                    format[index+1][i+1] = {type: "numeric", format: "$ 0, 000"};
+                    format[index+2][i+1] = {type: "numeric", format: "0, 000 a"};
+                    format[index+3][i+1] = {type: "numeric", format: "0, 000 a"};
+                    format[index+4][i+1] = {type: "numeric", format: "0, 000.00 a"};
                     format[index+5][i+1] = {type: "numeric", format: "%"};
                 }
 
@@ -1163,7 +1163,7 @@ UIs.prototype = _.create(
 
         updateUI: function(json) {
             $("input[name=startYear]").val(this.user["starting year"] );
-            $("input[name=totalFund]").val(numeral(this.user["investment"] ).format('$ 0,000')  );
+            $("input[name=totalFund]").val(numeral(this.user["investment"] ).format('$ 0, 000')  );
             $("input[name=endYear]").val(this.user["target year"] );
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
         },
@@ -14161,5 +14161,29 @@ WWF.prototype = _.create(WWF.prototype, {
     data: null,
     ui: null
 });
+
+
+
+
+
+// load a language
+numeral.language('en', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm',
+        billion: 'b',
+        trillion: 't'
+    },
+
+    currency: {
+        symbol: '$'
+    }
+});
+
+// switch between languages
 
 },{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./GrowthRateDataTable.js":4,"./ImpactDataTable.js":5,"./InvestmentDataTable.js":6,"./Results.js":7,"./SharesDataTable.js":8,"./UI.js":9,"./data.js":10,"./energyScenario.js":11,"./res.js":15,"lodash":14}]},{},[12]);

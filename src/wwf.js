@@ -44,3 +44,27 @@ WWF.prototype = _.create(WWF.prototype, {
     data: null,
     ui: null
 });
+
+
+
+
+
+// load a language
+numeral.language('en', {
+    delimiters: {
+        thousands: ' ',
+        decimal: ','
+    },
+    abbreviations: {
+        thousand: 'k',
+        million: 'm',
+        billion: 'b',
+        trillion: 't'
+    },
+
+    currency: {
+        symbol: '$'
+    }
+});
+
+// switch between languages

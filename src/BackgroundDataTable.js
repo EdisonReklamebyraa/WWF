@@ -69,7 +69,7 @@ BackgroundDataTable.prototype = _.create(
                                           this.type = "numeric";
                                           break;
                                           default:
-                                          this.format = "0,00.0' a";
+                                          this.format = "0,000.0' a";
                                           this.type = "numeric";
                                       }
                                   }

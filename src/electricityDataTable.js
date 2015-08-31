@@ -50,17 +50,17 @@ ElectricityDataTable.prototype = _.create(
                     stretchH: "all",
                     columns: [
                         {type: 'numeric', format: '0'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'},
-                        {type: 'numeric', format: '0,0.00 a'}],
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'},
+                        {type: 'numeric', format: '0, 000.00 a'}],
                     contextMenu: true
                 });
 

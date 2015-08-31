@@ -148,7 +148,7 @@ GrowthRateDataTable.prototype = _.create(
                                           case 2:
                                           case 4:
                                           this.type = "numeric";
-                                          this.format = "aaa 0%"
+                                          this.format = "0%"
                                           break;
                                           default:
                                           this.type = "numeric";
