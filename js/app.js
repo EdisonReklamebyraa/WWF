@@ -961,12 +961,14 @@ Results.prototype = _.create(
                            $("#EmissionsAvoided").text(numeral(c02g/million).format('0,0'));
                            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
                            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
-
                            $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0.000a')+'H');
                            $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
                            $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
                            $("#twhImpact .start").text(this.data.user["starting year"]);
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+                           $(".impactYears").text(  impact.years );
+
+
 
                            $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
@@ -1063,9 +1065,9 @@ SharesDataTable.prototype = _.create(
                     rows[index][i+1] = "";
                     rows[index][0] = title;
                     rows[index + 1][0] = "Annual investment (USD)";
-                    rows[index + 2][0] = "Electricity output, annual (W)";
-                    rows[index + 3][0] = "Electricity output, lifetime (W)";
-                    rows[index + 4][0] = "Installed capacity (W)";
+                    rows[index + 2][0] = "Electricity output, annual (kWh)";
+                    rows[index + 3][0] = "Electricity output, lifetime (kWh)";
+                    rows[index + 4][0] = "Installed capacity (kW)";
                     rows[index + 5][0] = "Relative share within the category " + title;
 
                     rows[index+1][i+1] = member.money;

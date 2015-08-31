@@ -87,9 +87,9 @@ SharesDataTable.prototype = _.create(
                     rows[index][i+1] = "";
                     rows[index][0] = title;
                     rows[index + 1][0] = "Annual investment (USD)";
-                    rows[index + 2][0] = "Electricity output, annual (W)";
-                    rows[index + 3][0] = "Electricity output, lifetime (W)";
-                    rows[index + 4][0] = "Installed capacity (W)";
+                    rows[index + 2][0] = "Electricity output, annual (kWh)";
+                    rows[index + 3][0] = "Electricity output, lifetime (kWh)";
+                    rows[index + 4][0] = "Installed capacity (kW)";
                     rows[index + 5][0] = "Relative share within the category " + title;
 
                     rows[index+1][i+1] = member.money;

@@ -199,12 +199,14 @@ Results.prototype = _.create(
                            $("#EmissionsAvoided").text(numeral(c02g/million).format('0,0'));
                            $("#timesWorld").text(numeral(c02g/worldGHG).format('0a') );
                            $("#timesUS").text(numeral(c02g /worldUS).format('0a') );
-
                            $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0.000a')+'H');
                            $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0a'));
                            $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
                            $("#twhImpact .start").text(this.data.user["starting year"]);
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+                           $(".impactYears").text(  impact.years );
+
+
 
                            $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
