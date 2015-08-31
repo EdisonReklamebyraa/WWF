@@ -88,7 +88,7 @@ ImpactDataTable.prototype = _.create(
                               data: d.data,
                               cells: function(row,cell,prop) {
                                   this.type = "numeric";
-                                  this.format = "0 a"
+                                  this.format = "0, 000"
                               }
 
 

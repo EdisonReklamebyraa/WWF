@@ -70,7 +70,7 @@ BackgroundDataTable.prototype = _.create(
                                           this.type = "numeric";
                                           break;
                                           default:
-                                          this.format = "0,000.0' a";
+                                          this.format = "0, 000.0 ";
                                           this.type = "numeric";
                                       }
                                   }
@@ -647,7 +647,7 @@ ImpactDataTable.prototype = _.create(
                               data: d.data,
                               cells: function(row,cell,prop) {
                                   this.type = "numeric";
-                                  this.format = "0 a"
+                                  this.format = "0, 000"
                               }
 
 
@@ -743,7 +743,7 @@ InvestmentDataTable.prototype = _.create(
                                   contextMenu: true,
                                   cells: function(row,cell,prop) {
                                       this.type = "numeric";
-                                      this.format = "000, 000 a"
+                                      this.format = "000, 000"
                                   }
                               });
 
@@ -929,9 +929,9 @@ Results.prototype = _.create(
                 installed     += shares[i].totalLifetimeOutput;
             }
 
-            $("#gigawatts").text(numeral(installed).format('0, 00a'));
-            $("#coalPlants").text(numeral(installed / coalPlant).format('0a'));
-            $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0a'));
+            $("#gigawatts").text(numeral(installed).format('0, 000'));
+            $("#coalPlants").text(numeral(installed / coalPlant).format('0, 000'));
+            $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0, 000'));
         },
 
 
@@ -958,12 +958,12 @@ Results.prototype = _.create(
 
                            Arbiter.publish("changed/impact",impact );
 
-                           $("#EmissionsAvoided").text(numeral(c02g/million).format('0,0'));
-                           $("#timesWorld").text(numeral(c02g/worldGHG).format('0, 000a') );
-                           $("#timesUS").text(numeral(c02g /worldUS).format('0, 000a') );
-                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000a')+'H');
-                           $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000a'));
-                           $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('a'));
+                           $("#EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
+                           $("#timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
+                           $("#timesUS").text(numeral(c02g /worldUS).format('0, 000') );
+                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000')+'H');
+                           $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
+                           $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
                            $("#twhImpact .start").text(this.data.user["starting year"]);
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
                            $(".impactYears").text(  impact.years );
@@ -1083,9 +1083,9 @@ SharesDataTable.prototype = _.create(
                     format[index + 5][0] = {renderer: "html"};
 
                     format[index+1][i+1] = {type: "numeric", format: "$ 0, 000"};
-                    format[index+2][i+1] = {type: "numeric", format: "0, 000 a"};
-                    format[index+3][i+1] = {type: "numeric", format: "0, 000 a"};
-                    format[index+4][i+1] = {type: "numeric", format: "0, 000.00 a"};
+                    format[index+2][i+1] = {type: "numeric", format: "0, 000"};
+                    format[index+3][i+1] = {type: "numeric", format: "0, 000 "};
+                    format[index+4][i+1] = {type: "numeric", format: "0, 000.00"};
                     format[index+5][i+1] = {type: "numeric", format: "%"};
                 }
 
