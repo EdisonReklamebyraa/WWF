@@ -4,4 +4,7 @@
 markdown: kramdown
 exclude: ['src']
 include: ['_pages']
-baseurl: '' 
+baseurl: ''
+sass:
+  sass_dir: _sass
+  style: compressed

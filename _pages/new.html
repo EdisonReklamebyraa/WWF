@@ -4,104 +4,98 @@ title: New
 permalink: /new/
 ---
 
-<Header class="row">
+<header class="row">
   <div class="large-2 columns noLeftPadd">
     <div class="whitewrap">
       <img src="/img/WWF.png" alt="WWF Logo" />
 		</div>
   </div>
+  
   <div class="large-10 columns noRightPadd">
-	  <div class="whitewrap">
-      {% include intro.md %}       
+	  <div class="whitewrap">      
+      {% include intro.html %}
 	  </div>
   </div>
 </header>
 
 <div class="row whitewrap margTop">
 	<div class="large-10 columns large-offset-1 ">
-		{% include the_report.md %}       
+    {% include report.html %}
   </div>
 </div>
 
 
 <div class="row whitewrap margTop">
 	<div class="large-10 columns large-offset-1 ">
+    {% include inputs.html %}    
+  </div>
+</div>
 
-    {% include inputs.md %}   
-	  
+
+
+<div class="row papered margTop">
+  <div class="large-12 columns">
+    
+		<div class="medium-5 columns earthBox noSidePadd">
+			<h2>
+        <div data-min="2013" data-target="startYear" data-inc="1" data-format="0000"  class="upndownBox"></div>
+      </h2>
+			<img class="spin" src="/img/SVG/earth1.svg" />
+		</div>
+    
+		<div class="dollas">
+			<img src="/img/SVG/dollas.svg" />
+			<h3><span class="modifier" id="budget1"></span> in renewable energy</h3>
+		</div>
+    
+		<div class="medium-5 columns earthBox noSidePadd medium-offset-2">
+			<h2> 
+        <div data-min="2015" data-target="endYear" data-inc="1" data-format="0000"   class="upndownBox"></div>
+      </h2>
+			<img class="spin" src="/img/SVG/earth2.svg" />
+		</div>
     
   </div>
 </div>
 
 
-
-<div class="row papered">
-  <div class="large-12 columns">
-		<div class="medium-5 columns earthBox noSidePadd">
-			<h2><input type="text" name="startYear" maxlength="4" value="2016"><div data-min="2013" data-target="startYear" data-inc="1" data-format="0000"  class="upndownBox"><a class="upBtn" href="">Up</a><a class="downBtn" href="">Down</a></div></h2>
-			<img class="spin" src="/img/SVG/earth1.svg" />
-		</div>
-		<div class="dollas">
-			<img src="/img/SVG/dollas.svg" />
-			<h3><span class="modifier" id="budget1"></span> in renewable energy</h3>
-		</div>
-		<div class="medium-5 columns earthBox noSidePadd medium-offset-2">
-			<h2><input type="text" name="endYear" maxlength="4" value="2020"><div data-min="2015" data-target="endYear" data-inc="1" data-format="0000"   class="upndownBox"><a class="upBtn" href="">Up</a><a class="downBtn" href="">Down</a></div></h2>
-			<img class="spin" src="/img/SVG/earth2.svg" />
-		</div>		   
+<div class="row whitewrap margTop">
+	<div class="large-10 columns large-offset-1 ">
+    {% include background.html %}
   </div>
 </div>
 
 
 <div class="row whitewrap margTop">
 	<div class="large-10 columns large-offset-1 ">
-    {% include background.md %}   	      
+    {% markdown box1.html %}   	      
+  </div>
+</div>
+
+<div class="row whitewrap margTop">
+	<div class="large-10 columns large-offset-1 ">
+    {% markdown box2.html %}   	      
+  </div>
+</div>
+
+<div class="row whitewrap margTop">
+	<div class="large-10 columns large-offset-1 ">
+    {% markdown results.html %}   	      
+  </div>
+</div>
+
+<div class="row whitewrap margTop">
+	<div class="large-10 columns large-offset-1 ">
+    {% markdown methodology.html %}   	      
   </div>
 </div>
 
 
 <div class="row whitewrap margTop">
 	<div class="large-10 columns large-offset-1 ">
-    {% include box1.md %}   	      
-  </div>
-</div>
-
-<div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
-    {% include box2.md %}   	      
-  </div>
-</div>
-
-<div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
-    {% include results.md %}   	      
-  </div>
-</div>
-
-<div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
-    {% include methodology.md %}   	      
-  </div>
-</div>
-
-
-<div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
-    {% include about.md %}   	      
+    {% markdown about.html %}   	      
   </div>
 </div>
 
 
 
-<!-- Footer -->
-<footer class="row margTop">Footer.</footer>
-
-<script src="https://www.google.com/jsapi"></script>
-<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/bower_components/foundation/js/foundation.min.js"></script>
-<script src="/js/handsontable.full.min.js"></script>
-<script src="/js/FileSaver.js"></script>
-<script src="/js/app.js"></script>
-<script src="/js/scale.fix.js"></script>
-</body>
-</html>

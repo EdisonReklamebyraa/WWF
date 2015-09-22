@@ -1,3 +1,6 @@
+---
+---
+
 @import "settings";
 @import "foundation";
 
@@ -16,7 +19,7 @@ $blueish: #0e6e8d;
 --------------------------------------------------------------------- */
 body {
 	background: $beigeish;
-	font-family: Georgia, sans-serif;
+	font-family: arial, sans-serif;
 }
 
 ul {
@@ -83,7 +86,7 @@ header.row {
 	color: $orangeish;
 	border-bottom: 4px solid $orangeish;
 }
-
+ 
 a.modalLink {
 	text-transform: lowercase;
 	color: $orangeish;
