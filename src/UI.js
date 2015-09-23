@@ -35,7 +35,6 @@ UIs.prototype = _.create(
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
         },
 
-
         loadEvents: function(e) {
             self = this;
             $(".upndownBox .downBtn").click(function(e) {
@@ -65,7 +64,6 @@ UIs.prototype = _.create(
                   $(this).val(numeral().unformat($(this).val()));
             });
         },
-
 
         interaction: function() {
             this.user["starting year"] = Math.max(2013,numeral().unformat($("input[name=startYear]").val()));

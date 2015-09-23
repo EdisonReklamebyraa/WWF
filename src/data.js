@@ -17,7 +17,7 @@ Data.prototype = _.create(
 
         load: function(json) {
             var _self = this;
-            $.getJSON( "data.json",function(json) {
+            $.getJSON( "/data.json",function(json) {
                 _self.update(json);
             }).fail(function(jqxhr, textStatus, error ) {
                 var err = textStatus + ", " + error;

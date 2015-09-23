@@ -12,21 +12,28 @@ permalink: /new/
   </div>
   
   <div class="large-10 columns noRightPadd">
-	  <div class="whitewrap">      
+	  <div class="whitewrap padding ">      
       {% include intro.html %}
 	  </div>
   </div>
 </header>
 
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
+    {% include case.html %}
+  </div>
+</div>
+
+
+<div class="row whitewrap margTop">
+	<div class="large-10 columns ">
     {% include report.html %}
   </div>
 </div>
 
 
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
     {% include inputs.html %}    
   </div>
 </div>
@@ -36,66 +43,109 @@ permalink: /new/
 <div class="row papered margTop">
   <div class="large-12 columns">
     
-		<div class="medium-5 columns earthBox noSidePadd">
-			<h2>
-        <div data-min="2013" data-target="startYear" data-inc="1" data-format="0000"  class="upndownBox"></div>
-      </h2>
+	  <div class="medium-5 columns earthBox noSidePadd">
+			<h2><input type="text" name="startYear" maxlength="4" value="2016"><div data-min="2013" data-target="startYear" data-inc="1" data-format="0000"  class="upndownBox"><a class="upBtn" href="">Up</a><a class="downBtn" href="">Down</a></div></h2>
 			<img class="spin" src="/img/SVG/earth1.svg" />
 		</div>
-    
 		<div class="dollas">
 			<img src="/img/SVG/dollas.svg" />
 			<h3><span class="modifier" id="budget1"></span> in renewable energy</h3>
 		</div>
-    
 		<div class="medium-5 columns earthBox noSidePadd medium-offset-2">
-			<h2> 
-        <div data-min="2015" data-target="endYear" data-inc="1" data-format="0000"   class="upndownBox"></div>
-      </h2>
+			<h2><input type="text" name="endYear" maxlength="4" value="2020"><div data-min="2015" data-target="endYear" data-inc="1" data-format="0000"   class="upndownBox"><a class="upBtn" href="">Up</a><a class="downBtn" href="">Down</a></div></h2>
 			<img class="spin" src="/img/SVG/earth2.svg" />
 		</div>
-    
   </div>
 </div>
 
-
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
     {% include background.html %}
   </div>
 </div>
 
+<div class="row margTop">    
+
+	<ul class="accordion" data-accordion>
+
+    
+	  <li class="accordion-navigation">
+	    <a href="#panel1a">More advanced settings</a>
+	    <div id="panel1a" class="content">
+
+        <h2>Investment Forecast </h2>
+        <div id="GrowthRateDataTable"></div>
+        <a id="DownloadGrowthRateData" href="#">Download data</a>
+        
+        <h2>Background data</h2>
+        <div id="BackgroundData"></div>
+        <a id="DownloadBackgroundData" href="#">Download data</a>
+
+        <h2>Electricity Data Table</h2>
+        <div id="EMix"></div>        
+        <a id="DownloadEMixData" href="#">Download data</a>
+        
+	    </div>
+	  </li>
+	  
+	  <li class="accordion-navigation">
+	    <a href="#panel2a">Key results</a>
+	    <div id="panel2a" class="content">
+                
+        <h2>Key results</h2>
+        <div id="SharesDataTable"></div>
+        <a id="DownloadSharesDataData" href="#">Download data</a>
+        
+	    </div>
+	  </li>
+    
+    <li class="accordion-navigation">
+	    <a href="#panel3a">Impact</a>
+	    <div id="panel3a" class="content">                
+        <h2>Annual power generation from SPU <span class="years">5</span> years investments</h2>
+        <div id="ImpactDataTable"></div>
+        <a id="DownloadImpactData" href="#">Download data</a>
+	    </div>
+	  </li>
+    
+	</ul>    
+</div>
 
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
     {% include box1.html %}   	      
   </div>
 </div>
 
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
     {% include box2.html %}   	      
   </div>
 </div>
 
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
     {% include results.html %}   	      
   </div>
 </div>
 
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
     {% include methodology.html %}   	      
   </div>
 </div>
 
 
 <div class="row whitewrap margTop">
-	<div class="large-10 columns large-offset-1 ">
+	<div class="large-10 columns ">
     {% include about.html %}   	      
   </div>
 </div>
 
 
+<div class="row whitewrap margTop">
+	<div class="large-10 columns ">
+    {% include rights.html %}   	      
+  </div>
+</div>
 
