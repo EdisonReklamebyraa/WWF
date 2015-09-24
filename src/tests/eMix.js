@@ -41,57 +41,57 @@ test('Test ENERGY SCENARIO per year', function(t) {
 
     t.isEquivalent(energyScenario.getRelativeShare(2016)["Renewable energy"],
                    {
-                       "title": "Renewable energy",
-                       "total": 2053810700,
-                       "members": [
+                       "title":"Renewable energy",
+                       "total":2053810700,
+                       "members":[
                            {
-                               "id": 4,
-                               "percent": 0.28230723937119,
-                               "relativeShare": 0.5931735821612,
-                               "needed": 33417512.5,
-                               "title": "hydro"
+                               "id":4,
+                               "percent":0.2823072393711903,
+                               "relativeShare":0.5931735821611992,
+                               "needed":33417512.5,
+                               "title":"hydro"
                            },
                            {
-                               "id": 5,
-                               "percent": 0.055824456368162,
-                               "relativeShare": 0.062234752209636,
-                               "needed": 6608100,
-                               "title": "bioenergy"
+                               "id":5,
+                               "percent":0.05582445636816213,
+                               "relativeShare":0.06223475220963646,
+                               "needed":6608100,
+                               "title":"bioenergy"
                            },
                            {
-                               "id": 6,
-                               "percent": 0.35357505965261,
-                               "relativeShare": 0.21882471933757,
-                               "needed": 41853687.5,
-                               "title": "wind"
+                               "id":6,
+                               "percent":0.3535750596526146,
+                               "relativeShare":0.2188247193375709,
+                               "needed":41853687.5,
+                               "title":"wind"
                            },
                            {
-                               "id": 7,
-                               "percent": 0.0073897857490125,
-                               "relativeShare": 0.0071922889485384,
-                               "needed": 874750,
-                               "title": "geothermal"
+                               "id":7,
+                               "percent":0.0073897857490125484,
+                               "relativeShare":0.007192288948538441,
+                               "needed":874750,
+                               "title":"geothermal"
                            },
                            {
-                               "id": 8,
-                               "percent": 0.28888022042217,
-                               "relativeShare": 0.1142644743257,
-                               "needed": 34195575,
-                               "title": "solar pv"
+                               "id":8,
+                               "percent":0.28888022042216605,
+                               "relativeShare":0.114264474325701,
+                               "needed":34195575,
+                               "title":"solar pv"
                            },
                            {
-                               "id": 9,
-                               "percent": 0.011444980838089,
-                               "relativeShare": 0.0039160863267486,
-                               "needed": 1354775,
-                               "title": "csp (concentrated solar power.)"
+                               "id":9,
+                               "percent":0.01144498083808914,
+                               "relativeShare":0.003916086326748614,
+                               "needed":1354775,
+                               "title":"csp (concentrated solar power.)"
                            },
                            {
-                               "id": 10,
-                               "percent": 0.00057825759876526,
-                               "relativeShare": 0.00039409669060542,
-                               "needed": 68450,
-                               "title": "marine"
+                               "id":10,
+                               "percent":0.0005782575987652574,
+                               "relativeShare":0.00039409669060541945,
+                               "needed":68450,
+                               "title":"marine"
                            }
                        ]
                    },

@@ -112,7 +112,7 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
 
     getRenewableEnergyShares : function(start, end) {
         var shares = [];
-        for(var i = 0; i < end - start; i++)
+        for(var i = 0; i <= end - start; i++)
         {
             shares.push(this.getRelativeShare(start + i )[this.electricityMix.RENEWABLEENERGY]);
         }

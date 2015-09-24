@@ -76,8 +76,8 @@ module.exports =  [
         "maxHours": 3700,
         "averageHours": 2950,
         "emissions": 11.5,
-        "employment_1": 0.17,
-        "employment_2": 20.6998150732761000
+        "employment_1": 0.61463,
+        "employment_2": 25.0839537109598
     },
     {
         "type": "Geothermal",
@@ -98,8 +98,8 @@ module.exports =  [
         "maxHours": 2400,
         "averageHours": 1800,
         "emissions": 48,
-        "employment_1": 0.87,
-        "employment_2": 16.4356257360935000
+        "employment_1": 1.71,
+        "employment_2": 26
     },
     {
         "type": "CSP (concentrated solar power.)",
@@ -109,8 +109,8 @@ module.exports =  [
         "maxHours": 3500,
         "averageHours": 2850,
         "emissions": 27,
-        "employment_1": 0.23,
-        "employment_2": 2.5490404406997700
+        "employment_1": 0.4344,
+        "employment_2": 2.5490
     },
     {
         "type": "Marine",
@@ -120,7 +120,7 @@ module.exports =  [
         "maxHours": 5300,
         "averageHours": 3650,
         "emissions": 17,
-        "employment_1": 0,
-        "employment_2": 0
+        "employment_1": 0.11,
+        "employment_2": 8.6
     }
 ];

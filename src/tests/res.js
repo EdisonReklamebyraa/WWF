@@ -37,18 +37,18 @@ test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
                    "Should calculate the annual target ammount");
     var annualGrowthRates;
 
-   t.isEquivalent(annualGrowthRates = res.getAnnualGrowthRates( 0.05, 5 ),
-                   [0.05, 0.05,0.05,0.05,0.05,0.05],
-                   "Should calculate getAnnualGrowthRates");
+   t.isEquivalent(annualGrowthRates = res.getAnnualGrowthRates( 0.02, 4 ),
+                  [ 0, 0.02, 0.02, 0.02, 0.02  ],
+                  "Should calculate getAnnualGrowthRates");
 
     var projectIvestments;
-   t.isEquivalent( projectIvestments = res.projectIvestments(1000000, annualGrowthRates ),
-                   [ 1050000, 1102500, 1157625, 1215506.25, 1276281.5625, 1340095.640625 ],
+   t.isEquivalent( projectIvestments = res.projectIvestments(1000000000, annualGrowthRates ),
+                   [1000000000.0000,	1020000000.0000,	1040400000.0000,	1061208000.0000,	1082432160.0000 ],
                    "Should calculate project investments");
 
     var investments;
     t.isEquivalent(investments = res.getInvestments(projectIvestments, 0.05  ),
-                   [8750, 9625, 10565.625, 11576.25, 12661.5234375, 13826.383593749997  ],
+                   [ 10000000.0,	10400000.0,	10812000.0,	11236320.0,	11673288.0 ],
                    "Should calculate Annual investment in Res");
 
 
@@ -68,29 +68,30 @@ test('Test INVESTOR SIZE, FORECAST AND INVESTMENT TARGET', function(t) {
 
 test('Test POWER GENERATION', function(t) {
 
-    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
-    var projectIvestments  = res.projectIvestments(100000, annualGrowthRates );
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 4 );
+    var projectIvestments  = res.projectIvestments(1000000000, annualGrowthRates );
 
-    var share =  energyScenario.getRenewableEnergyShare(2016);
     var investments = res.getInvestments(projectIvestments, 0.05);
+    var share =  energyScenario.getRenewableEnergyShare(2016);
     var shares = energyScenario.getRenewableEnergyShares(2016, 2020);
+
 
 
     t.isEquivalent(_.map(res.addAllocatedMoney(share,investments[0]).members, function(a) {
                        return a.money;
-                   }), [ 20.568098868472436, 4.067210392537526, 25.76046863183335, 0.5383986759994857, 21.04698748790067, 0.8338486039179231, 0.042130196481468755 ],
+                   }),  [2823072.3937119027, 558244.5636816212, 3535750.596526146, 73897.85749012549, 2888802.2042216603, 114449.80838089141, 5782.575987652574 ],
                    "Should allocate the money");
 
     t.isEquivalent(_.map(res.addCapacityInstalled(share).members, function(a) {
                        return a.installed;
                    }),
-                   [ 0.16581521693513504, 1.0879232604695834, 0.014779571498025097, 0.902750688819269, 0.022441138898214003, 0.001070847405120847 ]
+                   [ 1456.6937016057288, 162.56393817170098, 1066.5914318329249, 14.48977597845598, 885.0496949208518, 22.001116566876473, 1.049850397177301 ]
                  ,"Annual new installed capacity kW, (Money allocated (USD) / overnight capital cost)");
 
     t.isEquivalent(_.map(res.addAnnualOutput(share).members, function(a) {
                        return a.annualOutput;
                    }),
-                   [7206.2637418435415, 887.1114106029725, 3209.373618385271, 97.54517188696563, 1624.9512398746842, 63.95724585990991, 3.9085930286910915 ]
+                   [  7064964.452787785, 869717.0692186003, 3146444.7239071284, 95632.52145780946, 1593089.4508575334, 62703.182215597946, 3831.953949697149  ]
                  ,"Annual output (capacity x FLH)");
 
 
@@ -98,22 +99,18 @@ test('Test POWER GENERATION', function(t) {
     t.isEquivalent(_.map(res.addLifetimeOutput(share).members, function(a) {
                        return a.lifetimeOutput;
                    }),
-                   [360313.1870921771, 32823.12219230998, 80234.34045963179, 2926.355156608969, 40623.780996867106, 1279.1449171981983, 78.17186057382183 ]
+                   [ 353248222.6393892, 32179531.56108821, 78661118.09767821, 2868975.6437342837, 39827236.27143834, 1254063.644311959, 76639.07899394298  ]
                  ,"Annual output (kWh) * lifetime (years).");
+
 
     t.isEquivalent( _.map(res.getLifeTimeSpread(shares,investments ), function(a) {
                         return _.reduce(a,function(total, n) { return total + n;  });
                     }),
-                    [1950072.9069033489, 177644.01526282998, 434241.15224947303, 15837.90466547693, 219862.435059029, 6922.937978379335, 423.07867946070394 ],
+                    [ 1911836183.238577, 174160799.27728435, 425726619.8524247, 15527357.515173445, 215551406.92061663, 6787194.096450324, 414783.01907912147 ],
                     "Rate of Return Matrix");
 
     t.isEquivalent( res.summarise(res.getLifeTimeSpread(shares,investments )) ,
-                    { "years": 54,
-                      "averageAnnualPowerGeneration": 51944.52649625923,
-                      "peakPowerGeneration": 1950072.9069033489,
-                      "yearlyTotalPowerGeneration": [ 13093.111021482038, 26709.946483823354, 40866.218120249716, 55578.05664353963, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70862.02222051303, 70794.15638162443, 70723.57590918028, 70650.19936417392, 70573.94313589185, 70494.72138762103, 65660.39652936108, 60632.69867677073, 55405.82664002007, 49973.824530883714, 44330.57789528095, 44233.03272339398, 44131.58574463154, 44026.11990478735, 43916.51502820966, 43802.64773976505, 43802.64773976505, 43802.64773976505, 42915.53632916208, 41992.94046213499, 41033.79560499106, 40037.008836472414, 39001.45813806694, 39001.45813806694, 39001.45813806694, 39001.45813806694, 39001.45813806694, 39001.45813806694, 39001.45813806694, 39001.45813806694, 39001.45813806694, 31795.194396223396, 24300.680104706113, 16509.26774702488, 8412.079206249735 ],
-                      "totalPowerGenerationPerType": [ 1950072.9069033489, 177644.01526282998, 434241.15224947303, 15837.90466547693, 219862.435059029, 6922.937978379335, 423.07867946070394 ],
-                      "yearlyMaximum": 70862.02222051303 },
+                    { "years": 54, "averageAnnualPowerGeneration": 50926006.36888159, "peakPowerGeneration": 1911836183.238577, "yearlyTotalPowerGeneration": [ 12836383.35439415, 26186222.04296407, 40064919.72573502, 54488290.826999635, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69472570.80442454, 69406035.66825925, 69336839.12664734, 69264901.33742543, 69190140.32930574, 69112471.94864807, 64372937.77388341, 59443822.232128166, 54319437.88237261, 48993945.61851344, 43461350.87772642, 43365718.35626861, 43266260.53395249, 43162862.6517523, 43055406.890401624, 42943772.2938873, 42943772.2938873, 42943772.2938873, 42074055.2246687, 41169549.47268136, 40229211.3774422, 39251969.44752197, 38236723.664771505, 38236723.664771505, 38236723.664771505, 38236723.664771505, 38236723.664771505, 38236723.664771505, 38236723.664771505, 38236723.664771505, 38236723.664771505, 31171759.21198372, 23824196.181084424, 16185556.614730269, 8247136.476715423 ], "totalPowerGenerationPerType": [ 1911836183.238577, 174160799.27728435, 425726619.8524247, 15527357.515173445, 215551406.92061663, 6787194.096450324, 414783.01907912147 ], "yearlyMaximum": 69472570.80442454 },
                     "summarise the rate of return matrix");
 
 
@@ -128,18 +125,18 @@ test('Test EMISSIONS CALCULATIONS', function(t) {
     var ffShare = energyScenario.getFossilFuelsShare(2016);
 
 
-    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
-    var projectIvestments  = res.projectIvestments(1000000, annualGrowthRates );
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 4 );
+    var projectIvestments  = res.projectIvestments(1000000000, annualGrowthRates );
 
     var investments = res.getInvestments(projectIvestments, 0.05);
-    var shares = energyScenario.getRenewableEnergyShares(2016, 2021);
+    var shares = energyScenario.getRenewableEnergyShares(2016, 2020);
 
 
     res.addInvestmentLifetimeOutput(share,investments[0]);
 
     t.isEquivalent(_.map(res.addLifetimeEmissions(share).members, function(a) {
                        return a.lifetimeEmissions;
-                   }),[ 8647516.49021225, 15919214.26327034, 922694.9152857655, 111201.49595114082, 1949941.487849621, 34536.91276435136, 1328.921629754971 ],
+                   }),[ 8477957343.345341, 15607072807.127783, 904602858.1232995, 109021074.46190278, 1911707341.0290403, 33859718.39642289, 1302864.3428970308 ],
                    "Should add the lifetime emissions from Res power generation");
 
 
@@ -148,20 +145,17 @@ test('Test EMISSIONS CALCULATIONS', function(t) {
 
     t.isEquivalent(_.map(ffShare.members, function(a) {
                        return a.renewableEnergy;
-                   }), [ 249739.33004240147, 52627.90038204898, 215910.87225091658 ],
+                   }),  [ 244842480.43372688, 51595980.76671467, 211677325.73619264 ],
                    "Should get the lifetime output allocated to fossil fuels only");
 
 
     t.isEquivalent(_.map(ffShare.members, function(a) {
                        return a.renewableEnergyCO2;
-                   }), [204786250.6347692, 44207436.320921145, 105796327.40294912 ],
+                   }), [ 200770833955.65604, 43340623844.04032, 103721889610.73439 ],
                    "Should get the lifetime GHG emissions from power generation IF generated by fossil fuels");
 
-    t.isEquivalent(share.c02Saved , 327203579.87167627,
+    t.isEquivalent(share.c02Saved , 320787823403.60406,
                    "Net CO2 eq. Emission mitigation REs vs fossil");
-
-
-
 
     t.end();
 })
@@ -171,31 +165,26 @@ test('Test JOBS CREATION - Method 1: based on GWh produced', function(t) {
     var share =  energyScenario.getRenewableEnergyShare(2016);
     var ffShare = energyScenario.getFossilFuelsShare(2016);
 
-    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
-    var projectIvestments  = res.projectIvestments(1000000, annualGrowthRates );
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 4 );
+    var projectIvestments  = res.projectIvestments(1000000000, annualGrowthRates );
 
     var investments = res.getInvestments(projectIvestments, 0.05);
-    var shares = energyScenario.getRenewableEnergyShares(2016, 2021);
+    var shares = energyScenario.getRenewableEnergyShares(2016, 2020);
     res.addInvestmentLifetimeOutput(share,investments[0]);
 
 
     t.isEquivalent(_.map(res.addJobsCreated(share).members, function(a) {
                        return a.jobsCreated;
-                   }),[ 0.09728456051488782, 0.006892855660385095, 0.013639837878137405, 0.0007315887891522423, 0.035342689467274375, 0.0002942033309555856, 0],
+                   }), [ 95.37702011263508, 6.757701627828524, 48.34748301637595, 0.7172439109335709, 68.10457402415955, 0.544765247089115, 0.008430298689333727 ],
                    "Should get the jobs created with renewables energy");
-
 
     t.isEquivalent(_.map(res.addJobsCreatedWithFF(ffShare, share).members, function(a) {
                        return a.REJobs;
-                   }),[0.030365860825676855, 0, 0.026644730468613518 ],
-                   "Should get the jobs created with renewables energy");
+                   }), [ 29.77045178987926, 0, 26.122284773150497 ],
+                   "Jobs created with fossil fuels");
 
-    t.isEquivalent(ffShare.totalREJobsCreated, 0.05701059129429037,
+    t.isEquivalent(ffShare.totalREJobsCreated, 55.89273656302976,
                    "Should get the TOTAL jobs created with renewables energy");
-
-
-
-
     t.end();
 });
 
@@ -204,12 +193,11 @@ test('Test JOBS CREATION - Method 1: based on GWh produced', function(t) {
 
 test('Test JOBS CREATION - Method 2: based on USD invested', function(t) {
 
-
    var share =  energyScenario.getRenewableEnergyShare(2016);
     var ffShare = energyScenario.getFossilFuelsShare(2016);
 
-    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 5 );
-    var projectIvestments  = res.projectIvestments(1000000, annualGrowthRates );
+    var annualGrowthRates =  res.getAnnualGrowthRates( 0.02, 4 );
+    var projectIvestments  = res.projectIvestments(1000000000, annualGrowthRates );
 
     var investments = res.getInvestments(projectIvestments, 0.05);
     res.addInvestmentLifetimeOutput(share,investments[0]);
@@ -217,16 +205,16 @@ test('Test JOBS CREATION - Method 2: based on USD invested', function(t) {
 
     t.isEquivalent(_.map(res.addUSDJobsCreated(share).members, function(a) {
                        return a.jobsUSDCreated;
-                   }),[0.06734566960655435, 0.01731581289069414, 0.07465317116318321, 0.0006453483165928635, 0.048428857291272935, 0.0002975719337930963, 0 ],
+                   }),[ 66.02516628093564, 16.97628714773935, 88.69060429676034, 0.6326944280322192, 75.10885730976317, 0.2917325615628922, 0.049730153493812136 ],
                    "Should get the jobs created with renewables energy");
 
 
     t.isEquivalent(_.map(res.addUSDJobsCreatedWithFF(ffShare, share).members, function(a) {
                        return a.REUSDJobs;
-                   }),[0.06172173609827509, 0, 0.040814842071911855 ],
-                   "Should get the jobs created with renewables energy");
+                   }),[ 60.51150597870107, 0, 40.01455105089398 ],
+                   "Jobs created with fossil fuels");
 
-    t.isEquivalent(ffShare.totalUSDREJobsCreated, 0.10253657817018694,
+    t.isEquivalent(ffShare.totalUSDREJobsCreated,100.52605702959505,
                    "Should get the TOTAL jobs created with renewables energy");
 
 

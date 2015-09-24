@@ -188,8 +188,8 @@
             "maxHours": 3700,
             "averageHours": 2950,
             "emissions": 11.5,
-            "employment_1": 0.17,
-            "employment_2": 20.6998150732761
+            "employment_1": 0.61463,
+            "employment_2": 25.0839537109598
         },
         {
             "type": "Geothermal",

@@ -38,7 +38,7 @@ RES.prototype = _.create(
         },
 
         getAnnualGrowthRates: function( annualGrowthRate,years){
-            var gr =  _.fill(Array(years), annualGrowthRate);
+            var gr =  _.fill(Array(years ), annualGrowthRate);
             gr.unshift(0);
             return gr;
         },
@@ -149,15 +149,15 @@ RES.prototype = _.create(
 
             var lifeTime = this.getInvestmentLifetime() ;
             var totalYearsReturns = lifeTime + investments.length - 1  ;
+            var members = _.first(shares).members.length;
+            var matrix = makeMatrix(members, totalYearsReturns);
 
-            var matrix = makeMatrix(_.first(shares).members.length, totalYearsReturns);
-
-            for(var i = 0; i < Math.min(investments.length, shares.length); i++)
+            for(var i = 0; i < investments.length; i++)
             {
                 var share = shares[i];
                 this.addInvestmentLifetimeOutput(share, investments[i]);
 
-                for(var j = 0; j < share.members.length; j++)
+                for(var j = 0; j < members; j++)
                 {
 
                     var data = this.backgroundData[ share.members[j].id];
