@@ -29,6 +29,7 @@ UIs.prototype = _.create(
         },
 
         updateUI: function(json) {
+
             $("input[name=startYear]").val(this.user["starting year"] );
             $("input[name=totalFund]").val(numeral(this.user["investment"] ).format('$ 0, 000')  );
             $("input[name=endYear]").val(this.user["target year"] );
@@ -68,7 +69,10 @@ UIs.prototype = _.create(
 
         interaction: function(input) {
 
-            this.user[ $(input).data("id")] = $(input).val();
+            this.user[ $(input).data("id")] = $(input).val() * 1;
+
+
+            this.user["target year"] = Math.max(this.user["target year"], this.user["starting year"])
 
             Arbiter.publish("changed/user",this.user);
         }
