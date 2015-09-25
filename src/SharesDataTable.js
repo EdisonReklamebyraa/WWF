@@ -80,7 +80,6 @@ SharesDataTable.prototype = _.create(
                             rows[index + k] = [];
                             format[index + k]  = [] ;
                         }
-
                     }
 
                     rows[index][i+1] = "";

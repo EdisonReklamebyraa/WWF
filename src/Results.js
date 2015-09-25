@@ -58,6 +58,7 @@ Results.prototype = _.create(
         ffshares:null,
         summary: null,
 
+
         loadData: function(json) {
             this.data = json;
         },
@@ -91,18 +92,15 @@ Results.prototype = _.create(
 
         updateAnnualGrowthRates : function() {
             this.setAnnualGrowthRates(this.res.getAnnualGrowthRates( this.data.user["annual growth rate"],
-                                                                           this.data.user["target year"] - this.data.user["starting year"]));
+                                                                           this.data.user["target year"] - this.data.user["starting year"] ));
         },
 
 
         updateInvestments : function() {
 
-           var endOfyear = 1;
-
             this.setInvestments( this.res.getInvestments( this.projections, this.data.user["target"]));
-
-            this.setShares( this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
-            this.setFFShares( this.energyScenario.getFossilFuelsShares(this.data.user["starting year"], this.data.user["target year"] + endOfyear ));
+            this.setShares( this.energyScenario.getRenewableEnergyShares(this.data.user["starting year"], this.data.user["target year"]  ));
+            this.setFFShares( this.energyScenario.getFossilFuelsShares(this.data.user["starting year"], this.data.user["target year"] ));
             this.updateResults();
 
         },
