@@ -577,11 +577,7 @@ function ImpactDataTable() {
     });
 
 
-    $(".accordion").click(
-        _.debounce(function() {
-            if(self.table)
-              self.table.render();
-        }, 100));
+
 
 
     $("#DownloadImpactData").click(function(e) {
@@ -597,7 +593,7 @@ ImpactDataTable.prototype = _.create(
     ImpactDataTable.prototype,
     {
         data: null,
-        table: null,
+
         userData: null,
 
 
@@ -614,24 +610,19 @@ ImpactDataTable.prototype = _.create(
 
         getData: function() {
             var start =  this.userData["starting year"];
-            var out = {cols:[], data: []};
-            var row  = [];
+            var list = "";
 
             for(var i = 0; i < this.data.yearlyTotalPowerGeneration.length; i++)
             {
-
-                row.push(this.data.yearlyTotalPowerGeneration[i]);
-
-
-                if(i%5 === 4 ){
-                    out.data.push(row);
-                    row = [];
-
-                }
+                list +="<div class='year'><dt>"
+              + ( i + start )
+              + ": </dt>"
+              +  "<dd>"
+              + numeral(this.data.yearlyTotalPowerGeneration[i]).format('0 000')
+              + "</dd></div>";
             }
 
-            out.data.push(row);
-            return out;
+            return list;
         },
 
         updateTable:  _.debounce(function() {
@@ -640,18 +631,7 @@ ImpactDataTable.prototype = _.create(
                           if(!this.data)
                             return;
 
-                          var container = document.getElementById('ImpactDataTable');
-                          var d = this.getData();
-                          container.innerHTML = "";
-                          this.table = new Handsontable(container, {
-                              data: d.data,
-                              cells: function(row,cell,prop) {
-                                  this.type = "numeric";
-                                  this.format = "0, 000"
-                              }
-
-
-                          });
+                          $("#ImpactDataTable").html("<dl>"+this.getData()+"</dl>");
 
                       }, 200)
 
@@ -947,7 +927,7 @@ Results.prototype = _.create(
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
                            var worldUS  = 6135 * 1000000  ;
-                           
+
                            for(var i = 0; i < shares.length; i++)
                            {
                                c02g     += shares[i].c02Saved;
@@ -966,7 +946,7 @@ Results.prototype = _.create(
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
                            $(".impactYears").text(  impact.years );
 
-
+                           $(".targetPercent").text(numeral(this.data.user["target"]).format('0%')   );
 
                            $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 

@@ -348,7 +348,17 @@ table {
     max-width: 10em;
     
 }
+#ImpactDataTable{
+    overflow: hidden;
+    .year{
+        float: left;
+        padding: 1em 1em 0 0;
+    }
 
+    dt, dd{
+        display: inline;
+    }
+}
  
 
 /* Animations

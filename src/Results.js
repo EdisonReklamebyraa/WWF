@@ -185,7 +185,7 @@ Results.prototype = _.create(
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
                            var worldUS  = 6135 * 1000000  ;
-                           
+
                            for(var i = 0; i < shares.length; i++)
                            {
                                c02g     += shares[i].c02Saved;
@@ -204,7 +204,7 @@ Results.prototype = _.create(
                            $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
                            $(".impactYears").text(  impact.years );
 
-
+                           $(".targetPercent").text(numeral(this.data.user["target"]).format('0%')   );
 
                            $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
