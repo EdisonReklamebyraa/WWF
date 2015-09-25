@@ -67,6 +67,11 @@ h1 {
   margin: 0;
   text-transform: uppercase;   
 }
+
+h2{
+    line-height: 1.1em;
+}
+
 h3, .accordion .accordion-navigation a {
 	font-size: 1.2rem;
 }
@@ -195,7 +200,11 @@ h2 .upndownBox .downBtn {
 }
 .sidebar {
 	text-align: center;
-	  padding: 2rem 0;
+	padding: 2rem;
+}
+
+.padding{
+	padding: 2rem;
 }
 .whitewrap {
 	background: white;

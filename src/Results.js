@@ -185,7 +185,7 @@ Results.prototype = _.create(
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
                            var worldUS  = 6135 * 1000000  ;
-
+                           
                            for(var i = 0; i < shares.length; i++)
                            {
                                c02g     += shares[i].c02Saved;
@@ -197,7 +197,7 @@ Results.prototype = _.create(
                            $("#EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
                            $("#timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
                            $("#timesUS").text(numeral(c02g /worldUS).format('0, 000') );
-                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000')+'H');
+                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000')+'Wh');
                            $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
                            $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
                            $("#twhImpact .start").text(this.data.user["starting year"]);

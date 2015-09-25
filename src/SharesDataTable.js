@@ -70,7 +70,6 @@ SharesDataTable.prototype = _.create(
 
                 for(var j = 0; j < members.length; j++)
                 {
-
                     var member = members[j];
                     var index = clump * j;
 
