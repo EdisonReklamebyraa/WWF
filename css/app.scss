@@ -28,6 +28,15 @@ ul {
         margin: 0;
     }
 }
+
+.logo{
+    img{
+        border: 2px solid #000;        
+    }    
+
+    padding: 5px;
+}
+
 .row {
 	max-width: 72rem;
 }
@@ -211,14 +220,20 @@ h2 .upndownBox .downBtn {
 }
 
 .padding{
-	padding: 2rem ;
+	padding: 2rem; 
 }
 .whitewrap {
 	background: white;
 }
+.topGap{
+    padding-top: 2em;
+    clear: both;
+    overflow: hidden;
+}
 
 .techBox, .earthBox {
-	position: relative;
+	  position: relative;
+    overflow: hidden;
 }
 .techBox p, .earthBox h2 {
 	position: absolute;
@@ -236,6 +251,10 @@ h2 .upndownBox .downBtn {
 	line-height: 1;
 	z-index: 9;
 }
+.globe{
+    padding: 1px;
+}
+
 .techBox p {
 	line-height: 1;
 }
@@ -254,15 +273,26 @@ h2 .upndownBox .downBtn {
 	padding:0;
 }
 
-header .whitewrap {
-	min-height: 16.65rem;
-}
 
 header .fundBox {
 	min-height: 0;
 	padding: 1rem 1.9rem 0.8rem;
 	background: #E8E8E8;
 	border-bottom: 4px solid #808080;
+}
+
+header{
+    .intro{
+        padding: 1.6rem 1.6rem 1rem;        
+    }
+    
+    h1{
+        padding: 0 0 1rem;
+    }
+
+    p{
+        margin-bottom: 0;
+    }
 }
 
 .fundBox input[type="text"] {

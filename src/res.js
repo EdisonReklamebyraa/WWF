@@ -78,11 +78,13 @@ RES.prototype = _.create(
         addAllocatedMoney : function(share, investment)
         {
             share.investment = investment;
+            var total = 0;
             for(var j = 0; j < share.members.length; j++)
             {
                 share.members[j].money = share.members[j].percent * investment;
+                total += share.members[j].money ;
             }
-
+            share.totalMoney = total;
             return share;
         },
 
@@ -96,8 +98,9 @@ RES.prototype = _.create(
 
                 var data = this.backgroundData[ share.members[i].id];
                 share.members[i].installed =   share.members[i].money / data.overnightCapitalCost;
-
+                totalInstalled += share.members[i].installed;
             }
+            share.totalInstalled = totalInstalled;
             return share;
         },
 

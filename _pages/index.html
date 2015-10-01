@@ -6,13 +6,13 @@ permalink: /
 
 <header class="row">
   <div class="large-2 columns noLeftPadd">
-    <div class="whitewrap">
+    <div class="whitewrap logo">
       <img src="/img/WWF.png" alt="WWF Logo" />
 		</div>
   </div>
   
   <div class="large-10 columns noRightPadd">
-	  <div class="whitewrap padding ">      
+	  <div class="whitewrap intro ">      
       {% include intro.html %}
 	  </div>
   </div>
@@ -36,14 +36,28 @@ permalink: /
 </div>
 
 <div class="row papered margTop">
-  <div class="large-12 columns">    
-	 {% include earth.html %}
+  <div class="large-8 columns">
+    <div class="  techBox">
+	    {% include earth.html %}
+    </div>    
+    <div class="  techBox">
+      {% include tech.html %}     
+    </div>
   </div>
-</div>
 
-<div class="row papered ">
-  <div class="large-12 columns techBox">
-    {% include tech.html %}
+  <div class="large-4 columns sidebar whitewrap">
+    <div>   
+	    {% include installed.html %}
+      <hr />
+    </div>
+    <div>   
+	    {% include renewable.html %}    
+      <hr />
+    </div>
+    <div>   
+	    {% include impact.html %}
+    </div>
+  
   </div>
 </div>
 

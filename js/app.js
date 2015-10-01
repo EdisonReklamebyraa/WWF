@@ -125,7 +125,7 @@ function Charts(data) {
         self.loadedGoogle();
     });
 
-    $("#ComparisonField").keyup(this.impactChart).change(this.impactChart);
+    $("#ComparisonField").keyup(this.impactChart).change(this.impactChart).keyup(this.impactChart);
 
 }
 
@@ -157,10 +157,12 @@ Charts.prototype = _.create(
 
         update: _.debounce(function() {
 
-             this.pieChart();
-             this.investmentsChart();
-             this.impactChart();
-         }, 200),
+                    this.pieChart();
+                    this.totalInvestmentChart();
+                    this.investmentsChart();
+                    this.impactChart();
+                    this.capacityInstalled();
+                }, 200),
 
 
         updateImpact: function(json) {
@@ -175,81 +177,146 @@ Charts.prototype = _.create(
 
         impactChart: _.debounce( function() {
 
-            if(this.impact && this.gLoaded && this.user){
+                         if(this.impact && this.gLoaded && this.user){
 
-                var arrData = [ ['Year', 'Comparison field', 'Energy']];
-                var comp  = $("#ComparisonField").val() * 1;
+                             var arrData = [ ['Year', 'Comparison field', 'Energy']];
+                             var comp  = $("#ComparisonField").val() * 1;
 
-                for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
-                {
-                    arrData.push([(this.user["starting year"] + i) + "", comp, this.impact.yearlyTotalPowerGeneration[i]]);
-
-
-                }
-
-                var data = google.visualization.arrayToDataTable(arrData);
-
-                var options = {
-                    chart: {
-                        title: 'Annual and cumulative investment.'
-                    }
-                };
+                             for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
+                             {
+                                 arrData.push([(this.user["starting year"] + i) + "", comp, this.impact.yearlyTotalPowerGeneration[i]]);
 
 
-                var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
+                             }
 
-                chart.draw(data, options);
-            }
-        },200),
+                             var data = google.visualization.arrayToDataTable(arrData);
 
-
-        investmentsChart: function() {
-
-            if(this.investments && this.gLoaded && this.user){
-                var arrData = [ ['Year', 'Annual investment', 'Cumulative investment']];
-                var total = 0;
-
-                for(var i = 0; i < this.investments.length; i++)
-                {
-                    total += this.investments[i];
-                    arrData.push([(this.user["starting year"] + i) + "", this.investments[i],total]);
-                }
-
-                 var data = google.visualization.arrayToDataTable(arrData);
-
-                var options = {
-                    chart: {
-                        title: 'Annual and cumulative investment.'
-                    }
-                };
+                             var options = {
+                                 chart: {
+                                     title: 'Impact'
+                                 }
+                             };
 
 
-                var chart = new google.charts.Bar(document.getElementById('InvestmentsChart'));
+                             var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
 
-                chart.draw(data, options);
-            }
-        },
+                             chart.draw(data, options);
 
-        pieChart: function() {
-            if(this.shares && this.gLoaded ){
-                var data = new google.visualization.DataTable();
-                var pieData = [];
+                             $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                         }
+                     },200),
 
-                data.addColumn('string', 'Type');
-                data.addColumn('number', 'Percentage');
 
-                for(var i = 0; i < this.shares[0].members.length; i++)
-                {
-                    pieData.push([this.shares[0].members[i].title,this.shares[0].members[i].percent* 100]);
-                }
-                data.addRows(pieData );
-                // Set chart options
-                var options = {'title':'Relative share that each technology has WITHIN its category' };
+        investmentsChart: _.debounce( function() {
 
-                var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
-                chart.draw(data, options);
-            }
-        }
+                              var data = [(["Year"]).concat(_.first(this.shares).members.map(function(member) {
+                                                                return member.title;
+                                                            })).concat(["total"])];
+
+                              for(var i = 0; i < this.shares.length; i++){
+                                  data.push(([this.user["starting year"] + i]).concat(this.shares[i].members.map(function(member) {
+                                                                                          return member.money;
+                                                                                      })).concat([this.shares[i].totalMoney]) );
+                              }
+
+                              var series = {};
+                              series[(this.shares.length + 2)] = {type: 'line'};
+                              var options = {
+                                  vAxis: {title: 'Invested, $'},
+                                  hAxis: {title: 'Year'},
+                                  seriesType: 'bars',
+                                  series: series
+                              };
+
+                              var chart = new google.visualization.ComboChart(document.getElementById('InvestmentChart'));
+                              chart.draw(google.visualization.arrayToDataTable(data), options);
+
+                              $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+
+
+                          }, 200),
+
+
+
+        capacityInstalled: _.debounce( function() {
+
+                               var data = [(["Year"]).concat(_.first(this.shares).members.map(function(member) {
+                                                                 return member.title;
+                                                             })).concat(["total"])];
+
+                               for(var i = 0; i < this.shares.length; i++){
+                                   data.push(([this.user["starting year"] + i]).concat(this.shares[i].members.map(function(member) {
+                                                                                           return member.installed;
+                                                                                       })).concat([this.shares[i].totalInstalled]) );
+                               }
+
+                               var series = {};
+                               series[(this.shares.length + 2)] = {type: 'line'};
+                               var options = {
+                                   vAxis: {title: 'Installed capacity, kW'},
+                                   hAxis: {title: 'Year'},
+                                   seriesType: 'bars',
+                                   series: series
+                               };
+
+                               var chart = new google.visualization.ComboChart(document.getElementById('CapacityInstalled'));
+                               chart.draw(google.visualization.arrayToDataTable(data), options);
+                               $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+
+
+                           }, 200),
+
+
+        totalInvestmentChart:  _.debounce( function() {
+
+                                   if(this.investments && this.gLoaded && this.user){
+                                       var arrData = [ ['Year', 'Annual investment', 'Cumulative investment']];
+                                       var total = 0;
+
+                                       for(var i = 0; i < this.investments.length; i++)
+                                       {
+                                           total += this.investments[i];
+                                           arrData.push([(this.user["starting year"] + i) + "", this.investments[i],total]);
+                                       }
+
+                                       var data = google.visualization.arrayToDataTable(arrData);
+
+                                       var options = {
+                                           chart: {
+                                               title: 'Annual and cumulative investment.'
+                                           }
+                                       };
+
+
+                                       var chart = new google.visualization.ColumnChart(document.getElementById('TotalInvestmentChart'));
+                                       chart.draw(data, options);
+
+                                       $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+
+                                   }
+                               }, 200),
+
+        pieChart:  _.debounce( function() {
+                                  if(this.shares && this.gLoaded ){
+                                      var data = new google.visualization.DataTable();
+                                      var pieData = [];
+
+                                      data.addColumn('string', 'Type');
+                                      data.addColumn('number', 'Percentage');
+
+                                      for(var i = 0; i < this.shares[0].members.length; i++)
+                                      {
+                                          pieData.push([this.shares[0].members[i].title,this.shares[0].members[i].percent* 100]);
+                                      }
+                                      data.addRows(pieData );
+                                      // Set chart options
+                                      var options = {'title':'Relative share that each technology has WITHIN its category' };
+
+                                      var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
+                                      chart.draw(data, options);
+                                      $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                                  }
+                              }, 200)
 
     }
 );
@@ -907,9 +974,9 @@ Results.prototype = _.create(
                 installed     += shares[i].totalLifetimeOutput;
             }
 
-            $("#gigawatts").text(numeral(installed).format('0, 000'));
-            $("#coalPlants").text(numeral(installed / coalPlant).format('0, 000'));
-            $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0, 000'));
+            $(".gigawatts").text(numeral(installed).format('0, 000'));
+            $(".coalPlants").text(numeral(installed / coalPlant).format('0, 000'));
+            $(".nuclearReactors").text(numeral(installed / nuclearReactor).format('0, 000'));
         },
 
 
@@ -927,23 +994,33 @@ Results.prototype = _.create(
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
                            var worldUS  = 6135 * 1000000  ;
-
+                           var globes = "";
+                           var numGlobes = 0;
                            for(var i = 0; i < shares.length; i++)
                            {
                                c02g     += shares[i].c02Saved;
                            }
 
+                           numGlobes = Math.floor(c02g/worldGHG)
+
+                           for(i = 0; i < Math.floor(c02g/worldGHG); i++)
+                           {
+                               globes += '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
+                           }
 
                            Arbiter.publish("changed/impact",impact );
 
-                           $("#EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
-                           $("#timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
-                           $("#timesUS").text(numeral(c02g /worldUS).format('0, 000') );
-                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000')+'Wh');
-                           $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
-                           $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
-                           $("#twhImpact .start").text(this.data.user["starting year"]);
-                           $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+                           $(".EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
+                           $(".timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
+
+                           $(".globes").html(globes);
+
+                           $(".timesUS").text(numeral(c02g /worldUS).format('0, 000') );
+                           $(".amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000')+' Wh');
+                           $(".wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
+                           $(".wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
+                           $(".start").text(this.data.user["starting year"]);
+                           $(".end").text(this.data.user["starting year"] + impact.years );
                            $(".impactYears").text(  impact.years );
 
                            $(".targetPercent").text(numeral(this.data.user["target"]).format('0%')   );
@@ -13822,11 +13899,13 @@ RES.prototype = _.create(
         addAllocatedMoney : function(share, investment)
         {
             share.investment = investment;
+            var total = 0;
             for(var j = 0; j < share.members.length; j++)
             {
                 share.members[j].money = share.members[j].percent * investment;
+                total += share.members[j].money ;
             }
-
+            share.totalMoney = total;
             return share;
         },
 
@@ -13840,8 +13919,9 @@ RES.prototype = _.create(
 
                 var data = this.backgroundData[ share.members[i].id];
                 share.members[i].installed =   share.members[i].money / data.overnightCapitalCost;
-
+                totalInstalled += share.members[i].installed;
             }
+            share.totalInstalled = totalInstalled;
             return share;
         },
 

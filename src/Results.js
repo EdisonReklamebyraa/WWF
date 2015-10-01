@@ -165,9 +165,9 @@ Results.prototype = _.create(
                 installed     += shares[i].totalLifetimeOutput;
             }
 
-            $("#gigawatts").text(numeral(installed).format('0, 000'));
-            $("#coalPlants").text(numeral(installed / coalPlant).format('0, 000'));
-            $("#nuclearReactors").text(numeral(installed / nuclearReactor).format('0, 000'));
+            $(".gigawatts").text(numeral(installed).format('0, 000'));
+            $(".coalPlants").text(numeral(installed / coalPlant).format('0, 000'));
+            $(".nuclearReactors").text(numeral(installed / nuclearReactor).format('0, 000'));
         },
 
 
@@ -185,23 +185,33 @@ Results.prototype = _.create(
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
                            var worldUS  = 6135 * 1000000  ;
-
+                           var globes = "";
+                           var numGlobes = 0;
                            for(var i = 0; i < shares.length; i++)
                            {
                                c02g     += shares[i].c02Saved;
                            }
 
+                           numGlobes = Math.floor(c02g/worldGHG)
+
+                           for(i = 0; i < Math.floor(c02g/worldGHG); i++)
+                           {
+                               globes += '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
+                           }
 
                            Arbiter.publish("changed/impact",impact );
 
-                           $("#EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
-                           $("#timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
-                           $("#timesUS").text(numeral(c02g /worldUS).format('0, 000') );
-                           $("#twhImpact .amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000')+'Wh');
-                           $("#wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
-                           $("#wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
-                           $("#twhImpact .start").text(this.data.user["starting year"]);
-                           $("#twhImpact .end").text(this.data.user["starting year"] + impact.years );
+                           $(".EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
+                           $(".timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
+
+                           $(".globes").html(globes);
+
+                           $(".timesUS").text(numeral(c02g /worldUS).format('0, 000') );
+                           $(".amount").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000')+' Wh');
+                           $(".wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
+                           $(".wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
+                           $(".start").text(this.data.user["starting year"]);
+                           $(".end").text(this.data.user["starting year"] + impact.years );
                            $(".impactYears").text(  impact.years );
 
                            $(".targetPercent").text(numeral(this.data.user["target"]).format('0%')   );
