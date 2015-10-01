@@ -67,7 +67,6 @@ Results.prototype = _.create(
             this.data.user = json;
         },
 
-
         loadMix: function(json) {
 
             this.data.electricity_mix.data = json;
@@ -181,12 +180,13 @@ Results.prototype = _.create(
 
         updateImpact:  _.debounce(function(shares,investments) {
                            var million = 1000000;
-                           var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
+
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
                            var worldUS  = 6135 * 1000000  ;
                            var globes = "";
                            var numGlobes = 0;
+
                            for(var i = 0; i < shares.length; i++)
                            {
                                c02g     += shares[i].c02Saved;
@@ -199,7 +199,7 @@ Results.prototype = _.create(
                                globes += '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
                            }
 
-                           Arbiter.publish("changed/impact",impact );
+                           Arbiter.publish("changed/impact",this.summary  );
 
                            $(".EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
                            $(".timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
@@ -207,12 +207,12 @@ Results.prototype = _.create(
                            $(".globes").html(globes);
 
                            $(".timesUS").text(numeral(c02g /worldUS).format('0, 000') );
-                           $(".amount").text(numeral(impact.averageAnnualPowerGeneration/100).format('0, 000')+' KWh');
-                           $(".wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
-                           $(".wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
+                           $(".amount").text(numeral(this.summary .averageAnnualPowerGeneration/100).format('0, 000')+' KWh');
+                           $(".wAnnually").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
+                           $(".wAnnuallyType").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".start").text(this.data.user["starting year"]);
-                           $(".end").text(this.data.user["starting year"] + impact.years );
-                           $(".impactYears").text(  impact.years );
+                           $(".end").text(this.data.user["starting year"] + this.summary .years );
+                           $(".impactYears").text(  this.summary .years );
 
                            $(".targetPercent").text(numeral(this.data.user["target"]).format('0%')   );
 

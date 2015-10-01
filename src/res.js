@@ -136,6 +136,7 @@ RES.prototype = _.create(
             this.addCapacityInstalled(share);
             this.addAnnualOutput(share);
             this.addLifetimeOutput(share);
+
             return share;
         },
 

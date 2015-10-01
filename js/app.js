@@ -175,148 +175,148 @@ Charts.prototype = _.create(
             this.update();
         },
 
-        impactChart: _.debounce( function() {
+        impactChart: function() {
 
-                         if(this.impact && this.gLoaded && this.user){
+            if(this.impact && this.gLoaded && this.user){
 
-                             var arrData = [ ['Year', 'Comparison field', 'Energy']];
-                             var comp  = $("#ComparisonField").val() * 1;
+                var arrData = [ ['Year', 'Comparison field', 'Energy']];
+                var comp  = $("#ComparisonField").val() * 1;
 
-                             for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
-                             {
-                                 arrData.push([(this.user["starting year"] + i) + "", comp, this.impact.yearlyTotalPowerGeneration[i]]);
-
-
-                             }
-
-                             var data = google.visualization.arrayToDataTable(arrData);
-
-                             var options = {
-                                 chart: {
-                                     title: 'Impact'
-                                 }
-                             };
+                for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
+                {
+                    arrData.push([(this.user["starting year"] + i) + "", comp, this.impact.yearlyTotalPowerGeneration[i]]);
 
 
-                             var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
+                }
 
-                             chart.draw(data, options);
+                var data = google.visualization.arrayToDataTable(arrData);
 
-                             $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
-                         }
-                     },200),
-
-
-        investmentsChart: _.debounce( function() {
-
-                              var data = [(["Year"]).concat(_.first(this.shares).members.map(function(member) {
-                                                                return member.title;
-                                                            })).concat(["total"])];
-
-                              for(var i = 0; i < this.shares.length; i++){
-                                  data.push(([this.user["starting year"] + i]).concat(this.shares[i].members.map(function(member) {
-                                                                                          return member.money;
-                                                                                      })).concat([this.shares[i].totalMoney]) );
-                              }
-
-                              var series = {};
-                              series[(this.shares.length + 2)] = {type: 'line'};
-                              var options = {
-                                  vAxis: {title: 'Invested, $'},
-                                  hAxis: {title: 'Year'},
-                                  seriesType: 'bars',
-                                  series: series
-                              };
-
-                              var chart = new google.visualization.ComboChart(document.getElementById('InvestmentChart'));
-                              chart.draw(google.visualization.arrayToDataTable(data), options);
-
-                              $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                var options = {
+                    chart: {
+                        title: 'Impact'
+                    }
+                };
 
 
-                          }, 200),
+                var chart = new google.visualization.ColumnChart(document.getElementById('ImpactChart'));
+
+                chart.draw(data, options);
+
+                $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+            }
+        } ,
+
+
+        investmentsChart: function() {
+            if(this.impact && this.gLoaded && this.user){
+                var data = [(["Year"]).concat(_.first(this.shares).members.map(function(member) {
+                                                  return member.title;
+                                              })).concat(["total"])];
+
+                for(var i = 0; i < this.shares.length; i++){
+                    data.push(([(this.user["starting year"] + i + "")]).concat(this.shares[i].members.map(function(member) {
+                                                                            return member.money;
+                                                                        })).concat([this.shares[i].totalMoney]) );
+                }
+
+                var series = {};
+                series[(this.shares[0].members.length)] = {type: 'line'};
+                var options = {
+                    vAxis: {title: 'Invested, $'},
+                    hAxis: {title: 'Year'},
+                    seriesType: 'bars',
+                    series: series
+                };
+
+                var chart = new google.visualization.ComboChart(document.getElementById('InvestmentChart'));
+                chart.draw(google.visualization.arrayToDataTable(data), options);
+
+                $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+
+
+            }} ,
 
 
 
-        capacityInstalled: _.debounce( function() {
+        capacityInstalled:  function() {
+            if(this.investments && this.gLoaded && this.user){
+                var data = [(["Year"]).concat(_.first(this.shares).members.map(function(member) {
+                                                  return member.title;
+                                              })).concat(["total"])];
 
-                               var data = [(["Year"]).concat(_.first(this.shares).members.map(function(member) {
-                                                                 return member.title;
-                                                             })).concat(["total"])];
+                for(var i = 0; i < this.shares.length; i++){
+                    data.push(([(this.user["starting year"] + i + "")]).concat(this.shares[i].members.map(function(member) {
+                                                                            return member.installed;
+                                                                        })).concat([this.shares[i].totalInstalled]) );
+                }
 
-                               for(var i = 0; i < this.shares.length; i++){
-                                   data.push(([this.user["starting year"] + i]).concat(this.shares[i].members.map(function(member) {
-                                                                                           return member.installed;
-                                                                                       })).concat([this.shares[i].totalInstalled]) );
-                               }
+                var series = {};
+                series[(this.shares[0].members.length )]  = {type: 'line'};
+                var options = {
+                    vAxis: {title: 'Installed capacity, kW'},
+                    hAxis: {title: 'Year'},
+                    seriesType: 'bars',
+                    series: series
+                };
 
-                               var series = {};
-                               series[(this.shares.length + 2)] = {type: 'line'};
-                               var options = {
-                                   vAxis: {title: 'Installed capacity, kW'},
-                                   hAxis: {title: 'Year'},
-                                   seriesType: 'bars',
-                                   series: series
-                               };
+                var chart = new google.visualization.ComboChart(document.getElementById('CapacityInstalled'));
+                chart.draw(google.visualization.arrayToDataTable(data), options);
+                $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
 
-                               var chart = new google.visualization.ComboChart(document.getElementById('CapacityInstalled'));
-                               chart.draw(google.visualization.arrayToDataTable(data), options);
-                               $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
-
-
-                           }, 200),
-
-
-        totalInvestmentChart:  _.debounce( function() {
-
-                                   if(this.investments && this.gLoaded && this.user){
-                                       var arrData = [ ['Year', 'Annual investment', 'Cumulative investment']];
-                                       var total = 0;
-
-                                       for(var i = 0; i < this.investments.length; i++)
-                                       {
-                                           total += this.investments[i];
-                                           arrData.push([(this.user["starting year"] + i) + "", this.investments[i],total]);
-                                       }
-
-                                       var data = google.visualization.arrayToDataTable(arrData);
-
-                                       var options = {
-                                           chart: {
-                                               title: 'Annual and cumulative investment.'
-                                           }
-                                       };
+            }
+        },
 
 
-                                       var chart = new google.visualization.ColumnChart(document.getElementById('TotalInvestmentChart'));
-                                       chart.draw(data, options);
+        totalInvestmentChart:   function() {
 
-                                       $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+            if(this.investments && this.gLoaded && this.user){
+                var arrData = [ ['Year', 'Annual investment', 'Cumulative investment']];
+                var total = 0;
 
-                                   }
-                               }, 200),
+                for(var i = 0; i < this.investments.length; i++)
+                {
+                    total += this.investments[i];
+                    arrData.push([(this.user["starting year"] + i) + "", this.investments[i],total]);
+                }
 
-        pieChart:  _.debounce( function() {
-                                  if(this.shares && this.gLoaded ){
-                                      var data = new google.visualization.DataTable();
-                                      var pieData = [];
+                var data = google.visualization.arrayToDataTable(arrData);
 
-                                      data.addColumn('string', 'Type');
-                                      data.addColumn('number', 'Percentage');
+                var options = {
+                    chart: {
+                        title: 'Annual and cumulative investment.'
+                    }
+                };
 
-                                      for(var i = 0; i < this.shares[0].members.length; i++)
-                                      {
-                                          pieData.push([this.shares[0].members[i].title,this.shares[0].members[i].percent* 100]);
-                                      }
-                                      data.addRows(pieData );
-                                      // Set chart options
-                                      var options = {'title':'Relative share that each technology has WITHIN its category' };
 
-                                      var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
-                                      chart.draw(data, options);
-                                      $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
-                                  }
-                              }, 200)
+                var chart = new google.visualization.ColumnChart(document.getElementById('TotalInvestmentChart'));
+                chart.draw(data, options);
+
+                $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+
+            }
+        },
+
+        pieChart:  function() {
+            if(this.shares && this.gLoaded ){
+                var data = new google.visualization.DataTable();
+                var pieData = [];
+
+                data.addColumn('string', 'Type');
+                data.addColumn('number', 'Percentage');
+
+                for(var i = 0; i < this.shares[0].members.length; i++)
+                {
+                    pieData.push([this.shares[0].members[i].title,this.shares[0].members[i].percent* 100]);
+                }
+                data.addRows(pieData );
+                // Set chart options
+                var options = {'title':'Relative share that each technology has WITHIN its category' };
+
+                var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
+                chart.draw(data, options);
+                $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+            }
+        }
 
     }
 );
@@ -665,6 +665,7 @@ ImpactDataTable.prototype = _.create(
 
 
         loadData: function(json) {
+
             this.data = json;
             this.updateTable();
         },
@@ -695,7 +696,7 @@ ImpactDataTable.prototype = _.create(
         updateTable:  _.debounce(function() {
                           var self = this;
 
-                          if(!this.data)
+                          if(!this.data || !this.userData)
                             return;
 
                           $("#ImpactDataTable").html("<dl>"+this.getData()+"</dl>");
@@ -876,7 +877,6 @@ Results.prototype = _.create(
             this.data.user = json;
         },
 
-
         loadMix: function(json) {
 
             this.data.electricity_mix.data = json;
@@ -990,12 +990,13 @@ Results.prototype = _.create(
 
         updateImpact:  _.debounce(function(shares,investments) {
                            var million = 1000000;
-                           var impact = this.res.summarise(this.res.getLifeTimeSpread(shares,investments )) ;
+
                            var c02g = 0;
                            var worldGHG = 45914 * 1000000  ;
                            var worldUS  = 6135 * 1000000  ;
                            var globes = "";
                            var numGlobes = 0;
+
                            for(var i = 0; i < shares.length; i++)
                            {
                                c02g     += shares[i].c02Saved;
@@ -1008,7 +1009,7 @@ Results.prototype = _.create(
                                globes += '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
                            }
 
-                           Arbiter.publish("changed/impact",impact );
+                           Arbiter.publish("changed/impact",this.summary  );
 
                            $(".EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
                            $(".timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
@@ -1016,12 +1017,12 @@ Results.prototype = _.create(
                            $(".globes").html(globes);
 
                            $(".timesUS").text(numeral(c02g /worldUS).format('0, 000') );
-                           $(".amount").text(numeral(impact.averageAnnualPowerGeneration/100).format('0, 000')+' KWh');
-                           $(".wAnnually").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
-                           $(".wAnnuallyType").text(numeral(impact.averageAnnualPowerGeneration).format('0, 000'));
+                           $(".amount").text(numeral(this.summary .averageAnnualPowerGeneration/100).format('0, 000')+' KWh');
+                           $(".wAnnually").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
+                           $(".wAnnuallyType").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".start").text(this.data.user["starting year"]);
-                           $(".end").text(this.data.user["starting year"] + impact.years );
-                           $(".impactYears").text(  impact.years );
+                           $(".end").text(this.data.user["starting year"] + this.summary .years );
+                           $(".impactYears").text(  this.summary .years );
 
                            $(".targetPercent").text(numeral(this.data.user["target"]).format('0%')   );
 
@@ -1153,7 +1154,7 @@ SharesDataTable.prototype = _.create(
         updateTable:  _.debounce(function() {
                           var self = this;
 
-                          if(!this.data)
+                          if(!this.data || !this.userData)
                             return;
 
 
@@ -1222,6 +1223,11 @@ UIs.prototype = _.create(
             $("input[name=endYear]").val(this.user["target year"] );
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
             $("input[name=growthRate]").val(numeral(this.user["annual growth rate"] ).format('0%'));
+
+            $("#AppRest").click(function(e) {
+                e.preventDefault();
+                Arbiter.publish("reset",this);
+            });
         },
 
         loadEvents: function(e) {
@@ -1277,25 +1283,136 @@ var _ = require("lodash");
 module.exports = Data;
 
 function Data(data) {
-    this.load();
+    this.init();
+
+
 }
 
 Data.prototype = _.create(
     Data.prototype,
     {
         data: null,
+        investments: null,
+        annualGrowthRates: null,
 
-        load: function(json) {
+        init: function() {
+            var localData = JSON.parse(localStorage.getItem("data"));
+
+            if(localData && localData.user && localData.electricity_mix){
+                this.update(localData);
+                this.reLoadAnnualGrowthRates();
+                this.reLoadInvestments();
+
+            }else{
+                this.load();
+            }
+
+            this.loadEvents();
+        },
+
+        loadEvents: function() {
+            var _self = this;
+
+            Arbiter.subscribe("changed/user",function(json) {
+                _self.changeUser(json);
+            } );
+
+            Arbiter.subscribe("edit/mix",function(json) {
+                _self.changeEmix(json);
+
+            } );
+
+            Arbiter.subscribe("edit/background",function(json) {
+                _self.changeBackground(json);
+            } );
+
+            Arbiter.subscribe("edit/investments",function(json) {
+                _self.changeInvestments(json);
+            } );
+
+            Arbiter.subscribe("edit/annualGrowthRates",function(json) {
+                _self.changeAnnualGrowthRates(json);
+            } );
+
+            Arbiter.subscribe("reset",function(json) {
+                _self.clear();
+            } );
+
+        },
+
+        reLoadInvestments: function() {
+            var investments = JSON.parse(localStorage.getItem("investments"));
+
+            if(investments){
+                Arbiter.publish("edit/investments", investments);
+            }
+        },
+
+        reLoadAnnualGrowthRates: function() {
+            var annualGrowthRates = JSON.parse(localStorage.getItem("annualGrowthRates"));
+
+            if(annualGrowthRates){
+                Arbiter.publish("edit/annualGrowthRates", annualGrowthRates);
+            }
+        },
+
+        save: function() {
+            localStorage.setItem("data",JSON.stringify(this.data));
+
+            if(this.investments)
+              localStorage.setItem("investments",this.investments);
+
+            if(this.annualGrowthRates)
+              localStorage.setItem("annualGrowthRates",this.annualGrowthRates);
+        },
+
+        load: function() {
             var _self = this;
             $.getJSON( "/data.json",function(json) {
                 _self.update(json);
+                _self.save();
             }).fail(function(jqxhr, textStatus, error ) {
                 var err = textStatus + ", " + error;
             });
         },
 
+
+        changeUser: function(json) {
+            this.data.user = json;
+            this.save();
+        } ,
+
+        changeEmix : function(json) {
+            this.data.electricity_mix = json;
+            this.save();
+
+        } ,
+
+        changeBackground : function(json) {
+            this.data.background = json;
+            this.save();
+        } ,
+
+        changeInvestments : function(json) {
+            this.investments = json;
+            this.save();
+        } ,
+
+        changeAnnualGrowthRates : function(json) {
+            this.annualGrowthRates = json;
+            this.save();
+        } ,
+
+        clear: function() {
+            this.data= null;
+            this.investments= null;
+            this.annualGrowthRates= null;
+            this.load();
+        },
+
         update: function(json) {
-            this.data = json.data;
+            this.data = json;
+
             Arbiter.publish("update/user", json.user);
             Arbiter.publish("update/mix", json.electricity_mix);
             Arbiter.publish("update/background", json.background);
@@ -13957,6 +14074,7 @@ RES.prototype = _.create(
             this.addCapacityInstalled(share);
             this.addAnnualOutput(share);
             this.addLifetimeOutput(share);
+
             return share;
         },
 
@@ -14206,13 +14324,13 @@ function WWF() {
 
     this.ui = new UI();
     this.results = new Results();
-    this.data = new Data();
     this.electricityDataTable = new ElectricityDataTable();
     this.backgroundDataTable = new BackgroundDataTable();
     this.impactDataTable = new ImpactDataTable();
     this.sharesDataTable = new SharesDataTable();
     this.growthRateDataTable = new GrowthRateDataTable();
     this.charts = new Charts();
+    this.data = new Data();
 }
 
 

@@ -120,7 +120,7 @@ SharesDataTable.prototype = _.create(
         updateTable:  _.debounce(function() {
                           var self = this;
 
-                          if(!this.data)
+                          if(!this.data || !this.userData)
                             return;
 
 

@@ -1,24 +1,40 @@
 <h2 id="inputs">Inputs</h2>
-<p>The existing data is based on the case study of the Norwegian sovereign wealth fund. To create your own case study based on our model, you need to personalize the following field:</p>
+<p>The existing data is based on the case study of the Norwegian sovereign wealth fund. To create your own case study based on our model, you need to personalize the following fields:</p>
 
-<ul>
-  <li>The latest known size of the investor: <div class="inline-box"> <input type="text" data-id="investment" name="totalFund" data-format="0,000"   value="" /></div>  USD</li>
-  <li>The expected annual growth rate (CAGR): <div class="inline-box"> <input data-id="annual growth rate" type="text" name="growthRate" ></div> percent.</li>
-  <li>The target for renewable energy investment: <div class="inline-box"> <input data-id="target" type="text" name="investPercentage" data-format="0,000.00" ></div> percent of fund’s total value.</li>
-
-  <li>Start : <div class="inline-box"><input type="number"   maxlength="4" value="2016" data-id="starting year" name="start" ></div> </li>
-  <li>Target : <div class="inline-box"><input type="number"   maxlength="4" value="2020" data-id="target year" name="target"></div> </li>
+<form id="InputsForm">
 
 
+    <p>
+      <label for="Investment">The latest known size of the investor is </label>
+      <input id="Investment" type="text" data-id="investment" name="totalFund" data-format="0,000"   value="" />
+      <label for="Investment">USD.</label>            
+    </p>
+
+    
+    <p>
+      <label for="GrowthRate">The expected annual growth rate (CAGR) is </label>
+      <input id="GrowthRate" data-id="annual growth rate" type="text" name="growthRate" >
+      <label for="GrowthRate">percent.</label>
+    </p>
+
+    <p>
+      <label for="InvestPercentage">The target for renewable energy investment is </label>
+      <input id="InvestPercentage" data-id="target" type="text" name="investPercentage" data-format="0,000.00" >
+      <label for="InvestPercentage"> percent of fund’s total value.</label>
+    </p>
 
 
+    <p>
+      <label for="StartingYear">The fund will start to invest in </label>
+      <input type="number" id="StartingYear"  maxlength="4" value="2016" data-id="starting year" name="start" >
+       
+      <label for="TargetYear">and the target to be reached in </label>
+      <input type="number"   id="TargetYear" maxlength="4" value="2020" data-id="target year" name="target">
+      <label for="TargetYear">.</label>
+    </p>
 
-</ul>
+  
+    <p><div class="inpne-box"> <a href="#" id="AppRest" class="button">Reset</a></div> </p>
 
-<h3 id="in-the-graphic-below-you-can-choose">In the graphic below you can choose:</h3>
-
-<ul>
-  <li>The first year of investment (as per 31th december) </li>
-  <li>The year when the target is to be reached.</li>
-</ul>
-
+ 
+</form>

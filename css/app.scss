@@ -66,6 +66,32 @@ ul {
 	display: inline-block;
 }
 
+
+#InputsForm{
+    input{
+        display: inline;
+        max-width: 10em;
+        
+        &#GrowthRate,
+        &#InvestPercentage{
+            max-width: 4em;
+        }
+
+        &#StartingYear,
+        &#TargetYear{
+            max-width: 4.5em;
+        }
+
+        
+    }
+    label{
+        display: inline;
+    }
+}
+
+
+
+
 /* Type
 --------------------------------------------------------------------- */
 h1, h2, h3, .techBox p, .accordion .accordion-navigation a { 
@@ -86,6 +112,7 @@ h1 {
 
 h2{
     line-height: 1.1em;
+    text-transform: uppercase;
 }
 
 h3, .accordion .accordion-navigation a {

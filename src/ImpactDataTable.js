@@ -39,6 +39,7 @@ ImpactDataTable.prototype = _.create(
 
 
         loadData: function(json) {
+
             this.data = json;
             this.updateTable();
         },
@@ -69,7 +70,7 @@ ImpactDataTable.prototype = _.create(
         updateTable:  _.debounce(function() {
                           var self = this;
 
-                          if(!this.data)
+                          if(!this.data || !this.userData)
                             return;
 
                           $("#ImpactDataTable").html("<dl>"+this.getData()+"</dl>");

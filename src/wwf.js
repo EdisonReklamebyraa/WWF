@@ -30,13 +30,13 @@ function WWF() {
 
     this.ui = new UI();
     this.results = new Results();
-    this.data = new Data();
     this.electricityDataTable = new ElectricityDataTable();
     this.backgroundDataTable = new BackgroundDataTable();
     this.impactDataTable = new ImpactDataTable();
     this.sharesDataTable = new SharesDataTable();
     this.growthRateDataTable = new GrowthRateDataTable();
     this.charts = new Charts();
+    this.data = new Data();
 }
 
 

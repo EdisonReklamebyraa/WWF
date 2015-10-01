@@ -37,6 +37,11 @@ UIs.prototype = _.create(
             $("input[name=endYear]").val(this.user["target year"] );
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
             $("input[name=growthRate]").val(numeral(this.user["annual growth rate"] ).format('0%'));
+
+            $("#AppRest").click(function(e) {
+                e.preventDefault();
+                Arbiter.publish("reset",this);
+            });
         },
 
         loadEvents: function(e) {
