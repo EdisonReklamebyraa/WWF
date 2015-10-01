@@ -254,8 +254,7 @@ h2 .upndownBox .downBtn {
 
 .employment{
     max-width: 5em;
-    margin-left: 1em;
-    margin-top: -1.5em;
+    margin: -1.5em -1em -0.25em 1em;
 }
 
 .earthBox {
@@ -444,6 +443,10 @@ table {
 	.noRightPadd {
 		padding-right: 0;
 	}
+
+  .earth.techBox{
+      padding-bottom: 4em;
+  }
 }
 
 @media only screen and (max-width: 72rem) {
