@@ -238,6 +238,14 @@ h2 .upndownBox .downBtn {
 .techBox p, .earthBox h2 {
 	position: absolute;
 }
+.box{
+    overflow: hidden;
+    position: relative;
+}
+.earthBolt{
+    width: 5em;
+    margin-left: 2em;
+}
 
 
 .earthBox {
