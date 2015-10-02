@@ -188,8 +188,8 @@ Results.prototype = _.create(
         updateImpact:  _.debounce(function(shares,investments) {
                            var million = 1000000;
                            var globes = "";
+                           var c02g = 0;
 
-                           var c02g = this.data.user["c02g"];
                            var worldGHG = this.data.user["worldGHG"];
                            var worldUS  = this.data.user["worldUS"];
 

@@ -89,7 +89,7 @@ BackgroundDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":13,"lodash":14}],2:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],2:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -319,7 +319,115 @@ Charts.prototype = _.create(
 
     }
 );
-},{"arbiter-subpub":13,"lodash":14}],3:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],3:[function(require,module,exports){
+var Arbiter = require('arbiter-subpub');
+var _ = require("lodash");
+
+module.exports = ComparisonsTable;
+
+function ComparisonsTable(data) {
+
+    var self = this;
+    Arbiter.subscribe("update/user",function(json) {
+        self.loadData(json);
+    } );
+
+    $(".accordion").click(_.debounce(function() {
+        if(self.table)
+          self.table.render();
+    }, 100));
+
+}
+
+ComparisonsTable.prototype = _.create(
+
+    ComparisonsTable.prototype,
+    {
+        data: null,
+        table: null,
+
+        loadData: function(json) {
+            this.data = json;
+            this.updateTable();
+        },
+
+        getData: function() {
+
+           return  [[ "Nuclear reactor, capacity average (2015)",	"MW",	this.data["nuclearReactor"],	"World Nuclear Association"],
+           [ "Coal power generator, capacity, average (2013)",	"MW",	this.data["coalPlant"],	"EPA (see background info)"],
+           [ "United States electricity generation (2011)",	"TWh",	this.data["US"],	"IEA 2014"],
+           [ "European Union, electricity consumption per capita (2011)",	"kWh",	this.data["EUCitizens"],	"World Bank"],
+           [ "World annual GHG emissions, incl. LUCF(2012)",	"Mt CO2 eq.",	this.data["worldGHG"],	"World resource Institute"],
+           [ "US annual GHG emissionS, INCL. LUCF (2011)",	"Mt CO2 eq.",	 this.data["worldUS"],	"World resource Institute"]];
+
+        },
+
+        updateUser: function(cell) {
+
+
+            switch(cell[0]) {
+                case 0:
+                this.data["nuclearReactor"] = cell[3];
+                break;
+                case 1:
+                this.data["coalPlant"] = cell[3];
+                break;
+                case 2:
+                this.data["US"] = cell[3];
+                break;
+                case 3:
+                this.data["EUCitizens"] = cell[3];
+                break;
+                case 4:
+                this.data["worldGHG"] = cell[3];
+                break;
+                case 5:
+                this.data["worldUS"] = cell[3];
+                break;
+            }
+
+             Arbiter.publish("changed/user",this.data);
+
+        },
+
+        updateTable:  _.debounce(function() {
+                          var self = this;
+
+                          if(!this.table){
+                              var container = document.getElementById('ComparisonsTable');
+                              this.table = new Handsontable(container, {
+                                  data: this.getData(),
+                                  rowHeaders: false,
+                                  colHeaders: ["Indicator",	"Unit",	"Value", "Source"],
+                                  stretchH: "all",
+                                  contextMenu: true,
+                                  cells: function(row,cell,prop) {
+                                      if(cell == 2) {
+
+                                          this.format = "0, 000";
+                                          this.type = "numeric";
+                                      }else{
+                                          this.readOnly = true;
+                                      }
+                                  }
+                              });
+
+                              this.table.addHook('afterChange', function(cols, type) {
+                                  if(type == "edit"){
+                                      for(var i = 0; i < cols.length; i++)
+                                      {
+                                          self.updateUser(cols[i]);
+                                      }
+                                  }
+                              });
+                          }else{
+                              this.table.loadData(self.data);
+                          }
+                      }, 200)
+
+    });
+
+},{"arbiter-subpub":14,"lodash":15}],4:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -398,7 +506,7 @@ ElectricityDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":13,"lodash":14}],4:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],5:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -622,7 +730,7 @@ GrowthRateDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":13,"lodash":14}],5:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],6:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -703,7 +811,7 @@ ImpactDataTable.prototype = _.create(
                       }, 200)
     });
 
-},{"arbiter-subpub":13,"lodash":14}],6:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],7:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -805,7 +913,7 @@ InvestmentDataTable.prototype = _.create(
                       }, 200)
     });
 
-},{"arbiter-subpub":13,"lodash":14}],7:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],8:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -996,8 +1104,8 @@ Results.prototype = _.create(
         updateImpact:  _.debounce(function(shares,investments) {
                            var million = 1000000;
                            var globes = "";
+                           var c02g = 0;
 
-                           var c02g = this.data.user["c02g"];
                            var worldGHG = this.data.user["worldGHG"];
                            var worldUS  = this.data.user["worldUS"];
 
@@ -1040,7 +1148,7 @@ Results.prototype = _.create(
 
                        }, 150)
     });
-},{"./energyScenario.js":11,"./res.js":15,"arbiter-subpub":13,"lodash":14}],8:[function(require,module,exports){
+},{"./energyScenario.js":12,"./res.js":16,"arbiter-subpub":14,"lodash":15}],9:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -1192,7 +1300,7 @@ SharesDataTable.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":13,"lodash":14}],9:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],10:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
 
@@ -1283,7 +1391,7 @@ UIs.prototype = _.create(
 
     });
 
-},{"arbiter-subpub":13,"lodash":14}],10:[function(require,module,exports){
+},{"arbiter-subpub":14,"lodash":15}],11:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var RES = require('./res.js');
 var EnergyScenario = require('./energyScenario.js');
@@ -1440,7 +1548,7 @@ Data.prototype = _.create(
         }
     });
 
-},{"./energyScenario.js":11,"./res.js":15,"arbiter-subpub":13,"lodash":14}],11:[function(require,module,exports){
+},{"./energyScenario.js":12,"./res.js":16,"arbiter-subpub":14,"lodash":15}],12:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -1621,12 +1729,12 @@ EnergyScenario.prototype = _.create(EnergyScenario.prototype, {
 }
                                    );
 
-},{"lodash":14}],12:[function(require,module,exports){
+},{"lodash":15}],13:[function(require,module,exports){
 var WWF = require('./wwf.js');
 var wwf = new WWF();
 
 $(document).foundation();
-},{"./wwf.js":16}],13:[function(require,module,exports){
+},{"./wwf.js":17}],14:[function(require,module,exports){
 /*
 Arbiter.js
   by Matt Kruse
@@ -1785,7 +1893,7 @@ var Arbiter = (function () {
 
 module.exports = Arbiter;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -13955,7 +14063,7 @@ module.exports = Arbiter;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var _ = require("lodash");
 
 
@@ -14314,7 +14422,7 @@ function zeroArray(w){
     return Array.apply(null, new Array(w)).map(Number.prototype.valueOf,0);
 }
 
-},{"lodash":14}],16:[function(require,module,exports){
+},{"lodash":15}],17:[function(require,module,exports){
 var _ = require('lodash');
 
 var EnergyScenario = require('./energyScenario.js');
@@ -14330,6 +14438,7 @@ var SharesDataTable = require("./SharesDataTable.js");
 var GrowthRateDataTable = require("./GrowthRateDataTable.js");
 var ImpactDataTable = require("./ImpactDataTable.js");
 
+var ComparisonsTable = require("./ComparisonsTable.js");
 
 var Charts = require("./Charts.js");
 
@@ -14347,6 +14456,7 @@ function WWF() {
 
     this.ui = new UI();
     this.results = new Results();
+    this.comparisonsTable = new ComparisonsTable();
     this.electricityDataTable = new ElectricityDataTable();
     this.backgroundDataTable = new BackgroundDataTable();
     this.impactDataTable = new ImpactDataTable();
@@ -14384,4 +14494,4 @@ numeral.language('en', {
     }
 });
 
-},{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./GrowthRateDataTable.js":4,"./ImpactDataTable.js":5,"./InvestmentDataTable.js":6,"./Results.js":7,"./SharesDataTable.js":8,"./UI.js":9,"./data.js":10,"./energyScenario.js":11,"./res.js":15,"lodash":14}]},{},[12]);
+},{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ComparisonsTable.js":3,"./ElectricityDataTable.js":4,"./GrowthRateDataTable.js":5,"./ImpactDataTable.js":6,"./InvestmentDataTable.js":7,"./Results.js":8,"./SharesDataTable.js":9,"./UI.js":10,"./data.js":11,"./energyScenario.js":12,"./res.js":16,"lodash":15}]},{},[13]);

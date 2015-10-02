@@ -13,6 +13,7 @@ var SharesDataTable = require("./SharesDataTable.js");
 var GrowthRateDataTable = require("./GrowthRateDataTable.js");
 var ImpactDataTable = require("./ImpactDataTable.js");
 
+var ComparisonsTable = require("./ComparisonsTable.js");
 
 var Charts = require("./Charts.js");
 
@@ -30,6 +31,7 @@ function WWF() {
 
     this.ui = new UI();
     this.results = new Results();
+    this.comparisonsTable = new ComparisonsTable();
     this.electricityDataTable = new ElectricityDataTable();
     this.backgroundDataTable = new BackgroundDataTable();
     this.impactDataTable = new ImpactDataTable();
