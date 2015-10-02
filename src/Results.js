@@ -155,7 +155,7 @@ Results.prototype = _.create(
 
         updateInstalledCapacity: function(shares) {
             var installed = 0 ;
-            var coalPlant = 272000;
+            var coalPlant = 586000;
             var nuclearReactor = 922000;
 
 
