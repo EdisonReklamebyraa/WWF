@@ -1242,7 +1242,7 @@ UIs.prototype = _.create(
 
             setTimeout(function() {
                 $("#AppRest").text("Reset").removeClass("saving");;
-            }, 300);
+            }, 1500);
 
         },
 
