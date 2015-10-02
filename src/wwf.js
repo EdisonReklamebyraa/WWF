@@ -66,5 +66,3 @@ numeral.language('en', {
         symbol: '$'
     }
 });
-
-// switch between languages

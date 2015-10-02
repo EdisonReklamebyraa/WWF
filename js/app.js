@@ -14382,6 +14382,4 @@ numeral.language('en', {
     }
 });
 
-// switch between languages
-
 },{"./BackgroundDataTable.js":1,"./Charts.js":2,"./ElectricityDataTable.js":3,"./GrowthRateDataTable.js":4,"./ImpactDataTable.js":5,"./InvestmentDataTable.js":6,"./Results.js":7,"./SharesDataTable.js":8,"./UI.js":9,"./data.js":10,"./energyScenario.js":11,"./res.js":15,"lodash":14}]},{},[12]);
