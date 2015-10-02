@@ -18,8 +18,8 @@ $blueish: #0e6e8d;
 /* Main resets and fixes
 --------------------------------------------------------------------- */
 body {
-	background: $beigeish;
-	font-family: arial, sans-serif;
+	  background: $beigeish;
+	  font-family: arial, sans-serif;
 }
 
 ul {
@@ -38,32 +38,32 @@ ul {
 }
 
 .row {
-	max-width: 72rem;
+	  max-width: 72rem;
 }
 
 .noSidePadd {
-	padding-right: 0;
-	padding-left: 0;
+	  padding-right: 0;
+	  padding-left: 0;
 }
 .margTop {
-	margin-top: 1.875rem;
+	  margin-top: 1.875rem;
 }
 .bigPaddBot {
-	padding-bottom: 5.625rem;
+	  padding-bottom: 5.625rem;
 }
 
 .bigPad {
-	padding: 3rem 0;
+	  padding: 3rem 0;
 }
 
 
 
 .left-floater {
-	float: left!important;
+	  float: left!important;
 }
 
 .inline-box {
-	display: inline-block;
+	  display: inline-block;
 }
 
 
@@ -107,20 +107,20 @@ ul {
 
 /* Type
 --------------------------------------------------------------------- */
-h1, h2, h3, .techBox p, .accordion .accordion-navigation a { 
-	font-family: 'wwfregular', Arial, Helvetica, sans-serif; 
-	font-weight: normal;
-  span{
-	    text-transform: uppercase;      
-  }
+h1, h2, h3, .teckbox p, .accordion .accordion-navigation a { 
+	  font-family: 'wwfregular', Arial, Helvetica, sans-serif; 
+	  font-weight: normal;
+    span{
+	      text-transform: uppercase;      
+    }
 
 }
 h1 {
 	  font-size: 3.5rem;
-  line-height: 1.1;
-  padding: 0.5em 0.5em 0;
-  margin: 0;
-  text-transform: uppercase;   
+    line-height: 1.1;
+    padding: 0.5em 0.5em 0;
+    margin: 0;
+    text-transform: uppercase;   
 }
 
 h2{
@@ -129,43 +129,43 @@ h2{
 }
 
 h3, .accordion .accordion-navigation a {
-	font-size: 1.2rem;
+	  font-size: 1.2rem;
 }
 
 .larger {
-	font-size: 1.8rem;
+	  font-size: 1.8rem;
 }
 header.row {
-	margin-bottom: 1.875rem;
+	  margin-bottom: 1.875rem;
 }
 .sidebar p {
-	font-size: 0.8rem;
-	line-height: 1.2;
+	  font-size: 0.8rem;
+	  line-height: 1.2;
 }
 .icon {
-	height: 1.3rem;
-	margin: 0 0.2rem 0.3rem;
+	  height: 1.3rem;
+	  margin: 0 0.2rem 0.3rem;
 }
 .modifier {
-	color: $orangeish;
-	border-bottom: 4px solid $orangeish;
+	  color: $orangeish;
+	  border-bottom: 4px solid $orangeish;
 }
- 
+
 a.modalLink {
-	text-transform: lowercase;
-	color: $orangeish;
-	border: 1px solid $orangeish;
-	width: 1.4rem;
-	height: 1.4rem;
-	line-height: 1.1rem;
-	margin-left: 0.35rem;
-	border-radius: 50%;
-	display: inline-block;	
+	  text-transform: lowercase;
+	  color: $orangeish;
+	  border: 1px solid $orangeish;
+	  width: 1.4rem;
+	  height: 1.4rem;
+	  line-height: 1.1rem;
+	  margin-left: 0.35rem;
+	  border-radius: 50%;
+	  display: inline-block;	
 }
 
 a.modalLink:hover {
-	color: white;
-	background: $orangeish;
+	  color: white;
+	  background: $orangeish;
 }
 
 .greened {color: $greenish;}
@@ -177,17 +177,17 @@ a.modalLink:hover {
 --------------------------------------------------------------------- */
 
 h1 input[type="text"], h2 input[type="text"] {
-	display: inline;
-	color: #FFA500;
-	padding: 0;
-	border: none;
-	box-shadow: none;
-	height: auto;
-	border-bottom: 4px solid #FFA500;
+	  display: inline;
+	  color: #FFA500;
+	  padding: 0;
+	  border: none;
+	  box-shadow: none;
+	  height: auto;
+	  border-bottom: 4px solid #FFA500;
 }
 
 h1 input[type="text"] {
-	font-size: 3.5rem;
+	  font-size: 3.5rem;
 	  text-align: right;
 	  padding-right: 0.3rem;
     max-width: 5rem;
@@ -201,69 +201,69 @@ h1 input[type="text"].string {
 }
 
 h1 input[type="text"]:last-child {
-	width: auto;
-	max-width: 23rem;
+	  width: auto;
+	  max-width: 23rem;
 }
 
 h2 input[type="text"] {
-	font-size: 4rem;
-	padding: 0 0.5rem 0.4rem 0.5rem;
-	width: 9rem;
-	margin: 0;
-	background-color: rgba(255, 255, 255, 0.85);
+	  font-size: 4rem;
+	  padding: 0 0.5rem 0.4rem 0.5rem;
+	  width: 9rem;
+	  margin: 0;
+	  background-color: rgba(255, 255, 255, 0.85);
 }
 
 .upndownBox {
 	  display: inline-block;
-  width: 2rem;
+    width: 2rem;
   	text-indent: -9999px;
   	position: relative;
   	top: 1.15rem;
   	border-bottom: 4px solid #FFA500;
 }
 h2 .upndownBox {
-	top: 1.65rem;
-	left: -2.5rem;
+	  top: 1.65rem;
+	  left: -2.5rem;
 }
 .upndownBox a {
-	position: absolute;
+	  position: absolute;
 }
 .upBtn {
 	  bottom: 2.5rem;
-  left: 0.5rem;
-	width: 0;
-height: 0;
-border-style: solid;
-border-width: 0 10px 20px 10px;
-border-color: transparent transparent #ff9500 transparent;
+    left: 0.5rem;
+	  width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 20px 10px;
+    border-color: transparent transparent #ff9500 transparent;
 }
 .downBtn {
 	  bottom: 0.75rem;
-  left: 0.5rem;
-	width: 0;
-height: 0;
-border-style: solid;
-border-width: 20px 10px 0 10px;
-border-color: #ff9500 transparent transparent transparent;
+    left: 0.5rem;
+	  width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 10px 0 10px;
+    border-color: #ff9500 transparent transparent transparent;
 }
 
 h2 .upndownBox .upBtn {
-	bottom: 3rem;
+	  bottom: 3rem;
 }
 
 h2 .upndownBox .downBtn {
-	bottom: 1.25rem;
+	  bottom: 1.25rem;
 }
 .sidebar {
-	text-align: center;
-	padding: 2rem;
+	  text-align: center;
+	  padding: 2rem;
 }
 
 .padding{
-	padding: 2rem; 
+	  padding: 2rem; 
 }
 .whitewrap {
-	background: white;
+	  background: white;
 }
 .topGap{
     padding-top: 2em;
@@ -271,13 +271,11 @@ h2 .upndownBox .downBtn {
     overflow: hidden;
 }
 
-.techBox, .earthBox {
+.teckbox, .earthBox {
 	  position: relative;
     overflow: hidden;
 }
-.techBox p, .earthBox h2 {
-	position: absolute;
-}
+
 .box{
     overflow: hidden;
     position: relative;
@@ -298,44 +296,39 @@ h2 .upndownBox .downBtn {
 }
 
 .earthBox {
-	padding-top:0.9375rem;
+	  padding-top:0.9375rem;
 }
 .earthBox h2 {
-	top: 40%;
-	left: 34%;
-	font-size: 4rem;
-	margin: 0;
-	line-height: 1;
-	z-index: 9;
+	  top: 40%;
+	  left: 34%;
+	  font-size: 4rem;
+	  margin: 0;
+	  line-height: 1;
+	  z-index: 9;
 }
 .globe{
     padding: 1px;
 }
 
-.techBox p {
-	line-height: 1;
+.teckbox p {
+	  line-height: 1;
 }
-.techBox p span {
-	font-size: 1.5rem;
+.teckbox p span {
+	  font-size: 1.5rem;
 }
-#hydro {top: 53%;left: 13%;}
-#bio {top: 54%;left: 26%;}
-#wind {top: 36%;left: 43%;}
-#geo {top: 33%;left: 56%;}
-#solarpv {top: 35%;left: 68%;}
-#solarp {top: 29%;left: 80%;}
+
 
 .papered {
-	background: url("../img/paper.jpg");
-	padding:0;
+	  background: url("../img/paper.jpg");
+	  padding:0;
 }
 
 
 header .fundBox {
-	min-height: 0;
-	padding: 1rem 1.9rem 0.8rem;
-	background: #E8E8E8;
-	border-bottom: 4px solid #808080;
+	  min-height: 0;
+	  padding: 1rem 1.9rem 0.8rem;
+	  background: #E8E8E8;
+	  border-bottom: 4px solid #808080;
 }
 
 header{
@@ -354,37 +347,37 @@ header{
 
 .fundBox input[type="text"] {
 	  display: inline;
-  width: auto;
-  font-size: 1rem;
-  color: $orangeish;
-  min-width: 10rem;
-  margin: 0 0 0 1rem;
+    width: auto;
+    font-size: 1rem;
+    color: $orangeish;
+    min-width: 10rem;
+    margin: 0 0 0 1rem;
 }
 
 .dollas img {
-	position: absolute;
-	width: 34%;
-	top: 24%;
-	left: 34%;
+	  position: absolute;
+	  width: 34%;
+	  top: 24%;
+	  left: 34%;
 }
 .dollas h3 {
-	position: absolute;
-	width: 18%;
-  top: 50%;
-  left: 41%;
+	  position: absolute;
+	  width: 18%;
+    top: 50%;
+    left: 41%;
 }
 
 .graphs {
-	border: 1px solid lightgray;
-	margin-bottom: 1.25rem;
+	  border: 1px solid lightgray;
+	  margin-bottom: 1.25rem;
 }
 
 #globes {
-	margin-bottom: 1.25rem;
+	  margin-bottom: 1.25rem;
 }
- 
+
 #globes img {
-	max-width: 3.5rem;
+	  max-width: 3.5rem;
 }
 
 #BackgroundData, #EMix, #InvestmentDataTable{
@@ -396,13 +389,13 @@ header{
 --------------------------------------------------------------------- */
 
 .accordion-navigation a:before {
-	content:"+";
-	margin-right: 0.2rem;
+	  content:"+";
+	  margin-right: 0.2rem;
 }
 
 
 table {
-	width: 100%;
+	  width: 100%;
 }
 
 
@@ -446,7 +439,7 @@ table {
         display: inline;
     }
 }
- 
+
 
 /* Animations
 --------------------------------------------------------------------- */
@@ -470,77 +463,169 @@ table {
     font-family: 'wwfregular';
     src: url('wwf-webfont.eot');
     src: url('wwf-webfont.eot?#iefix') format('embedded-opentype'),
-         url('wwf-webfont.woff') format('woff'),
-         url('wwf-webfont.ttf') format('truetype');
+    url('wwf-webfont.woff') format('woff'),
+    url('wwf-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @media only screen and (min-width: 72rem) {
-	.noLeftPadd {
-		padding-left: 0;
-	}
-	.noRightPadd {
-		padding-right: 0;
-	}
+	  .noLeftPadd {
+		    padding-left: 0;
+	  }
+	  .noRightPadd {
+		    padding-right: 0;
+	  }
 
-  .earth.techBox{
-      padding-bottom: 4em;
-  }
+    .earth.teckbox{
+        padding-bottom: 4em;
+    }
+
+    .teckbox p, .earthBox h2 {
+	      position: absolute;
+    }
+
+    #hydro {top: 53%;left: 13%;}
+    #bio {top: 54%;left: 26%;}
+    #wind {top: 36%;left: 43%;}
+    #geo {top: 33%;left: 56%;}
+    #solarpv {top: 35%;left: 68%;}
+    #solarp {top: 29%;left: 80%;}
 }
 
 @media only screen and (max-width: 72rem) {
-	
-	header h1, header h1 input[type="text"] {
-		font-size: 2.75rem;
-	}
-	header .whitewrap {
-		padding-bottom: 2rem;
-	}
-	header .upndownBox {
-		top: 0.95rem;
-		width: 1.8rem;
-	}
-	header .upBtn {
-		border-width: 0 8px 14px 8px;
-		bottom: 2rem;
-	}
-	header .downBtn {
-		border-width: 14px 8px 0 8px;
-	}
-	
-	.large-2 img {
-		
-	}
-	header .whitewrap {
-		min-height: 0;
-	}
+	  
+	  header h1, header h1 input[type="text"] {
+		    font-size: 2.75rem;
+	  }
+	  header .whitewrap {
+		    padding-bottom: 2rem;
+	  }
+	  header .upndownBox {
+		    top: 0.95rem;
+		    width: 1.8rem;
+	  }
+	  header .upBtn {
+		    border-width: 0 8px 14px 8px;
+		    bottom: 2rem;
+	  }
+	  header .downBtn {
+		    border-width: 14px 8px 0 8px;
+	  }
+	  
+	  .large-2 img {
+		    
+	  }
+	  header .whitewrap {
+		    min-height: 0;
+	  }
+
+    .dollas{
+        clear: both;
+        height: 6em;
+        position: relative;
+        img{
+            position: absolute;
+            width: 47%;
+            top: 0;
+            left: 29%;
+        }
+        h3{
+            position: relative;
+            width: auto;
+            text-align: center;
+            left: 0;
+        }
+        
+    }
+
+    .teckbox p span {
+        font-size: 1rem;
+    }
+    .earthBox h2 {
+	      position: absolute;
+    }
+    .teck.teckbox {
+        text-align: center;
+        img{
+            display: none;
+        }
+
+        p{
+            display: inline-block;
+            padding: 1em;
+        }
+        
+    }
+    .techModal{
+        padding-bottom: 1em;
+    }
+
+    
+    
 }
 @media only screen and (max-width: 64.063rem) {
-	header .large-2 {
-		width: 8rem;
-	}
-	header .large-2 .whitewrap {
-		padding: 0 0.5rem;
-	}
-	h2 input[type="text"] {
-		font-size: 3rem;
-		  width: 7rem;
-	}
-	.earthBox {
-		.upndownBox {
-			top: 1.4rem;
-			width: 1.8rem;
-			left: -2.15rem;
-			
-			.upBtn {
-				border-width: 0 8px 14px 8px;
-				bottom: 2.5rem;
-			}
-			.downBtn {
-				border-width: 14px 8px 0 8px;
-			}
-			
-		}
-	}
+
+    body{
+        background: #FFF;
+    }
+
+    header .intro{
+        padding: 1rem 0;
+    }
+
+
+    .bigPad{
+        padding: 0.9375rem;
+    }
+    
+    .padding, .sidebar {
+        padding: 1rem 0;
+        
+        &.columns{
+            padding: 0.9375rem;
+        }
+
+        h2{
+            font-size: 2rem;
+        }
+
+        .employment{
+            margin: 0 auto;
+            display: block;
+        }
+    }
+
+
+    
+	  header .large-2 {
+		    width: 8rem;
+	  }
+	  header .large-2 .whitewrap {
+		    padding: 0.5rem 0;
+	  }
+    h2{
+        text-transform: none;
+    }
+	  h2 input[type="text"] {
+		    font-size: 3rem;
+		    width: 7rem;
+        
+	  }
+	  .earthBox {
+		    .upndownBox {
+			      top: 1.4rem;
+			      width: 1.8rem;
+			      left: -2.15rem;
+			      
+			      .upBtn {
+				        border-width: 0 8px 14px 8px;
+				        bottom: 2.5rem;
+			      }
+			      .downBtn {
+				        border-width: 14px 8px 0 8px;
+			      }
+			      
+		    }
+	  }
 }
