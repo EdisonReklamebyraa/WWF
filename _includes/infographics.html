@@ -1,49 +1,52 @@
-<div class="padding">
-  <div class="medium-12 columns ">
 
-    <h2>WELCOME!</h2>
-    <p>Welcome to WWF-Norway’s web-calculator!</p>
-    <p>Would you like to know what happens if your pension fund or your bank starts to invest 5% of its money in renewable energy? Or maybe 10%? On this webpage, you can build your own scenario!</p>
-    
-<p>After you have chosen the sum of money to be invested, you can choose which technology to fund: Solar and wind power? Geothermal? Hydropower? And why not a realistic mix of renewable energy technologies? (Our default energy mix is based on the International Energy Agency’s data.)</p>
-<p>The results might surprise you: the new power plants will generate electricity for many years. Did you know that an hydropower plant typically works for 50 years? And a wind turbine or a solar panel for 25 years? That’s a lot of clean electricity!
-But how much exactly? The following graphs give you an overview of the many interesting results (theoretical estimates*) you can get.</p>
-  </div>
+<div class="medium-9 columns large-offset-1 bigPad">
 
+  <h2>WELCOME!</h2>
+  <p>Welcome to WWF-Norway’s web-calculator!</p>
+  <p>Would you like to know what happens if your pension fund or your bank starts to invest 5% of its money in renewable energy? Or maybe 10%? On this webpage, you can build your own scenario!</p>
   
+  <p>After you have chosen the sum of money to be invested, you can choose which technology to fund: Solar and wind power? Geothermal? Hydropower? And why not a realistic mix of renewable energy technologies? (Our default energy mix is based on the International Energy Agency’s data.)</p>
+  <p>The results might surprise you: the new power plants will generate electricity for many years. Did you know that an hydropower plant typically works for 50 years? And a wind turbine or a solar panel for 25 years? That’s a lot of clean electricity!
+    But how much exactly? The following graphs give you an overview of the many interesting results (theoretical estimates*) you can get.</p>
+</div>
 
+<hr />  
 
-  <div class="medium-4 columns  sidebar whitewrap">
-      <h5>New installed capacity (annual and total): that indicates how much electricity can the new power plants produce.</h5>
-      {% include installed_popup.html %}
-      <hr />
+<div class="medium-4 columns  sidebar whitewrap">
+  <h5>New installed capacity (annual and total): that indicates how much electricity can the new power plants produce.</h5>
+  {% include installed_popup.html %}
+  <hr />
 
-	  {% include installed.html %}    
-  </div>
-  <div class="medium-4 columns sidebar  whitewrap">
-     <h5>Electricity generation (annual and total): watts of electricity that can power everything, from heavy machineries to your laptop.</h5>     
-     {% include renewable_popup.html %}
-     <hr />
+	{% include installed.html %}    
+</div>
+<div class="medium-4 columns sidebar  whitewrap">
+  <h5>Electricity generation (annual and total): watts of electricity that can power everything, from heavy machineries to your laptop.</h5>     
+  {% include renewable_popup.html %}
+  <hr />
 
-    {% include renewable.html %}
-     
-  </div>
-  <div class="medium-4 columns sidebar  whitewrap">
-     <h5>Emission saved by not investing in fossil fuels instead: by making smart choices we reduce emissions.</h5>
-    {% include impact_popup.html %}
-<hr />
-
-     {% include impact.html %}
-   
-  </div>
+  {% include renewable.html %}
   
-  <div class="medium-12 columns ">
+</div>
+<div class="medium-4 columns sidebar  whitewrap">
+  <h5>Emission saved by not investing in fossil fuels instead: by making smart choices we reduce emissions.</h5>
+  {% include impact_popup.html %}
+  <hr />
 
-    <p>Maybe you want to invest more than 5% and choose your own energy mix? Just continue to scroll down and you will find that all default background data is easily editable. This means that you are fully free to create your own world. You can use your favourite investor as a case study, or simply play with small number: what if you could invest $10 000 in solar power?</p>
+  {% include impact.html %}
+  
+</div>
 
-<p>Graphical elements and tables are easily downloadable, so you can use them in a presentation or on social media. </p><p>Please let us know how you liked (or not) the tool. Enjoy!</p>
 
-<p><i>*As all model, this also has limitations: Please refer to the methodology chapter in the report for more details.</i></p>
+<hr />  
 
-  </div>
+
+
+<div class="medium-9 columns large-offset-1 bigPad">
+
+  <p>Maybe you want to invest more than 5% and choose your own energy mix? Just continue to scroll down and you will find that all default background data is easily editable. This means that you are fully free to create your own world. You can use your favourite investor as a case study, or simply play with small number: what if you could invest $10 000 in solar power?</p>
+
+  <p>Graphical elements and tables are easily downloadable, so you can use them in a presentation or on social media. </p><p>Please let us know how you liked (or not) the tool. Enjoy!</p>
+
+  <p><i>*As all model, this also has limitations: Please refer to the methodology chapter in the report for more details.</i></p>
+
 </div>
