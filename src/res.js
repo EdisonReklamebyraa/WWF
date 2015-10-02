@@ -137,6 +137,9 @@ RES.prototype = _.create(
             this.addAnnualOutput(share);
             this.addLifetimeOutput(share);
 
+
+            this.addJobsCreated(share)
+
             return share;
         },
 

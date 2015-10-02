@@ -218,6 +218,8 @@ Results.prototype = _.create(
 
                            $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
+                           $(".jobsCreated").text(numeral(_.first(shares).totalJobsCreated).format('0, 000'));
+
 
                        }, 150)
     });
