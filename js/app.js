@@ -1203,6 +1203,11 @@ function UIs(data) {
         self.updateUI(json);
     });
 
+    Arbiter.subscribe("saving", function() {
+        self.saving();
+
+    });
+
 }
 
 UIs.prototype = _.create(
@@ -1228,6 +1233,15 @@ UIs.prototype = _.create(
                 e.preventDefault();
                 Arbiter.publish("reset",this);
             });
+        },
+
+        saving: function() {
+            $("#AppRest").text("Saving").addClass("saving");
+
+            setTimeout(function() {
+                $("#AppRest").text("Reset").removeClass("saving");;
+            }, 300);
+
         },
 
         loadEvents: function(e) {
@@ -1304,6 +1318,7 @@ Data.prototype = _.create(
                 this.reLoadInvestments();
 
             }else{
+                localStorage.removeItem("data");
                 this.load();
             }
 
@@ -1345,6 +1360,8 @@ Data.prototype = _.create(
 
             if(investments){
                 Arbiter.publish("edit/investments", investments);
+            }else{
+                localStorage.removeItem("investments");
             }
         },
 
@@ -1353,17 +1370,24 @@ Data.prototype = _.create(
 
             if(annualGrowthRates){
                 Arbiter.publish("edit/annualGrowthRates", annualGrowthRates);
+            }else{
+                localStorage.removeItem("annualGrowthRates");
             }
         },
 
         save: function() {
+
             localStorage.setItem("data",JSON.stringify(this.data));
 
             if(this.investments)
               localStorage.setItem("investments",this.investments);
 
+
             if(this.annualGrowthRates)
               localStorage.setItem("annualGrowthRates",this.annualGrowthRates);
+
+            Arbiter.publish("saving", this);
+
         },
 
         load: function() {

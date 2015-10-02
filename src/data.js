@@ -28,6 +28,7 @@ Data.prototype = _.create(
                 this.reLoadInvestments();
 
             }else{
+                localStorage.removeItem("data");
                 this.load();
             }
 
@@ -69,6 +70,8 @@ Data.prototype = _.create(
 
             if(investments){
                 Arbiter.publish("edit/investments", investments);
+            }else{
+                localStorage.removeItem("investments");
             }
         },
 
@@ -77,17 +80,24 @@ Data.prototype = _.create(
 
             if(annualGrowthRates){
                 Arbiter.publish("edit/annualGrowthRates", annualGrowthRates);
+            }else{
+                localStorage.removeItem("annualGrowthRates");
             }
         },
 
         save: function() {
+
             localStorage.setItem("data",JSON.stringify(this.data));
 
             if(this.investments)
               localStorage.setItem("investments",this.investments);
 
+
             if(this.annualGrowthRates)
               localStorage.setItem("annualGrowthRates",this.annualGrowthRates);
+
+            Arbiter.publish("saving", this);
+
         },
 
         load: function() {

@@ -17,6 +17,11 @@ function UIs(data) {
         self.updateUI(json);
     });
 
+    Arbiter.subscribe("saving", function() {
+        self.saving();
+
+    });
+
 }
 
 UIs.prototype = _.create(
@@ -42,6 +47,15 @@ UIs.prototype = _.create(
                 e.preventDefault();
                 Arbiter.publish("reset",this);
             });
+        },
+
+        saving: function() {
+            $("#AppRest").text("Saving").addClass("saving");
+
+            setTimeout(function() {
+                $("#AppRest").text("Reset").removeClass("saving");;
+            }, 300);
+
         },
 
         loadEvents: function(e) {

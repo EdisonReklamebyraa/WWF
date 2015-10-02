@@ -92,6 +92,19 @@ ul {
 
 
 
+#ComparisonField, #ComparisonFieldLabel{
+    display: inline;
+}
+
+#AppRest{
+    &:active,
+    &.saving{
+        background-color: $orangeish;
+    }
+    
+}
+
+
 /* Type
 --------------------------------------------------------------------- */
 h1, h2, h3, .techBox p, .accordion .accordion-navigation a { 
