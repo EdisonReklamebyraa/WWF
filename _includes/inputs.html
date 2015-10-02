@@ -1,24 +1,26 @@
-<h2 id="inputs">Inputs</h2>
-<p>The existing data is based on the case study of the Norwegian sovereign wealth fund. To create your own case study based on our model, you need to personalize the following fields:</p>
+<h2 id="inputs">Inputs: now it's your turn!</h2>
+<p>The numbers you see refers to the case study WWF-Norway developed, based on Norway’s sovereign wealth fund, world’s largest with almost 900 billion dollars in assets.</p>
+
+<p>Now you have the possibility to create your own case study! Simply edit the following fields. The changes are automatically saved, and you can go back to default just by pressing the “Reset” button.</p>
 
 <form id="InputsForm">
 
 
     <p>
-      <label for="Investment">The latest known size of the investor is </label>
+      <label for="Investment">How large is the investor you want to test? (in US dollars)</label>
       <input id="Investment" type="text" data-id="investment" name="totalFund" data-format="0,000"   value="" />
       <label for="Investment">USD.</label>            
     </p>
 
     
     <p>
-      <label for="GrowthRate">The expected annual growth rate (CAGR) is </label>
+      <label for="GrowthRate">How much do you expect it to grow in the coming years? As a default it will be 2% per year (CAGR).</label>
       <input id="GrowthRate" data-id="annual growth rate" type="text" name="growthRate" >
       <label for="GrowthRate">percent.</label>
     </p>
 
     <p>
-      <label for="InvestPercentage">The target for renewable energy investment is </label>
+      <label for="InvestPercentage">How much should the fund invest in renewable energy projects?</label>
       <input id="InvestPercentage" data-id="target" type="text" name="investPercentage" data-format="0,000.00" >
       <label for="InvestPercentage"> percent of fund’s total value.</label>
     </p>
