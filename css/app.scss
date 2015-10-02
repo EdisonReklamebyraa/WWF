@@ -377,6 +377,13 @@ header .fundBox {
 }
 
 
+.handsontable .htNumeric {
+    max-width: 5.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Table styles
 --------------------------------------------------------------------- */
 

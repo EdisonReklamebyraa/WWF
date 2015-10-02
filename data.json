@@ -78,7 +78,7 @@
             "wind",
             "geothermal",
             "solar pv",
-            "Concentrated solar power",
+            "Concentrated <br>solar power",
             "marine"
         ],
         "FOSSILFUELS": "Fossil fuels",
