@@ -43,6 +43,8 @@ UIs.prototype = _.create(
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
             $("input[name=growthRate]").val(numeral(this.user["annual growth rate"] ).format('0%'));
 
+            $("input[name=comparison]").val(numeral(this.user["comparison"] ).format('0, 000'));
+
             $("#AppRest").click(function(e) {
                 e.preventDefault();
                 Arbiter.publish("reset",this);

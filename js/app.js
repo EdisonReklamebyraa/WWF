@@ -125,8 +125,7 @@ function Charts(data) {
         self.loadedGoogle();
     });
 
-    $("#ComparisonField").keyup(this.impactChart).change(this.impactChart).keyup(this.impactChart);
-
+   
 }
 
 Charts.prototype = _.create(
@@ -180,7 +179,7 @@ Charts.prototype = _.create(
             if(this.impact && this.gLoaded && this.user){
 
                 var arrData = [ ['Year', 'Comparison field', 'Energy']];
-                var comp  = $("#ComparisonField").val() * 1;
+                var comp  = this.user["comparison"] ;
 
                 for(var i = 0; i < this.impact.yearlyTotalPowerGeneration.length; i++)
                 {
@@ -1236,6 +1235,8 @@ UIs.prototype = _.create(
             $("input[name=endYear]").val(this.user["target year"] );
             $("input[name=investPercentage]").val(numeral(this.user["target"] ).format('0%'));
             $("input[name=growthRate]").val(numeral(this.user["annual growth rate"] ).format('0%'));
+
+            $("input[name=comparison]").val(numeral(this.user["comparison"] ).format('0, 000'));
 
             $("#AppRest").click(function(e) {
                 e.preventDefault();

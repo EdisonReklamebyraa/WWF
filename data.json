@@ -5,7 +5,8 @@
         "annual growth rate": 0.02,
         "target": 0.05,
         "starting year": 2016,
-        "target year": 2020
+        "target year": 2020,
+        "comparison": 75000000
 
     },
     "electricity_mix": {
