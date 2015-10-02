@@ -30,11 +30,14 @@ ul {
 }
 
 .logo{
+    float: left;
+    padding: 0;
     img{
-        border: 2px solid #000;        
+        margin: -0.1em 1em 0.5em 0 ;
+        border: 2px solid #000;
+        float: left;
+        max-height: 3em;
     }    
-
-    padding: 5px;
 }
 
 .row {
@@ -475,7 +478,7 @@ table {
         padding: 2em 2em 2em;        
         
         h1{
-            padding: 0 0 1rem;
+                overflow: hidden;
         }
 
         p{

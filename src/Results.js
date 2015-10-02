@@ -155,8 +155,10 @@ Results.prototype = _.create(
 
         updateInstalledCapacity: function(shares) {
             var installed = 0 ;
-            var coalPlant = 586000;
-            var nuclearReactor = 922000;
+            var coalPlant = 586 * 1000;
+            var nuclearReactor = 922 * 1000;
+            var EUCitizens = 6144;
+            var US = 4260 * 1000000;
 
 
             for(var i = 0; i < shares.length; i++)
@@ -167,6 +169,10 @@ Results.prototype = _.create(
             $(".gigawatts").text(numeral(installed).format('0, 000'));
             $(".coalPlants").text(numeral(installed / coalPlant).format('0, 000'));
             $(".nuclearReactors").text(numeral(installed / nuclearReactor).format('0, 000'));
+
+            $(".EUCitizens").text(numeral(installed / EUCitizens).format('0, 000'));
+            $(".US").text(numeral(installed / US).format('0, 000.00'));
+
         },
 
 
