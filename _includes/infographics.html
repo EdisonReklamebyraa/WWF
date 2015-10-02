@@ -8,43 +8,30 @@
   </div>
 
   
-  <div class="topGap" >
-    <hr />  
-  </div>
- 
+
 
   <div class="medium-4 columns  sidebar whitewrap">
-    <h5>Installed capacity annual and total: new solar farms, wind parks, geothermal plants, and so on.</h5>
-    {% include installed_popup.html %}
-  </div>
+      <h5>Installed capacity annual and total: new solar farms, wind parks, geothermal plants, and so on.</h5>
+      {% include installed_popup.html %}
+      <hr />
 
-
-
-  <div class="medium-4 columns sidebar  whitewrap">
-    <h5>Electricity generation, annual and total: watts of electricity that can power industries and cities.</h5>
-    {% include renewable_popup.html %}    	  
-
-  </div>
-
-
-  
-  <div class="medium-4 columns sidebar  whitewrap">
-    <h5>Emission saved by not investing in fossil fuels instead: by making smart choices we reduce emissions.</h5>
-    {% include impact_popup.html %}
-  </div>
-
-  <hr />
-
-  
-
-  <div class="medium-4 columns  sidebar whitewrap">
 	  {% include installed.html %}    
   </div>
   <div class="medium-4 columns sidebar  whitewrap">
+     <h5>Electricity generation, annual and total: watts of electricity that can power industries and cities.</h5>     
+     {% include renewable_popup.html %}
+     <hr />
+
     {% include renewable.html %}
+     
   </div>
   <div class="medium-4 columns sidebar  whitewrap">
-    {% include impact.html %}	  
+     <h5>Emission saved by not investing in fossil fuels instead: by making smart choices we reduce emissions.</h5>
+    {% include impact_popup.html %}
+<hr />
+
+     {% include impact.html %}
+   
   </div>
   
   <div class="medium-12 columns ">
