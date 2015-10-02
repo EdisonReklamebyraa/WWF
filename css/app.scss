@@ -331,18 +331,6 @@ header .fundBox {
 	  border-bottom: 4px solid #808080;
 }
 
-header{
-    padding: 0 2em 2em;
-    
-    h1{
-        padding: 0 0 1rem;
-    }
-
-    p{
-        margin-bottom: 0;
-    }
-}
-
 .fundBox input[type="text"] {
 	  display: inline;
     width: auto;
@@ -481,6 +469,17 @@ table {
 
     .teckbox p, .earthBox h2 {
 	      position: absolute;
+    }
+    header{
+        padding: 0 2em 2em;
+        
+        h1{
+            padding: 0 0 1rem;
+        }
+
+        p{
+            margin-bottom: 0;
+        }
     }
 
     #hydro {top: 53%;left: 13%;}
