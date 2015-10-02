@@ -367,7 +367,7 @@ ElectricityDataTable.prototype = _.create(
                 var container = document.getElementById('EMix');
                 this.table = new Handsontable(container, {
                     data: this.data.data,
-                    rowHeaders: true,
+                    rowHeaders: false,
                     colHeaders: _.union(["year"], this.data.cols),
                     stretchH: "all",
                     columns: [
@@ -963,10 +963,11 @@ Results.prototype = _.create(
 
         updateInstalledCapacity: function(shares) {
             var installed = 0 ;
-            var coalPlant = 586 * 1000;
-            var nuclearReactor = 922 * 1000;
-            var EUCitizens = 6144;
-            var US = 4260 * 1000000;
+
+            var coalPlant = this.data.user["coalPlant"];
+            var nuclearReactor = this.data.user["nuclearReactor"];
+            var EUCitizens = this.data.user["EUCitizens"];
+            var US = this.data.user["US"];
 
 
             for(var i = 0; i < shares.length; i++)
@@ -994,11 +995,12 @@ Results.prototype = _.create(
 
         updateImpact:  _.debounce(function(shares,investments) {
                            var million = 1000000;
-
-                           var c02g = 0;
-                           var worldGHG = 45914 * 1000000  ;
-                           var worldUS  = 6135 * 1000000  ;
                            var globes = "";
+
+                           var c02g = this.data.user["c02g"];
+                           var worldGHG = this.data.user["worldGHG"];
+                           var worldUS  = this.data.user["worldUS"];
+
                            var numGlobes = 0;
 
                            for(var i = 0; i < shares.length; i++)

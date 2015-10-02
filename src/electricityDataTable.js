@@ -45,7 +45,7 @@ ElectricityDataTable.prototype = _.create(
                 var container = document.getElementById('EMix');
                 this.table = new Handsontable(container, {
                     data: this.data.data,
-                    rowHeaders: true,
+                    rowHeaders: false,
                     colHeaders: _.union(["year"], this.data.cols),
                     stretchH: "all",
                     columns: [

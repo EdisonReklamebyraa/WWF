@@ -383,6 +383,13 @@ header .fundBox {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#EMix .handsontable thead th .relative{
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
 
 /* Table styles
 --------------------------------------------------------------------- */
