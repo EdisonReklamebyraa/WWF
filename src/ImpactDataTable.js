@@ -60,7 +60,7 @@ ImpactDataTable.prototype = _.create(
               + ( i + start )
               + ": </dt>"
               +  "<dd>"
-              + numeral(this.data.yearlyTotalPowerGeneration[i]).format('0 000')
+              + numeral(this.data.yearlyTotalPowerGeneration[i]).format('0, 000')
               + "</dd></div>";
             }
 
@@ -76,5 +76,4 @@ ImpactDataTable.prototype = _.create(
                           $("#ImpactDataTable").html("<dl>"+this.getData()+"</dl>");
 
                       }, 200)
-
     });
