@@ -198,11 +198,12 @@ Results.prototype = _.create(
                                c02g     += shares[i].c02Saved;
                            }
 
-                           numGlobes = Math.floor(c02g/worldGHG)
+                           numGlobes = Math.floor(c02g/worldGHG);
 
-                           for(i = 0; i < Math.floor(c02g/worldGHG); i++)
+
+                           for(i = 0; i < numGlobes; i++)
                            {
-                               globes += '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
+                               globes += (numGlobes > 40 )? ".":'<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
                            }
 
                            Arbiter.publish("changed/impact",this.summary  );

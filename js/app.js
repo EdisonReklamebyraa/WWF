@@ -1007,11 +1007,12 @@ Results.prototype = _.create(
                                c02g     += shares[i].c02Saved;
                            }
 
-                           numGlobes = Math.floor(c02g/worldGHG)
+                           numGlobes = Math.floor(c02g/worldGHG);
 
-                           for(i = 0; i < Math.floor(c02g/worldGHG); i++)
+
+                           for(i = 0; i < numGlobes; i++)
                            {
-                               globes += '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
+                               globes += (numGlobes > 40 )? ".":'<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
                            }
 
                            Arbiter.publish("changed/impact",this.summary  );
@@ -1253,23 +1254,6 @@ UIs.prototype = _.create(
 
         loadEvents: function(e) {
             self = this;
-            $(".upndownBox .downBtn").click(function(e) {
-                e.preventDefault();
-                var p = $(this).parent();
-                var t = $("input[name="+p.data("target")+"]");
-                var val = Math.max(numeral().unformat(p.data("min")) ,numeral().unformat(t.val()) - p.data("inc"));
-                t.val( val );
-                self.interaction(t);
-            });
-
-            $(".upndownBox .upBtn").click(function(e) {
-                e.preventDefault();
-                var p = $(this).parent();
-                var t = $("input[name="+p.data("target")+"]");
-                var val = Math.max(numeral().unformat(p.data("min")) , numeral().unformat(t.val()) + p.data("inc"));
-                t.val( val );
-                self.interaction(t);
-            });
 
             $("input").focusout(function() {
                 self.interaction(this);
@@ -1282,12 +1266,14 @@ UIs.prototype = _.create(
         },
 
         interaction: function(input) {
+            var val = $(input).val() * 1;
+            val = isNaN(val)? numeral().unformat(val):val;
 
-            this.user[ $(input).data("id")] = $(input).val() * 1;
-
+            if(!isNaN(val)){
+                this.user[ $(input).data("id")] = val;
+            }
 
             this.user["target year"] = Math.max(this.user["target year"], this.user["starting year"])
-
             Arbiter.publish("changed/user",this.user);
         }
 

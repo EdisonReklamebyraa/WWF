@@ -310,7 +310,7 @@ h2 .upndownBox .downBtn {
 	  z-index: 9;
 }
 .globe{
-    padding: 1px;
+    padding: 1px;  
 }
 
 .teckbox p {
@@ -361,7 +361,10 @@ header .fundBox {
 	  margin-bottom: 1.25rem;
 }
 
-#globes {
+.globes {
+    overflow: hidden;
+    color: $greenish;
+    font-size: 0.5em;
 	  margin-bottom: 1.25rem;
 }
 

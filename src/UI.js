@@ -60,23 +60,6 @@ UIs.prototype = _.create(
 
         loadEvents: function(e) {
             self = this;
-            $(".upndownBox .downBtn").click(function(e) {
-                e.preventDefault();
-                var p = $(this).parent();
-                var t = $("input[name="+p.data("target")+"]");
-                var val = Math.max(numeral().unformat(p.data("min")) ,numeral().unformat(t.val()) - p.data("inc"));
-                t.val( val );
-                self.interaction(t);
-            });
-
-            $(".upndownBox .upBtn").click(function(e) {
-                e.preventDefault();
-                var p = $(this).parent();
-                var t = $("input[name="+p.data("target")+"]");
-                var val = Math.max(numeral().unformat(p.data("min")) , numeral().unformat(t.val()) + p.data("inc"));
-                t.val( val );
-                self.interaction(t);
-            });
 
             $("input").focusout(function() {
                 self.interaction(this);
@@ -89,12 +72,14 @@ UIs.prototype = _.create(
         },
 
         interaction: function(input) {
+            var val = $(input).val() * 1;
+            val = isNaN(val)? numeral().unformat(val):val;
 
-            this.user[ $(input).data("id")] = $(input).val() * 1;
-
+            if(!isNaN(val)){
+                this.user[ $(input).data("id")] = val;
+            }
 
             this.user["target year"] = Math.max(this.user["target year"], this.user["starting year"])
-
             Arbiter.publish("changed/user",this.user);
         }
 
