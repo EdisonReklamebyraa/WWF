@@ -1427,7 +1427,7 @@ Data.prototype = _.create(
 
              try{
                  var localData = JSON.parse(localStorage.getItem("data"));
-                 debugger;
+
                  if(localData && localData.user && localData.electricity_mix){
                      this.update(localData);
                      this.reLoadAnnualGrowthRates();
