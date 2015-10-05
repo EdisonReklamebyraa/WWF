@@ -2,7 +2,7 @@
 
 <p>The following graphs visualize the main results of the model. You can easily save each graph as an image, and use it for your presentation. Please remember to include the credits.</p>
 <hr />
-<p>The first graph shows how much money is invested annually, and how this amount increases until the target is reached (<span class="targetPercent"></span>).</p>
+<p>The first graph shows how much money is invested annually (left bar) and how the investments build up to reach the target (right bar), that is <span class="targetPercent"></span>.</p>
 
 <p> <div class="bigPad" id="TotalInvestmentChart">
     
@@ -12,34 +12,9 @@
     
   </div>
 </p>
-<hr />
-<p>The second graph visualizes the energy mix which is used to allocate the investment in every technology. In short, the money invested every year are allocated to different technologies for the generation of renewable energy, according to this scheme. This default allocation is based on the International Energy Agency’s scenario for the investmed needed in the next years. Until 2020, the central scenario is used (New Policy Scenario), while after 2020 and until 2040 we chose the 450 scenario, which shows the path needed to limit global warming to 2-degrees Celsius. This is the goal that almost all countries in the world have agreed upon.</p>
-
-<p>
-  <div class="bigPad" id="PieDist" >		
-  </div>
-  <div id="PieDistLink">
-    
-  </div>
-</p>
 
 <hr />
-<p>The third graph shows the amount of electricity generated every year for the lifetime of the power plants. In fact, every technology has a different life-cycle (see background table above). For example, an hydropower plant is in operation for 50 years, while a wind mill for 25 years. The source for this data is IPCC, and the user can edit it. This graph also let you compare the annual electricity generation to a number of your choice. For example, one can choose to compare it to the annual electricity generation of a country, or a city, or a power plant.</p>
-
-<p><div class="bigPad" id="ImpactChart">
-    
-  </div>
-  <label id="ComparisonFieldLabel" for="ComparisonField" >This input box needs text: </label>
-  <input id="ComparisonField" type="text" name="comparison" data-id="comparison" data-format="0,000"  >
-  <div id="ImpactChartLink">
-    
-  </div>
-</p>
-
-<hr />
-<p>The following graph shows how much money are invested in each technology, annually, until the target is reached.</p>
-
-
+<p>The second graph shows how much money are invested in each technology, annually, until the target is reached.</p>
 
 <p> <div class="bigPad" id="InvestmentChart">
     
@@ -50,11 +25,36 @@
 </p>
 
 <hr />
-<p>The following graph show how much new capacity is installed every year: this means new solar panels and wind turbines, geothermal plants, hydropower dams, and so on. Capacity indicates the maximum electric output a generator can produce.</p>
+<p>The third graph visualizes the energy mix which is used to allocate the investment in every technology. In short, the money invested every year are allocated to different technologies for the generation of renewable energy, according to this scheme. This default allocation is based on the International Energy Agency’s scenario for the investmed needed in the next years. Until 2020, the central scenario is used (New Policy Scenario), while after 2020 and until 2040 we chose the 450 scenario, which shows the path needed to limit global warming to 2-degrees Celsius. This is the goal that almost all countries in the world have agreed upon.</p>
+
+<p>
+  <div class="bigPad" id="PieDist" >		
+  </div>
+  <div id="PieDistLink">
+    
+  </div>
+</p>
+
+<hr />
+<p>The fourth graph show how much new capacity is installed every year: this means new solar panels and wind turbines, geothermal plants, hydropower dams, and so on. Capacity indicates the maximum electric output a generator can produce.</p>
 
 <p> <div class="bigPad" id="CapacityInstalled">
     
   </div><div id="CapacityInstalledLink">
+    
+  </div>
+</p>
+
+
+<hr />
+<p>The fifth graph shows the amount of electricity generated every year for the lifetime of the power plants. In fact, every technology has a different life-cycle (see background table above). For example, an hydropower plant is in operation for 50 years, while a wind mill for 25 years. The source for this data is IPCC, and the user can edit it. This graph also let you compare the annual electricity generation to a number of your choice. For example, one can choose to compare it to the annual electricity generation of a country, or a city, or a power plant.</p>
+
+<p><div class="bigPad" id="ImpactChart">
+    
+  </div>
+  <label id="ComparisonFieldLabel" for="ComparisonField" >This input box needs text: </label>
+  <input id="ComparisonField" type="text" name="comparison" data-id="comparison" data-format="0,000"  >
+  <div id="ImpactChartLink">
     
   </div>
 </p>
