@@ -977,10 +977,12 @@ Results.prototype = _.create(
 
         loadData: function(json) {
             this.data = json;
+            this.clean();
         },
 
         loadUser: function(json) {
             this.data.user = json;
+            this.clean();
         },
 
         loadMix: function(json) {
@@ -991,6 +993,12 @@ Results.prototype = _.create(
         loadBackground: function(json) {
 
             this.data.background = json;
+        },
+
+        clean: function() {
+            this.data.user["starting year"] = Math.max(this.data.user["starting year"], 2000);
+            this.data.user["target year"] = Math.max(this.data.user["starting year"], this.data.user["target year"]);
+            this.data.user["target year"] =  (this.data.user["target year"] - this.data.user["starting year"] > 100)?this.data.user["starting year"] + 99 : this.data.user["target year"] ;
         },
 
         update: _.debounce(function() {
@@ -1415,19 +1423,28 @@ Data.prototype = _.create(
         annualGrowthRates: null,
 
         init: function() {
-            var localData = JSON.parse(localStorage.getItem("data"));
 
-            if(localData && localData.user && localData.electricity_mix){
-                this.update(localData);
-                this.reLoadAnnualGrowthRates();
-                this.reLoadInvestments();
 
-            }else{
+             try{
+                 var localData = JSON.parse(localStorage.getItem("data"));
+
+                 if(localData && localData.user && localData.electricity_mix){
+                     this.update(localData);
+                     this.reLoadAnnualGrowthRates();
+                     this.reLoadInvestments();
+                 }
+
+
+            }
+            catch(err) {
                 localStorage.removeItem("data");
                 this.load();
             }
 
+
+
             this.loadEvents();
+
         },
 
         loadEvents: function() {
@@ -1461,28 +1478,36 @@ Data.prototype = _.create(
         },
 
         reLoadInvestments: function() {
-            var investments = JSON.parse(localStorage.getItem("investments"));
 
-            if(investments){
-                setTimeout(function() {
-                    Arbiter.publish("edit/investments", investments);}, 200);
-            }else{
+            try{
+                var investments = JSON.parse(localStorage.getItem("investments"));
+
+                if(investments){
+                    setTimeout(function() {
+                        Arbiter.publish("edit/investments", investments);}, 200);
+                }
+            }
+            catch(err) {
                 localStorage.removeItem("investments");
             }
         },
 
         reLoadAnnualGrowthRates: function() {
-            var annualGrowthRates = JSON.parse(localStorage.getItem("annualGrowthRates"));
+            try{
+                var annualGrowthRates = JSON.parse(localStorage.getItem("annualGrowthRates"));
 
-            if(annualGrowthRates){
-                setTimeout(function() {
-                    Arbiter.publish("edit/annualGrowthRates", annualGrowthRates);}, 200);
-            }else{
+                if(annualGrowthRates){
+                    setTimeout(function() {
+                        Arbiter.publish("edit/annualGrowthRates", annualGrowthRates);}, 200);
+                }
+            }
+            catch(err) {
                 localStorage.removeItem("annualGrowthRates");
             }
         },
 
         save: function() {
+
 
             localStorage.setItem("data",JSON.stringify(this.data));
 

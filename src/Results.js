@@ -62,10 +62,12 @@ Results.prototype = _.create(
 
         loadData: function(json) {
             this.data = json;
+            this.clean();
         },
 
         loadUser: function(json) {
             this.data.user = json;
+            this.clean();
         },
 
         loadMix: function(json) {
@@ -76,6 +78,12 @@ Results.prototype = _.create(
         loadBackground: function(json) {
 
             this.data.background = json;
+        },
+
+        clean: function() {
+            this.data.user["starting year"] = Math.max(this.data.user["starting year"], 2000);
+            this.data.user["target year"] = Math.max(this.data.user["starting year"], this.data.user["target year"]);
+            this.data.user["target year"] =  (this.data.user["target year"] - this.data.user["starting year"] > 100)?this.data.user["starting year"] + 99 : this.data.user["target year"] ;
         },
 
         update: _.debounce(function() {
