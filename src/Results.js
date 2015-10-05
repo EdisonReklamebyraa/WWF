@@ -36,6 +36,7 @@ function Results(data) {
 
 
     Arbiter.subscribe("edit/annualGrowthRates",function(json) {
+
         self.setAnnualGrowthRates(json);
         self.updateProjections();
         self.updateInvestments();

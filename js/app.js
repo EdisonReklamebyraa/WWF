@@ -823,7 +823,6 @@ function InvestmentDataTable() {
 
 
     Arbiter.subscribe("update/investments",function(json) {
-
         self.loadData(json);
     } );
 
@@ -952,6 +951,7 @@ function Results(data) {
 
 
     Arbiter.subscribe("edit/annualGrowthRates",function(json) {
+
         self.setAnnualGrowthRates(json);
         self.updateProjections();
         self.updateInvestments();
@@ -1463,7 +1463,8 @@ Data.prototype = _.create(
             var investments = JSON.parse(localStorage.getItem("investments"));
 
             if(investments){
-                Arbiter.publish("edit/investments", investments);
+                setTimeout(function() {
+                    Arbiter.publish("edit/investments", investments);}, 200);
             }else{
                 localStorage.removeItem("investments");
             }
@@ -1473,7 +1474,8 @@ Data.prototype = _.create(
             var annualGrowthRates = JSON.parse(localStorage.getItem("annualGrowthRates"));
 
             if(annualGrowthRates){
-                Arbiter.publish("edit/annualGrowthRates", annualGrowthRates);
+                setTimeout(function() {
+                    Arbiter.publish("edit/annualGrowthRates", annualGrowthRates);}, 200);
             }else{
                 localStorage.removeItem("annualGrowthRates");
             }
@@ -1484,11 +1486,11 @@ Data.prototype = _.create(
             localStorage.setItem("data",JSON.stringify(this.data));
 
             if(this.investments)
-              localStorage.setItem("investments",this.investments);
+              localStorage.setItem("investments",JSON.stringify(this.investments));
 
 
             if(this.annualGrowthRates)
-              localStorage.setItem("annualGrowthRates",this.annualGrowthRates);
+              localStorage.setItem("annualGrowthRates",JSON.stringify(this.annualGrowthRates));
 
             Arbiter.publish("saving", this);
 

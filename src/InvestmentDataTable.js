@@ -9,7 +9,6 @@ function InvestmentDataTable() {
 
 
     Arbiter.subscribe("update/investments",function(json) {
-
         self.loadData(json);
     } );
 
