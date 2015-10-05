@@ -1136,7 +1136,8 @@ Results.prototype = _.create(
                            $(".wAnnually").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".wAnnuallyType").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".start").text(this.data.user["starting year"]);
-                           $(".end").text(this.data.user["starting year"] + this.summary .years );
+                           $(".end").text(this.data.user["starting year"] + this.summary.years );
+                           $(".targetYears").text(this.data.user["target year"]   );
                            $(".impactYears").text(  this.summary .years );
 
                            $(".targetPercent").text(numeral(this.data.user["target"]).format('0%')   );
