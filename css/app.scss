@@ -453,6 +453,18 @@ table {
     }
 }
 
+footer{
+    padding: 2em;
+    font-weight: 100;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+    .devlogo{
+        max-height: 2.5em;
+        margin: -2em 1em 0;
+    }
+}
+
 
 /* Animations
 --------------------------------------------------------------------- */
@@ -492,6 +504,7 @@ table {
 
     .earth.teckbox{
         padding-bottom: 4em;
+        
     }
 
     .teckbox p, .earthBox h2 {
