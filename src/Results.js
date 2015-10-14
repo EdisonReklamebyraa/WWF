@@ -173,7 +173,7 @@ Results.prototype = _.create(
 
             for(var i = 0; i < shares.length; i++)
             {
-                installed     += shares[i].totalLifetimeOutput;
+                installed     += shares[i].totalInstalled;
             }
 
             $(".gigawatts").text(numeral(installed).format('0, 000'));
