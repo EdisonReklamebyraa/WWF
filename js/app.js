@@ -1140,7 +1140,7 @@ Results.prototype = _.create(
                            $(".globes").html(globes);
 
                            $(".timesUS").text(numeral(c02g /worldUS).format('0, 000') );
-                           $(".amount").text(numeral(this.summary .averageAnnualPowerGeneration/100).format('0, 000')+' KWh');
+                           $(".amount").text(numeral(this.summary.averageAnnualPowerGeneration).format('0, 000')+' KWh');
                            $(".wAnnually").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".wAnnuallyType").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".start").text(this.data.user["starting year"]);
