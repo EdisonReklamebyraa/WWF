@@ -204,6 +204,7 @@ Charts.prototype = _.create(
                 var data = google.visualization.arrayToDataTable(arrData);
 
                 var options = {
+                    height: 300,
                     chart: {
                         title: 'Impact'
                     },
@@ -251,6 +252,7 @@ Charts.prototype = _.create(
                 var series = {};
                 series[(this.shares[0].members.length)] = {type: 'line'};
                 var options = {
+                     height: 300,
                     vAxis: {title: 'Invested, $'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
@@ -301,6 +303,7 @@ Charts.prototype = _.create(
                 var series = {};
                 series[(this.shares[0].members.length )]  = {type: 'line'};
                 var options = {
+                    height: 300,
                     vAxis: {title: 'Installed capacity, kW'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
@@ -347,6 +350,7 @@ Charts.prototype = _.create(
                 var data = google.visualization.arrayToDataTable(arrData);
 
                 var options = {
+                     height: 300,
                     chart: {
                         title: 'Annual and cumulative investment.'
                     },
@@ -392,10 +396,13 @@ Charts.prototype = _.create(
                 }
                 data.addRows(pieData );
                 // Set chart options
-                var options = {'title':'Relative share that each technology has WITHIN its category',
-                               legend:{
-                                   position: 'bottom', maxLines: 5
-                               } };
+                var options = {
+                     height: 300,
+                    'title':'Relative share that each technology has WITHIN its category',
+                    legend:{
+                        position: 'bottom', maxLines: 5
+                    }
+                };
 
                 var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
                 chart.draw(data, options);
