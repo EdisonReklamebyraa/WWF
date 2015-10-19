@@ -104,7 +104,7 @@ Charts.prototype = _.create(
                         title: 'Impact'
                     },
                     legend:{
-                        position: 'bottom'
+                        position: 'bottom', maxLines: 5
                     }
                 };
 
@@ -152,7 +152,7 @@ Charts.prototype = _.create(
                     seriesType: 'bars',
                     series: series,
                     legend:{
-                        position: 'bottom'
+                        position: 'bottom', maxLines: 5
                     }
                 };
 
@@ -202,7 +202,7 @@ Charts.prototype = _.create(
                     seriesType: 'bars',
                     series: series,
                     legend:{
-                        position: 'bottom'
+                        position: 'bottom', maxLines: 5
                     }
                 };
 
@@ -247,7 +247,7 @@ Charts.prototype = _.create(
                         title: 'Annual and cumulative investment.'
                     },
                     legend:{
-                        position: 'bottom'
+                        position: 'bottom', maxLines: 5
                     }
                 };
 
@@ -290,7 +290,7 @@ Charts.prototype = _.create(
                 // Set chart options
                 var options = {'title':'Relative share that each technology has WITHIN its category',
                                legend:{
-                                   position: 'bottom'
+                                   position: 'bottom', maxLines: 5
                                } };
 
                 var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
