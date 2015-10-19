@@ -15,6 +15,16 @@ function ComparisonsTable(data) {
           self.table.render();
     }, 100));
 
+
+    $("#DownloadComparisonsTable")
+    .click(function(e) {
+               e.preventDefault();
+               var blob = new Blob([
+                   handsontable2csv.string(this.table, true)
+               ], {type: "text/plain;charset=utf-8"});
+               saveAs(blob, "ComparisonsTable.tsv");
+           }.bind(this));
+
 }
 
 ComparisonsTable.prototype = _.create(

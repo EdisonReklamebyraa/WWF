@@ -18,11 +18,14 @@ function BackgroundDataTable(data) {
     }, 100));
 
 
-  $("#DownloadBackgroundData").click(function(e) {
-        e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Background data.json");
-    });
+    $("#DownloadBackgroundData")
+    .click(function(e) {
+               e.preventDefault();
+               var blob = new Blob([
+                   handsontable2csv.string(this.table, true)
+               ], {type: "text/plain;charset=utf-8"});
+               saveAs(blob, "BackgroundDataTable.tsv");
+           }.bind(this));
 }
 
 BackgroundDataTable.prototype = _.create(
@@ -42,6 +45,8 @@ BackgroundDataTable.prototype = _.create(
                           if(!this.table){
 
                               var container = document.getElementById('BackgroundData');
+
+                              console.log(this.data);
                               this.table = new Handsontable(container, {
                                   data: this.data,
                                   rowHeaders: false,
@@ -51,12 +56,19 @@ BackgroundDataTable.prototype = _.create(
                                                "&nbsp;<hr>Min hours",
                                                "<div class='wide'><strong>Full Load Hours (capacity)</strong></div><hr> Max hours",
                                                "&nbsp;<hr>Average hours",
-                                               "<strong>Emissions</strong> <hr>(LCA life-cycle assessment)<hr>grams CO2eq/kWh",
-                                               "<strong>Employment</strong> <hr>Jobs / GWh",
-                                               "<strong>Employment</strong> <hr>Jobs / 1 million $" ],
+                                               "<strong>Emissions</strong> <hr>(LCA life-cycle assessment)<hr>grams CO2eq/kWh"  ],
 
                                   stretchH: "all",
                                   contextMenu: true,
+                                  columns: [
+                                      {data: "type"},
+                                      {data: "years"},
+                                      {data: "overnightCapitalCost"},
+                                      {data: "minHours"},
+                                      {data: "maxHours"},
+                                      {data: "averageHours"},
+                                      {data: "emissions"}
+                                  ],
                                   cells: function(row,cell,prop) {
                                       switch(cell) {
                                           case 0:
@@ -92,6 +104,7 @@ BackgroundDataTable.prototype = _.create(
 },{"arbiter-subpub":14,"lodash":15}],2:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
+var header = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n';
 
 
 module.exports = Charts;
@@ -125,7 +138,7 @@ function Charts(data) {
         self.loadedGoogle();
     });
 
-   
+
 }
 
 Charts.prototype = _.create(
@@ -193,6 +206,9 @@ Charts.prototype = _.create(
                 var options = {
                     chart: {
                         title: 'Impact'
+                    },
+                    legend:{
+                        position: 'bottom'
                     }
                 };
 
@@ -201,7 +217,21 @@ Charts.prototype = _.create(
 
                 chart.draw(data, options);
 
-                $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#ImpactChart svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "ImpactChart.svg");
+
+                    e.preventDefault();
+                });
             }
         } ,
 
@@ -214,8 +244,8 @@ Charts.prototype = _.create(
 
                 for(var i = 0; i < this.shares.length; i++){
                     data.push(([(this.user["starting year"] + i + "")]).concat(this.shares[i].members.map(function(member) {
-                                                                            return member.money;
-                                                                        })).concat([this.shares[i].totalMoney]) );
+                                                                                   return member.money;
+                                                                               })).concat([this.shares[i].totalMoney]) );
                 }
 
                 var series = {};
@@ -224,13 +254,32 @@ Charts.prototype = _.create(
                     vAxis: {title: 'Invested, $'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
-                    series: series
+                    series: series,
+                    legend:{
+                        position: 'bottom'
+                    }
                 };
 
                 var chart = new google.visualization.ComboChart(document.getElementById('InvestmentChart'));
                 chart.draw(google.visualization.arrayToDataTable(data), options);
 
-                $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#InvestmentChart svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "InvestmentChart.svg");
+
+                    e.preventDefault();
+                });
+
+
 
 
             }} ,
@@ -245,8 +294,8 @@ Charts.prototype = _.create(
 
                 for(var i = 0; i < this.shares.length; i++){
                     data.push(([(this.user["starting year"] + i + "")]).concat(this.shares[i].members.map(function(member) {
-                                                                            return member.installed;
-                                                                        })).concat([this.shares[i].totalInstalled]) );
+                                                                                   return member.installed;
+                                                                               })).concat([this.shares[i].totalInstalled]) );
                 }
 
                 var series = {};
@@ -255,12 +304,29 @@ Charts.prototype = _.create(
                     vAxis: {title: 'Installed capacity, kW'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
-                    series: series
+                    series: series,
+                    legend:{
+                        position: 'bottom'
+                    }
                 };
 
                 var chart = new google.visualization.ComboChart(document.getElementById('CapacityInstalled'));
                 chart.draw(google.visualization.arrayToDataTable(data), options);
-                $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#CapacityInstalled svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "CapacityInstalled.svg");
+
+                    e.preventDefault();
+                });
 
             }
         },
@@ -283,6 +349,9 @@ Charts.prototype = _.create(
                 var options = {
                     chart: {
                         title: 'Annual and cumulative investment.'
+                    },
+                    legend:{
+                        position: 'bottom'
                     }
                 };
 
@@ -290,7 +359,21 @@ Charts.prototype = _.create(
                 var chart = new google.visualization.ColumnChart(document.getElementById('TotalInvestmentChart'));
                 chart.draw(data, options);
 
-                $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#TotalInvestmentChart svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "TotalInvestmentChart.svg");
+
+                    e.preventDefault();
+                });
 
             }
         },
@@ -309,11 +392,28 @@ Charts.prototype = _.create(
                 }
                 data.addRows(pieData );
                 // Set chart options
-                var options = {'title':'Relative share that each technology has WITHIN its category' };
+                var options = {'title':'Relative share that each technology has WITHIN its category',
+                               legend:{
+                                   position: 'bottom'
+                               } };
 
                 var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
                 chart.draw(data, options);
-                $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#PieDist svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "PieDist.svg");
+
+                    e.preventDefault();
+                });
             }
         }
 
@@ -336,6 +436,16 @@ function ComparisonsTable(data) {
         if(self.table)
           self.table.render();
     }, 100));
+
+
+    $("#DownloadComparisonsTable")
+    .click(function(e) {
+               e.preventDefault();
+               var blob = new Blob([
+                   handsontable2csv.string(this.table, true)
+               ], {type: "text/plain;charset=utf-8"});
+               saveAs(blob, "ComparisonsTable.tsv");
+           }.bind(this));
 
 }
 
@@ -449,9 +559,9 @@ function ElectricityDataTable(data) {
 
   $("#DownloadEMixData").click(function(e) {
         e.preventDefault();
-        var blob = new Blob([ JSON.stringify(self.data.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Electricity Data Table.json");
-    });
+        var blob = new Blob([  handsontable2csv.string(this.table) ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Electricity Data Table.tsv");
+    }.bind(this));
 
 }
 
@@ -560,20 +670,10 @@ function GrowthRateDataTable() {
     $("#DownloadGrowthRateData").click(function(e) {
         e.preventDefault();
         var blob = new Blob([
-
-            JSON.stringify(
-            {
-                annualGrowthRates: self.annualGrowthRates,
-                investments: self.data,
-                projections: self.projections,
-                investor : self.userData
-
-            }, null, 4)
-
-
+            handsontable2csv.string(this.table)
         ], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "impactData.json");
-    });
+        saveAs(blob, "GrowthRateDataTable.tsv");
+    }.bind(this));
 
 }
 
@@ -593,13 +693,11 @@ GrowthRateDataTable.prototype = _.create(
         },
 
         loadProjections: function(json) {
-
             this.projections = json;
             this.updateTable();
         },
 
         loadUser: function(json) {
-
             this.userData = json;
             this.updateTable();
         },
@@ -756,9 +854,9 @@ function ImpactDataTable() {
 
     $("#DownloadImpactData").click(function(e) {
         e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "impact.json");
-    });
+        var blob = new Blob([ handsontable2csv.string(this.table) ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "ImpactDataTable.tsv");
+    }.bind(this));
 
 }
 
@@ -843,10 +941,10 @@ function InvestmentDataTable() {
 
 
     $("#DownloadImpactData").click(function(e) {
-                                     e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.getData(), null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Investment Forecast.json");
-    });
+                                       e.preventDefault();
+        var blob = new Blob([ handsontable2csv.string(this.table) ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "InvestmentDataTable.tsv");
+    }.bind(this));
 
 }
 
@@ -1185,11 +1283,15 @@ function SharesDataTable() {
 
 
 
-    $("#DownloadSharesDataData").click(function(e) {
-                                     e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Key results.json");
-    });
+
+    $("#DownloadSharesDataData")
+    .click(function(e) {
+               e.preventDefault();
+               var blob = new Blob([
+                   handsontable2csv.string(this.table, true)
+               ], {type: "text/plain;charset=utf-8"});
+               saveAs(blob, "BackgroundDataTable.tsv");
+           }.bind(this));
 }
 
 SharesDataTable.prototype = _.create(

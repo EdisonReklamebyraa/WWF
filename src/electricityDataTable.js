@@ -19,9 +19,9 @@ function ElectricityDataTable(data) {
 
   $("#DownloadEMixData").click(function(e) {
         e.preventDefault();
-        var blob = new Blob([ JSON.stringify(self.data.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Electricity Data Table.json");
-    });
+        var blob = new Blob([  handsontable2csv.string(this.table) ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "Electricity Data Table.tsv");
+    }.bind(this));
 
 }
 

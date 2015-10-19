@@ -1,5 +1,6 @@
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
+var header = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n';
 
 
 module.exports = Charts;
@@ -33,7 +34,7 @@ function Charts(data) {
         self.loadedGoogle();
     });
 
-   
+
 }
 
 Charts.prototype = _.create(
@@ -101,6 +102,9 @@ Charts.prototype = _.create(
                 var options = {
                     chart: {
                         title: 'Impact'
+                    },
+                    legend:{
+                        position: 'bottom'
                     }
                 };
 
@@ -109,7 +113,21 @@ Charts.prototype = _.create(
 
                 chart.draw(data, options);
 
-                $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#ImpactChart svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "ImpactChart.svg");
+
+                    e.preventDefault();
+                });
             }
         } ,
 
@@ -122,8 +140,8 @@ Charts.prototype = _.create(
 
                 for(var i = 0; i < this.shares.length; i++){
                     data.push(([(this.user["starting year"] + i + "")]).concat(this.shares[i].members.map(function(member) {
-                                                                            return member.money;
-                                                                        })).concat([this.shares[i].totalMoney]) );
+                                                                                   return member.money;
+                                                                               })).concat([this.shares[i].totalMoney]) );
                 }
 
                 var series = {};
@@ -132,13 +150,32 @@ Charts.prototype = _.create(
                     vAxis: {title: 'Invested, $'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
-                    series: series
+                    series: series,
+                    legend:{
+                        position: 'bottom'
+                    }
                 };
 
                 var chart = new google.visualization.ComboChart(document.getElementById('InvestmentChart'));
                 chart.draw(google.visualization.arrayToDataTable(data), options);
 
-                $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#InvestmentChart svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "InvestmentChart.svg");
+
+                    e.preventDefault();
+                });
+
+
 
 
             }} ,
@@ -153,8 +190,8 @@ Charts.prototype = _.create(
 
                 for(var i = 0; i < this.shares.length; i++){
                     data.push(([(this.user["starting year"] + i + "")]).concat(this.shares[i].members.map(function(member) {
-                                                                            return member.installed;
-                                                                        })).concat([this.shares[i].totalInstalled]) );
+                                                                                   return member.installed;
+                                                                               })).concat([this.shares[i].totalInstalled]) );
                 }
 
                 var series = {};
@@ -163,12 +200,29 @@ Charts.prototype = _.create(
                     vAxis: {title: 'Installed capacity, kW'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
-                    series: series
+                    series: series,
+                    legend:{
+                        position: 'bottom'
+                    }
                 };
 
                 var chart = new google.visualization.ComboChart(document.getElementById('CapacityInstalled'));
                 chart.draw(google.visualization.arrayToDataTable(data), options);
-                $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#CapacityInstalled svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "CapacityInstalled.svg");
+
+                    e.preventDefault();
+                });
 
             }
         },
@@ -191,6 +245,9 @@ Charts.prototype = _.create(
                 var options = {
                     chart: {
                         title: 'Annual and cumulative investment.'
+                    },
+                    legend:{
+                        position: 'bottom'
                     }
                 };
 
@@ -198,7 +255,21 @@ Charts.prototype = _.create(
                 var chart = new google.visualization.ColumnChart(document.getElementById('TotalInvestmentChart'));
                 chart.draw(data, options);
 
-                $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#TotalInvestmentChart svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "TotalInvestmentChart.svg");
+
+                    e.preventDefault();
+                });
 
             }
         },
@@ -217,11 +288,28 @@ Charts.prototype = _.create(
                 }
                 data.addRows(pieData );
                 // Set chart options
-                var options = {'title':'Relative share that each technology has WITHIN its category' };
+                var options = {'title':'Relative share that each technology has WITHIN its category',
+                               legend:{
+                                   position: 'bottom'
+                               } };
 
                 var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
                 chart.draw(data, options);
-                $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>');
+                $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+
+                    var blob = new Blob([header,
+                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                                         $("#PieDist svg").html(),
+                                         "</svg>"
+
+                                        ], {type: "application/svg+xml;charset=utf-8"});
+
+
+
+                    saveAs(blob, "PieDist.svg");
+
+                    e.preventDefault();
+                });
             }
         }
 

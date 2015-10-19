@@ -23,9 +23,9 @@ function ImpactDataTable() {
 
     $("#DownloadImpactData").click(function(e) {
         e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "impact.json");
-    });
+        var blob = new Blob([ handsontable2csv.string(this.table) ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "ImpactDataTable.tsv");
+    }.bind(this));
 
 }
 

@@ -17,11 +17,14 @@ function BackgroundDataTable(data) {
     }, 100));
 
 
-  $("#DownloadBackgroundData").click(function(e) {
-        e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Background data.json");
-    });
+    $("#DownloadBackgroundData")
+    .click(function(e) {
+               e.preventDefault();
+               var blob = new Blob([
+                   handsontable2csv.string(this.table, true)
+               ], {type: "text/plain;charset=utf-8"});
+               saveAs(blob, "BackgroundDataTable.tsv");
+           }.bind(this));
 }
 
 BackgroundDataTable.prototype = _.create(
@@ -41,6 +44,8 @@ BackgroundDataTable.prototype = _.create(
                           if(!this.table){
 
                               var container = document.getElementById('BackgroundData');
+
+                              console.log(this.data);
                               this.table = new Handsontable(container, {
                                   data: this.data,
                                   rowHeaders: false,
@@ -50,12 +55,19 @@ BackgroundDataTable.prototype = _.create(
                                                "&nbsp;<hr>Min hours",
                                                "<div class='wide'><strong>Full Load Hours (capacity)</strong></div><hr> Max hours",
                                                "&nbsp;<hr>Average hours",
-                                               "<strong>Emissions</strong> <hr>(LCA life-cycle assessment)<hr>grams CO2eq/kWh",
-                                               "<strong>Employment</strong> <hr>Jobs / GWh",
-                                               "<strong>Employment</strong> <hr>Jobs / 1 million $" ],
+                                               "<strong>Emissions</strong> <hr>(LCA life-cycle assessment)<hr>grams CO2eq/kWh"  ],
 
                                   stretchH: "all",
                                   contextMenu: true,
+                                  columns: [
+                                      {data: "type"},
+                                      {data: "years"},
+                                      {data: "overnightCapitalCost"},
+                                      {data: "minHours"},
+                                      {data: "maxHours"},
+                                      {data: "averageHours"},
+                                      {data: "emissions"}
+                                  ],
                                   cells: function(row,cell,prop) {
                                       switch(cell) {
                                           case 0:

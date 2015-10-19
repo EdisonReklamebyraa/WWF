@@ -29,10 +29,10 @@ function InvestmentDataTable() {
 
 
     $("#DownloadImpactData").click(function(e) {
-                                     e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.getData(), null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Investment Forecast.json");
-    });
+                                       e.preventDefault();
+        var blob = new Blob([ handsontable2csv.string(this.table) ], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, "InvestmentDataTable.tsv");
+    }.bind(this));
 
 }
 

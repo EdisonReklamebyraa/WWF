@@ -51,20 +51,10 @@ function GrowthRateDataTable() {
     $("#DownloadGrowthRateData").click(function(e) {
         e.preventDefault();
         var blob = new Blob([
-
-            JSON.stringify(
-            {
-                annualGrowthRates: self.annualGrowthRates,
-                investments: self.data,
-                projections: self.projections,
-                investor : self.userData
-
-            }, null, 4)
-
-
+            handsontable2csv.string(this.table)
         ], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "impactData.json");
-    });
+        saveAs(blob, "GrowthRateDataTable.tsv");
+    }.bind(this));
 
 }
 
@@ -84,13 +74,11 @@ GrowthRateDataTable.prototype = _.create(
         },
 
         loadProjections: function(json) {
-
             this.projections = json;
             this.updateTable();
         },
 
         loadUser: function(json) {
-
             this.userData = json;
             this.updateTable();
         },

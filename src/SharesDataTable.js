@@ -25,11 +25,15 @@ function SharesDataTable() {
 
 
 
-    $("#DownloadSharesDataData").click(function(e) {
-                                     e.preventDefault();
-        var blob = new Blob([JSON.stringify(self.data, null, 4)], {type: "text/plain;charset=utf-8"});
-        saveAs(blob, "Key results.json");
-    });
+
+    $("#DownloadSharesDataData")
+    .click(function(e) {
+               e.preventDefault();
+               var blob = new Blob([
+                   handsontable2csv.string(this.table, true)
+               ], {type: "text/plain;charset=utf-8"});
+               saveAs(blob, "BackgroundDataTable.tsv");
+           }.bind(this));
 }
 
 SharesDataTable.prototype = _.create(
