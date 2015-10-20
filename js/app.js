@@ -219,7 +219,7 @@ Charts.prototype = _.create(
 
                 chart.draw(data, options);
 
-                $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+                $("#ImpactChartLink").html( '<img width="50" target="_blank" src="' + chart.getImageURI() + '"/><a href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
                     saveSVG("ImpactChart");
                     e.preventDefault();
                 });
@@ -242,7 +242,7 @@ Charts.prototype = _.create(
                 var series = {};
                 series[(this.shares[0].members.length)] = {type: 'line'};
                 var options = {
-                     height: 400,
+                    height: 400,
                     vAxis: {title: 'Invested, $'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
@@ -256,7 +256,7 @@ Charts.prototype = _.create(
                 var chart = new google.visualization.ComboChart(document.getElementById('InvestmentChart'));
                 chart.draw(google.visualization.arrayToDataTable(data), options);
 
-                $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+                $("#InvestmentChartLink").html( '<img width="50" target="_blank" src="' + chart.getImageURI() + '"/><a href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
                     saveSVG("InvestmentChart");
                     e.preventDefault();
                 });
@@ -296,7 +296,7 @@ Charts.prototype = _.create(
 
                 var chart = new google.visualization.ComboChart(document.getElementById('CapacityInstalled'));
                 chart.draw(google.visualization.arrayToDataTable(data), options);
-                $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+                $("#CapacityInstalledLink").html( '<img width="50" target="_blank" src="' + chart.getImageURI() + '"/><a href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
                     saveSVG("CapacityInstalled");
                     e.preventDefault();
                 });
@@ -320,7 +320,7 @@ Charts.prototype = _.create(
                 var data = google.visualization.arrayToDataTable(arrData);
 
                 var options = {
-                     height: 400,
+                    height: 400,
                     chartArea: {  height: "60%" },
                     chart: {
                         title: 'Annual and cumulative investment.'
@@ -334,7 +334,7 @@ Charts.prototype = _.create(
                 var chart = new google.visualization.ColumnChart(document.getElementById('TotalInvestmentChart'));
                 chart.draw(data, options);
 
-                $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+                $("#TotalInvestmentChartLink").html( '<img width="50" target="_blank" src="' + chart.getImageURI() + '"/><a href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
                     saveSVG("TotalInvestmentChart");
                     e.preventDefault();
                 });
@@ -357,7 +357,7 @@ Charts.prototype = _.create(
                 data.addRows(pieData );
                 // Set chart options
                 var options = {
-                     height: 400,
+                    height: 400,
                     'title':'Relative share that each technology has WITHIN its category',
                     chartArea: {  height: "60%" },
                     legend:{
@@ -367,8 +367,8 @@ Charts.prototype = _.create(
 
                 var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
                 chart.draw(data, options);
-                $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
-                    saveSVG("PieDistLink");
+                $("#PieDistLink").html( '<img width="50" target="_blank" src="' + chart.getImageURI() + '"/><a href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+                    saveSVG("PieDist");
                     e.preventDefault();
                 });
             }
@@ -380,12 +380,36 @@ Charts.prototype = _.create(
 
 function saveSVG(id) {
 
-    var blob = new Blob(['<?xml version="1.0" encoding="utf-8"?>',
-                         '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n',
-                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
-                         (new XMLSerializer()).serializeToString($("#"+id+" svg").get(0)),
-                         "</svg>"], {type: "application/svg+xml;charset=utf-8"});
-    saveAs(blob, id+".svg");
+
+    var img = $("' + chart.getImageURI() + '"+id+"Link img:First").get(0);
+
+
+
+
+  var image_data = atob(img.src.split(',')[1]);
+    // Use typed arrays to convert the binary data to a Blob
+    var arraybuffer = new ArrayBuffer(image_data.length);
+    var view = new Uint8Array(arraybuffer);
+    for (var i=0; i<image_data.length; i++) {
+        view[i] = image_data.charCodeAt(i) & 0xff;
+    }
+    try {
+        // This is the recommended method:
+        var blob = new Blob([arraybuffer], {type: 'application/octet-stream'});
+        saveAs(blob, id+".png");
+    } catch (e) {
+        // The BlobBuilder API has been deprecated in favour of Blob, but older
+        // browsers don't know about the Blob constructor
+        // IE10 also supports BlobBuilder, but since the `Blob` constructor
+        //  also works, there's no need to add `MSBlobBuilder`.
+        var bb = new (window.WebKitBlobBuilder || window.MozBlobBuilder);
+        bb.append(arraybuffer);
+        var blob = bb.getBlob('application/octet-stream'); // <-- Here's the Blob
+
+        saveAs(blob, id+".png");
+    }
+
+
 }
 },{"arbiter-subpub":14,"lodash":15}],3:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
