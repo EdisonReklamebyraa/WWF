@@ -100,12 +100,13 @@ Charts.prototype = _.create(
                 var data = google.visualization.arrayToDataTable(arrData);
 
                 var options = {
-                    height: 300,
+                    height: 400,
+                    chartArea: {  height: "60%" },
                     chart: {
                         title: 'Impact'
                     },
                     legend:{
-                        position: 'bottom', maxLines: 5
+                        position: 'top', maxLines: 10
                     }
                 };
 
@@ -137,13 +138,14 @@ Charts.prototype = _.create(
                 var series = {};
                 series[(this.shares[0].members.length)] = {type: 'line'};
                 var options = {
-                     height: 300,
+                     height: 400,
                     vAxis: {title: 'Invested, $'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
                     series: series,
+                    chartArea: {  height: "60%" },
                     legend:{
-                        position: 'bottom', maxLines: 5
+                        position: 'top', maxLines: 10
                     }
                 };
 
@@ -177,13 +179,14 @@ Charts.prototype = _.create(
                 var series = {};
                 series[(this.shares[0].members.length )]  = {type: 'line'};
                 var options = {
-                    height: 300,
+                    height: 400,
                     vAxis: {title: 'Installed capacity, kW'},
                     hAxis: {title: 'Year'},
                     seriesType: 'bars',
                     series: series,
+                    chartArea: {  height: "60%" },
                     legend:{
-                        position: 'bottom', maxLines: 5
+                        position: 'top', maxLines: 10
                     }
                 };
 
@@ -213,12 +216,13 @@ Charts.prototype = _.create(
                 var data = google.visualization.arrayToDataTable(arrData);
 
                 var options = {
-                     height: 300,
+                     height: 400,
+                    chartArea: {  height: "60%" },
                     chart: {
                         title: 'Annual and cumulative investment.'
                     },
                     legend:{
-                        position: 'bottom', maxLines: 5
+                        position: 'top', maxLines: 10
                     }
                 };
 
@@ -249,10 +253,11 @@ Charts.prototype = _.create(
                 data.addRows(pieData );
                 // Set chart options
                 var options = {
-                     height: 300,
+                     height: 400,
                     'title':'Relative share that each technology has WITHIN its category',
+                    chartArea: {  height: "60%" },
                     legend:{
-                        position: 'bottom', maxLines: 5
+                        position: 'top', maxLines: 10
                     }
                 };
 
