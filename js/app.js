@@ -820,9 +820,9 @@ function ImpactDataTable() {
 
 
 
-    $("#DownloadImpactData").click(function(e) {
+    $("#DownloadImpactDataTable").click(function(e) {
         e.preventDefault();
-        var blob = new Blob([ handsontable2csv.string(this.table) ], {type: "text/plain;charset=utf-8"});
+        var blob = new Blob([ this.getDownload() ], {type: "text/plain;charset=utf-8"});
         saveAs(blob, "ImpactDataTable.tsv");
     }.bind(this));
 
@@ -847,6 +847,22 @@ ImpactDataTable.prototype = _.create(
 
             this.userData = json;
             this.updateTable();
+        },
+
+        getDownload: function(){
+            var start =  this.userData["starting year"];
+            var list = "";
+
+            for(var i = 0; i < this.data.yearlyTotalPowerGeneration.length; i++)
+            {
+                list +=""
+              + ( i + start ) +"\t"
+              + this.data.yearlyTotalPowerGeneration[i]
+              + "\n";
+            }
+
+            return list;
+
         },
 
         getData: function() {
