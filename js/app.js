@@ -367,7 +367,8 @@ Charts.prototype = _.create(
 
                 var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
                 chart.draw(data, options);
-                $("#PieDistLink").html( '<img width="50" target="_blank" src="' + chart.getImageURI() + '"/><a href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
+                $("#PieDistLink").html( '<img width="50" target="_blank" src="' + chart.getImageURI() + '"/><a href="' + chart.getImageURI() + '">Download Chart</a>')
+                .click(function(e){
                     saveSVG("PieDist");
                     e.preventDefault();
                 });
@@ -381,7 +382,7 @@ Charts.prototype = _.create(
 function saveSVG(id) {
 
 
-    var img = $("' + chart.getImageURI() + '"+id+"Link img:First").get(0);
+    var img = $("#"+id+"Link img:First").get(0);
 
 
 
