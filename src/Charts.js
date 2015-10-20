@@ -282,7 +282,6 @@ function saveSVG(id) {
 
 
 
-
   var image_data = atob(img.src.split(',')[1]);
     // Use typed arrays to convert the binary data to a Blob
     var arraybuffer = new ArrayBuffer(image_data.length);
