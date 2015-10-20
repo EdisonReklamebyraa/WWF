@@ -284,6 +284,9 @@ h2 .upndownBox .downBtn {
 .teckbox, .earthBox {
 	  position: relative;
     overflow: hidden;
+    img{
+        width: 100%;
+    }
 }
 
 .box{

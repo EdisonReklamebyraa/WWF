@@ -104,7 +104,7 @@ BackgroundDataTable.prototype = _.create(
 },{"arbiter-subpub":14,"lodash":15}],2:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
-var header = '<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n';
+
 
 
 module.exports = Charts;
@@ -219,18 +219,7 @@ Charts.prototype = _.create(
                 chart.draw(data, options);
 
                 $("#ImpactChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
-
-                    var blob = new Blob([header,
-                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
-                                         $("#ImpactChart svg").html(),
-                                         "</svg>"
-
-                                        ], {type: "application/svg+xml;charset=utf-8"});
-
-
-
-                    saveAs(blob, "ImpactChart.svg");
-
+                    saveSVG("ImpactChart");
                     e.preventDefault();
                 });
             }
@@ -266,18 +255,7 @@ Charts.prototype = _.create(
                 chart.draw(google.visualization.arrayToDataTable(data), options);
 
                 $("#InvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
-
-                    var blob = new Blob([header,
-                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
-                                         $("#InvestmentChart svg").html(),
-                                         "</svg>"
-
-                                        ], {type: "application/svg+xml;charset=utf-8"});
-
-
-
-                    saveAs(blob, "InvestmentChart.svg");
-
+                    saveSVG("InvestmentChart");
                     e.preventDefault();
                 });
 
@@ -316,18 +294,7 @@ Charts.prototype = _.create(
                 var chart = new google.visualization.ComboChart(document.getElementById('CapacityInstalled'));
                 chart.draw(google.visualization.arrayToDataTable(data), options);
                 $("#CapacityInstalledLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
-
-                    var blob = new Blob([header,
-                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
-                                         $("#CapacityInstalled svg").html(),
-                                         "</svg>"
-
-                                        ], {type: "application/svg+xml;charset=utf-8"});
-
-
-
-                    saveAs(blob, "CapacityInstalled.svg");
-
+                    saveSVG("CapacityInstalled");
                     e.preventDefault();
                 });
 
@@ -364,18 +331,7 @@ Charts.prototype = _.create(
                 chart.draw(data, options);
 
                 $("#TotalInvestmentChartLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
-
-                    var blob = new Blob([header,
-                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
-                                         $("#TotalInvestmentChart svg").html(),
-                                         "</svg>"
-
-                                        ], {type: "application/svg+xml;charset=utf-8"});
-
-
-
-                    saveAs(blob, "TotalInvestmentChart.svg");
-
+                    saveSVG("TotalInvestmentChart");
                     e.preventDefault();
                 });
 
@@ -407,18 +363,7 @@ Charts.prototype = _.create(
                 var chart = new google.visualization.PieChart(document.getElementById('PieDist'));
                 chart.draw(data, options);
                 $("#PieDistLink").html( '<a target="_blank" href="' + chart.getImageURI() + '">Download Chart</a>').click(function(e){
-
-                    var blob = new Blob([header,
-                                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
-                                         $("#PieDist svg").html(),
-                                         "</svg>"
-
-                                        ], {type: "application/svg+xml;charset=utf-8"});
-
-
-
-                    saveAs(blob, "PieDist.svg");
-
+                    saveSVG("PieDistLink");
                     e.preventDefault();
                 });
             }
@@ -426,6 +371,17 @@ Charts.prototype = _.create(
 
     }
 );
+
+
+function saveSVG(id) {
+
+    var blob = new Blob(['<?xml version="1.0" encoding="utf-8"?>',
+                         '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n',
+                         '<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >',
+                         (new XMLSerializer()).serializeToString($("#"+id+" svg").get(0)),
+                         "</svg>"], {type: "application/svg+xml;charset=utf-8"});
+    saveAs(blob, id+".svg");
+}
 },{"arbiter-subpub":14,"lodash":15}],3:[function(require,module,exports){
 var Arbiter = require('arbiter-subpub');
 var _ = require("lodash");
