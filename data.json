@@ -8,11 +8,11 @@
         "target year": 2020,
         "comparison": 75000000,
 
-        "coalPlant": 586000,
+        "coalPlant": 667000,
         "nuclearReactor": 922000,
         "EUCitizens": 6144,
         "US": 4260000000,        
-        "worldGHG": 45914000000,
+        "worldGHG": 45913500000,
         "worldUS": 6135000000,
         "globes": "",
         "numGlobes": 0
