@@ -1188,12 +1188,11 @@ Results.prototype = _.create(
 
             var coalPlant = this.data.user["coalPlant"];
             var nuclearReactor = this.data.user["nuclearReactor"];
-            var EUCitizens = this.data.user["EUCitizens"];
+
             var US = this.data.user["US"];
 
 
-            for(var i = 0; i < shares.length; i++)
-            {
+            for(var i = 0; i < shares.length; i++){
                 installed     += shares[i].totalInstalled;
             }
 
@@ -1201,7 +1200,7 @@ Results.prototype = _.create(
             $(".coalPlants").text(numeral(installed / coalPlant).format('0, 000'));
             $(".nuclearReactors").text(numeral(installed / nuclearReactor).format('0, 000'));
 
-            $(".EUCitizens").text(numeral(installed / EUCitizens).format('0, 000'));
+
             $(".US").text(numeral(installed / US).format('0, 000.00'));
 
         },
@@ -1222,6 +1221,8 @@ Results.prototype = _.create(
 
                            var worldGHG = this.data.user["worldGHG"];
                            var worldUS  = this.data.user["worldUS"];
+                           var EUCitizens = this.data.user["EUCitizens"];
+
 
                            var numGlobes = 0;
 
@@ -1248,6 +1249,7 @@ Results.prototype = _.create(
 
                            $(".timesUS").text(numeral(c02g /worldUS).format('0, 000') );
                            $(".amount").text(numeral(this.summary.averageAnnualPowerGeneration).format('0, 000')+' KWh');
+                           $(".EUCitizens").text(numeral(this.summary.averageAnnualPowerGeneration / EUCitizens).format('0, 000'));
                            $(".wAnnually").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".wAnnuallyType").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));
                            $(".start").text(this.data.user["starting year"]);
