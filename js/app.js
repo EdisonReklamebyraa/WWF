@@ -1230,13 +1230,14 @@ Results.prototype = _.create(
                                c02g     += shares[i].c02Saved;
                            }
 
-                           numGlobes = Math.floor(c02g/worldGHG);
+                           numGlobes = Math.min(21, Math.floor(c02g/worldGHG));
 
-
-                           for(i = 0; i < numGlobes; i++)
-                           {
-                               globes += (numGlobes > 40 )? ".":'<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
-                           }
+                           if(numGlobes < 20)
+                             for(i = 0; i < numGlobes; i++){
+                                 globes +=  '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
+                             }
+                           else
+                             numGlobes = "<hr />";
 
                            Arbiter.publish("changed/impact",this.summary  );
 
