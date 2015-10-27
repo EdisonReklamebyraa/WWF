@@ -1108,12 +1108,12 @@ Results.prototype = _.create(
         },
 
         update: _.debounce(function() {
-            this.res = new RES(this.data.background);
-            this.energyScenario = new EnergyScenario(this.data.electricity_mix);
-            this.updateAnnualGrowthRates();
-            this.updateProjections();
-            this.updateInvestments();
-        },100),
+                    this.res = new RES(this.data.background);
+                    this.energyScenario = new EnergyScenario(this.data.electricity_mix);
+                    this.updateAnnualGrowthRates();
+                    this.updateProjections();
+                    this.updateInvestments();
+                },100),
 
         updateProjections : function() {
             this.setProjections(this.res.projectIvestments( this.data.user["investment"], this.annualGrowthRates, this.data.user["target year"] - this.data.user["starting year"]));
@@ -1121,7 +1121,7 @@ Results.prototype = _.create(
 
         updateAnnualGrowthRates : function() {
             this.setAnnualGrowthRates(this.res.getAnnualGrowthRates( this.data.user["annual growth rate"],
-                                                                           this.data.user["target year"] - this.data.user["starting year"] ));
+                                                                     this.data.user["target year"] - this.data.user["starting year"] ));
         },
 
 
@@ -1209,7 +1209,7 @@ Results.prototype = _.create(
 
         updateMoneyToInvest: function(investments) {
             var investment = _.reduce(investments,
-                function(previousValue, currentValue) {return previousValue + currentValue;})
+                                      function(previousValue, currentValue) {return previousValue + currentValue;})
 
             $("#budget1").text(numeral(investment).format('($ 0, 000)') );
         },
@@ -1239,11 +1239,11 @@ Results.prototype = _.create(
                              }
                            else
                              numGlobes = "<hr />";
-
+                           
                            Arbiter.publish("changed/impact",this.summary  );
 
                            $(".EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
-                           $(".timesWorld").text(numeral(c02g/worldGHG).format('0, 000') );
+                           $(".timesWorld").text(numeral((c02g/worldGHG)/million).format('0, 000') );
 
                            $(".globes").html(globes);
 
