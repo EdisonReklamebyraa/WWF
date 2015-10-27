@@ -455,12 +455,12 @@ ComparisonsTable.prototype = _.create(
 
         getData: function() {
 
-           return  [[ "Nuclear reactor, capacity average (2015)",	"MW",	this.data["nuclearReactor"],	"World Nuclear Association"],
-           [ "Coal power generator, capacity, average (2013)",	"MW",	this.data["coalPlant"],	"EPA (see background info)"],
+           return  [[ "Wind turbine, capacity average (2015)",	"KW",	this.data["nuclearReactor"],	"European Wind Energy Association"],
+           [ "Coal power generator, capacity, average (2013)",	"KW",	this.data["coalPlant"],	"U.S. Energy Information Administration"],
            [ "United States electricity generation (2011)",	"TWh",	this.data["US"],	"IEA 2014"],
-           [ "European Union, electricity consumption per capita (2011)",	"kWh",	this.data["EUCitizens"],	"World Bank"],
-           [ "World annual GHG emissions, incl. LUCF(2012)",	"Mt CO2 eq.",	this.data["worldGHG"],	"World resource Institute"],
-           [ "US annual GHG emissionS, INCL. LUCF (2011)",	"Mt CO2 eq.",	 this.data["worldUS"],	"World resource Institute"]];
+           [ "European Union, electricity consumption per capita (2012)",	"kWh",	this.data["EUCitizens"],	"World Bank"],
+           [ "World annual GHG emissions, incl. LUCF (2011)",	"t CO2 eq.",	this.data["worldGHG"],	"World Resource Institute"],
+           [ "US annual GHG emissionS, INCL. LUCF (2011)",	"t CO2 eq.",	 this.data["worldUS"],	"World Resource Institute"]];
 
         },
 
