@@ -8,16 +8,16 @@
         "target year": 2020,
         "comparison": 75000000,
 
-        "coalPlant": 667000,
-        "nuclearReactor": 922000,
+        "coalPlant": 272000,
+        "nuclearReactor": 3000,
         "EUCitizens": 6144,
-        "US": 4260000000,        
+        "US": 4260000000,
         "worldGHG": 45913500000,
         "worldUS": 6135000000,
         "globes": "",
         "numGlobes": 0
     },
-    
+
     "electricity_mix": {
         "data": [
             [
@@ -77,7 +77,7 @@
                 11332700
             ]
         ],
-        "cols": [           
+        "cols": [
             "coal",
             "oil",
             "gas",
@@ -123,7 +123,7 @@
         ]
     },
     "background": [
-       
+
         {
             "type": "Coal",
             "years": 40,
