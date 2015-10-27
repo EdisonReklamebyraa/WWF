@@ -1,2 +1,34 @@
 <h2 id="methodology">Methodology</h2>
-<p>(In the end, here we can copy the text from the Info popup, or write something else. Not sure yet. But it will be a simple text box, in any case.)</p>
+
+<p>Here we provide a short summary describing the modelling approach used in this calculator. For a more complete description of the methodology.</p>
+
+<p>Sources of data</p>
+<p>All data used in the calculator are provided by the  <a href="http://www.worldenergyoutlook.org/publications/weo-2014/" target="_blank">International Energy Agency (IEA)</a> and the <a href="http://www.ipcc.ch/" target="_blank">Intergovernmental Panel on Climate Change (IPCC)</a>.</p>
+
+<p>Amount of investment</p>
+<p>The first step in our modelling approach is to define the amount of investment that will form the basis for the subsequent calculations. In the calculator, you specify the market value of the fund(s) that you would like to test in your analysis. In addition, you specify a percentage share of that total market value which will be allocated directly to renewable energy investments.</p>
+<p>Considering that this is a time-series analysis, it may also be relevant to insert a certain growth rate of the fund. The calculator allows you to insert a compound annual growth rate (CAGR). Such data may be publicly available. Please note that by default CAGR in the calculator is set to 0 percent.</p>
+<p>We assume that the investor starts to invest in the first year and linearly build up to reach the target. For example, for a case where the investment starts in 2016 and where a target of 5 percent is set by 2020, the fund will invest 1 percent of its value every year for five years. For this modelling period, it is assumed that investments dedicated to infrastructure projects are “locked”, that is, once invested in one year, that financing is tied to a specific project throughout the modelling period.
+</p>
+
+<p>Allocating investments to different technologies</p>
+<p>The annual investments are allocated to different renewable energy technologies in accordance with their derived share of the world’s annual added electrical capacity. The renewable energy mix used here is taken from the IEA’s World Energy Outlook 2014, where different climate scenarios are presented. Based on the data available, the calculator incorporates the IEA’s central scenario, called “New Policy Scenario” (NPS) for the period 2016-2019. For the year 2020-2035, the calculator incorporates data from the 450 scenario (450S). This implies that the larger part of investments will go to wind power, followed by hydropower and solar PV. These three technologies will attract approximately 90 percent of annual investment for the whole period.
+</p>
+
+<p>Estimation of added renewable energy capacity and associated electricity output</p>
+<p>Once the amount of investment has been registered, the model calculates the new electricity generation capacity. Put differently: it estimates the typical amount of electricity generated from each technology. To calculate this, the model relies on three variables, all provided by IPCC:
+
+<p>1) Overnight capital cost (in USD/kW), which indicates the cost of building a power plant overnight as if there were no cost of capital.</p>
+
+<p>2) Capacity utilization/full load hours (in hours): it expresses, for each technology, the number of hours that a generator would spend at full load if it always operated at that level.</p>
+
+<p>3) Plant lifetime (in years), the number of years a typical power plant will be functioning.</p>
+<p>The added capacity will be represented by new hydropower plants, solar plants, wind parks, geothermal facilities, and so on. These plants will generate a given amount of clean electricity every year. Based on this, we finally calculate the total electricity generated over the lifetime of the power plant.
+</p>
+
+<p>It is important to note that this is not a practical investment case since there are a host of variables that would influence the actual financial viability of renewable energy projects, such as the presence of unforeseen costs during construction, financial costs, regulatory frameworks, and more. It should also be noted that we do not include future forecasts on how these factors will change due to technological progress, for instance reduced construction costs, increased efficiency and prolonged lifetime of the plants.
+
+<p>Estimating averted emissions</p>
+<p>To illustrate the potential effect that the new renewable-based electricity generation capacity can have on greenhouse gas emissions (measured in carbon dioxide equivalent, CO2 eq.), we ask the following question: What are the associated theoretically averted GHG emissions if the electricity generated from renewables would have instead been generated from a mix of fossil fuels?</p>
+
+<p>To estimate this, we use emissions factors provided by IPCC (Table A.III.2), which define the GHG emissions produced to generate 1 kWh generated of electricity with different technologies, both renewables and fossil-based. Using the emission factors, we calculate emissions theoretically averted if the same amount of electricity would have been instead generated using a mix of coal, oil and gas. The lifetime emission produced by fossil fuels is then matched against the lifetime emission produced by renewable energy, and the difference between these emission levels constitute the amount of averted emissions.</p>

@@ -1,7 +1,7 @@
-<h2 id="inputs">Inputs: now it's your turn!</h2>
-<p>Now you have the possibility to create your own case study! Simply edit the following fields. The changes are automatically saved, and you can go back to default just by pressing the “Reset” button.</p>
+<h2 id="inputs">Data inputs: it's your turn!</h2>
+<p>Now you have the possibility to create your own case study! Simply edit the following fields. The changes are automatically saved in your browser, and you can go back to default just by pressing the “Reset” button.</p>
 
-<p>For illustrative purposes, we have inserted similar numbers to the one we use in a case study of Norway’s sovereign wealth fund (almost 1 trillion USD). Change these numbers with your own to create your personalized case.</p>
+<p>For illustrative purposes, we have inserted similar numbers to the one we use in a case study of  <a href="http://www.nbim.no/en/" target="_blank">Norway’s sovereign wealth fund</a>, which own almost 1 trillion USD in assets. Change these numbers with your own to create your personalized case.</p>
 
 <form id="InputsForm">
 
@@ -9,28 +9,22 @@
     <p>
       <label for="Investment">1) Insert the total capital holding of the investment fund(s) (In US dollars)</label>
       <input id="Investment" type="text" data-id="investment" name="totalFund" data-format="0,000"   value="" />
-      <label for="Investment">USD.</label>            
+      <label for="Investment">USD.</label>
     </p>
 
-    
- 
     <p>
-      <label for="InvestPercentage">2) Specify the percentage share of the fund’s total capital holding that should be invested directly in renewable energy projects:</label>
+      <label for="InvestPercentage">2) Specify the percentage share of the fund’s total capital holding to be invested directly in renewable energy projects:</label>
       <input id="InvestPercentage" data-id="target" type="text" name="investPercentage" data-format="0,000.00" >
       <label for="InvestPercentage"> percent of fund’s total value.</label>
     </p>
 
-
     <p>
-      <label for="StartingYear">3) The fund will start to invest in</label>
+      <label for="StartingYear">3) The fund will start to invest in the year</label>
       <input type="number" id="StartingYear"  maxlength="4" value="2016" data-id="starting year" name="start">
-      <label for="TargetYear">and the target to be reached in (max 2035)</label>
+      <label for="TargetYear">and the target to be reached in the year (max 2035)</label>
       <input type="number"   id="TargetYear" maxlength="4" value="2020" data-id="target year" name="target">
       <label for="TargetYear">.</label>
     </p>
 
-  
-    <p><div class="inpne-box"> <a href="#" id="AppRest" class="button">Reset</a></div> </p>
-
- 
+      <p><div class="inpne-box"> <a href="#" id="AppRest" class="button">Reset</a></div> </p>
 </form>
