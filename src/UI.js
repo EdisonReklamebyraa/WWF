@@ -67,15 +67,12 @@ UIs.prototype = _.create(
                 self.interaction(this);
             }).change(function() {
                 self.interaction(this);
-            }).focus(function() {
-                if(!$(this).hasClass("string"))
-                  $(this).val(numeral().unformat($(this).val()));
-            });
+            }) ;
         },
 
         interaction: function(input) {
             var val = $(input).val() * 1;
-            val = isNaN(val)? numeral().unformat(val):val;
+            val = isNaN(val)? numeral().unformat($(input).val()):val;
 
             if(!isNaN(val)){
                 this.user[ $(input).data("id")] = val;
