@@ -75,6 +75,10 @@ header {
 .row {
 	  max-width: 72rem;
 }
+.handsontable{
+    overflow: auto;
+    position: relative;
+}
 
 .noSidePadd {
 	  padding-right: 0;

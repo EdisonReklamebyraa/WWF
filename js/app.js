@@ -46,7 +46,7 @@ BackgroundDataTable.prototype = _.create(
 
                               var container = document.getElementById('BackgroundData');
 
-                              console.log(this.data);
+
                               this.table = new Handsontable(container, {
                                   data: this.data,
                                   rowHeaders: false,
