@@ -28,20 +28,40 @@ ul {
         margin: 0;
     }
 }
-header{
-    h1{
-        padding: 0.5em 0;
+ 
+.logo{
+    background: white;
+    padding: 5px;
+    float: left;
+    font-size: 3.5rem;
+    margin: -6px 0.5em 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    
+    img{
+        border: 2px solid #555;
+        max-height: 8rem;
+
     }
 }
-.logo{
-    float: left;
-    padding: 0;
 
-    img{
-        margin: -0.1em 1em 0.5em 0 ;
-        border: 2px solid #000;
-        float: left;
-        max-height: 3em;
+header {
+
+    .row{
+
+    }
+    
+    h1{
+        clear: both;
+    }
+}
+
+.photo{
+
+    background: transparent url(/img/webcalculator_header.png) 0 100%;
+    background-size: cover;
+    h1{
+        color: white;
+        margin: 0.75em 0 0.25em;
     }
 }
 
@@ -151,9 +171,7 @@ h3, .accordion .accordion-navigation a {
 .larger {
 	  font-size: 1.8rem;
 }
-header.row {
-	  margin-bottom: 1.875rem;
-}
+ 
 .sidebar p {
 	  font-size: 0.8rem;
 	  line-height: 1.2;
@@ -532,7 +550,7 @@ footer{
    
     header{
 
-        padding: 2em 0;
+        padding: 0 0 2em;
 
         h1{
                 overflow: hidden;
