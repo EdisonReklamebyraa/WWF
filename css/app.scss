@@ -419,7 +419,6 @@ header .fundBox {
 	  margin-right: 0.2rem;
 }
 
-
 table {
 	  width: 100%;
 }
@@ -477,8 +476,16 @@ footer{
         margin: -2em 1em 0;
     }
 }
-
-
+ .teckbox p, .earthBox h2 {
+	      position: absolute;
+    }
+ #hydro {top: 53%;left: 13%;}
+    #bio {top: 54%;left: 26%;}
+    #wind {top: 36%;left: 43%;}
+    #geo {top: 33%;left: 56%;}
+    #solarpv {top: 35%;left: 68%;}
+    #solarp {top: 29%;left: 80%;}
+    
 /* Animations
 --------------------------------------------------------------------- */
 /*.spin {
@@ -495,6 +502,8 @@ footer{
 }
 
 
+
+
 /* Font-face
 --------------------------------------------------------------------- */
 @font-face {
@@ -507,7 +516,7 @@ footer{
     font-style: normal;
 }
 
-@media only screen and (min-width: 72rem) {
+@media only screen and (min-width: 68rem) {
 	  .noLeftPadd {
 		    padding-left: 0;
 	  }
@@ -520,9 +529,7 @@ footer{
 
     }
 
-    .teckbox p, .earthBox h2 {
-	      position: absolute;
-    }
+   
     header{
 
         padding: 2em 0;
@@ -536,15 +543,10 @@ footer{
         }
     }
 
-    #hydro {top: 53%;left: 13%;}
-    #bio {top: 54%;left: 26%;}
-    #wind {top: 36%;left: 43%;}
-    #geo {top: 33%;left: 56%;}
-    #solarpv {top: 35%;left: 68%;}
-    #solarp {top: 29%;left: 80%;}
+   
 }
 
-@media only screen and (max-width: 72rem) {
+@media only screen and (max-width: 66rem) {
 
 	  header h1, header h1 input[type="text"] {
 		    font-size: 2.75rem;
@@ -571,15 +573,44 @@ footer{
 		    min-height: 0;
 	  }
 
+    .teckbox p span {
+        font-size: 1rem;
+    }
+    .earthBox {
+        text-align: center;
+        img{
+            width: 400px;
+            margin: 0 auto;
+        }
+        h2 {
+	          position: absolute;
+            text-align: center;
+            width: 300px;
+            left: 50%;
+
+            margin-left: -150px;
+        }
+    }
+   
+    .techModal{
+        padding-bottom: 1em;
+    }
+
+
+
+}
+@media only screen and (max-width: 44rem) {
+
     .dollas{
         clear: both;
         height: 6em;
         position: relative;
         img{
             position: absolute;
-            width: 47%;
+            width: 150px;
             top: 0;
-            left: 29%;
+            margin-left: -75px;
+            left: 50%;
         }
         h3{
             position: relative;
@@ -589,33 +620,6 @@ footer{
         }
 
     }
-
-    .teckbox p span {
-        font-size: 1rem;
-    }
-    .earthBox h2 {
-	      position: absolute;
-    }
-    .teck.teckbox {
-        text-align: center;
-        img{
-            display: none;
-        }
-
-        p{
-            display: inline-block;
-            padding: 1em;
-        }
-
-    }
-    .techModal{
-        padding-bottom: 1em;
-    }
-
-
-
-}
-@media only screen and (max-width: 64.063rem) {
 
     body{
         background: #FFF;

@@ -1231,23 +1231,14 @@ Results.prototype = _.create(
                                c02g     += shares[i].c02Saved;
                            }
 
-                           numGlobes = Math.min(21, Math.floor(c02g/worldGHG));
 
-                           if(numGlobes < 20)
-                             for(i = 0; i < numGlobes; i++){
-                                 globes +=  '<img src="/img/SVG/globe.svg" class="globe" width="' +90/numGlobes +  '%" />'
-                             }
-                           else
-                             numGlobes = "<hr />";
-                           
+
                            Arbiter.publish("changed/impact",this.summary  );
 
                            $(".EmissionsAvoided").text(numeral(c02g/million).format('0, 000'));
                            $(".timesWorld").text(numeral((c02g/worldGHG)/million).format('0, 000') );
 
-                           $(".globes").html(globes);
-
-                           $(".timesUS").text(numeral(c02g /worldUS).format('0, 000') );
+                           $(".timesUS").text(numeral((c02g /worldUS)/million).format('0, 000.00') );
                            $(".amount").text(numeral(this.summary.averageAnnualPowerGeneration).format('0, 000')+' KWh');
                            $(".EUCitizens").text(numeral(this.summary.averageAnnualPowerGeneration / EUCitizens).format('0, 000'));
                            $(".wAnnually").text(numeral(this.summary .averageAnnualPowerGeneration).format('0, 000'));

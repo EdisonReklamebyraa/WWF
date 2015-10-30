@@ -56,14 +56,18 @@ permalink: /
 
   <div class="large-4 columns sidebar whitewrap">
     <div>
+
+      {% include installed_popup.html %}
 	    {% include installed.html %}
       <hr />
     </div>
     <div>
+      {% include power_popup.html %}
 	    {% include small_renewable.html %}
       <hr />
     </div>
     <div>
+      {% include emissions_popup.html %} 
 	    {% include emissions.html %}
     </div>
 
