@@ -118,7 +118,7 @@ Results.prototype = _.create(
 
             this.res.addComparisons(this.ffshares,this.shares );
 
-            this.updateShares(_.first(this.shares));
+            this.updateShares();
             this.updateMoneyToInvest(this.investments);
             this.updateInstalledCapacity(this.shares);
             this.updateImpact(this.shares,this.investments);
@@ -151,11 +151,16 @@ Results.prototype = _.create(
         },
 
 
-        updateShares: function(share) {
-            for(var i = 0; i < share.members.length; i++)
+        updateShares: function() {
+            for(var i = 0; i < this.shares[0].members.length; i++)
             {
-                $("[data-id="+share.members[i].id+"] span").text(
-                    numeral(share.members[i].percent).format('0%')
+
+                 var av = this.shares.reduce(function(a, share) {
+                                 return a + share.members[i].percent; }, 0) / this.shares.length;
+
+
+                $("[data-id="+this.shares[0].members[i].id+"] span").text(
+                    numeral(av).format('0%')
                 );
             }
         },
@@ -229,7 +234,7 @@ Results.prototype = _.create(
 
                            $(".years").text( this.data.user["target year"] - this.data.user["starting year"] + 1);
 
-                           $(".jobsCreated").text(numeral(_.first(shares).totalJobsCreated).format('0, 000'));
+
 
 
                        }, 150)

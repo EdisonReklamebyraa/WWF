@@ -246,10 +246,15 @@ Charts.prototype = _.create(
                 data.addColumn('string', 'Type');
                 data.addColumn('number', 'Percentage');
 
+
+
                 for(var i = 0; i < this.shares[0].members.length; i++)
                 {
-                    pieData.push([this.shares[0].members[i].title,this.shares[0].members[i].percent* 100]);
+                    var av = this.shares.reduce(function(a, share) {
+                                 return a + share.members[i].percent; }, 0) / this.shares.length;
+                    pieData.push([this.shares[0].members[i].title,av * 100]);
                 }
+
                 data.addRows(pieData );
                 // Set chart options
                 var options = {
