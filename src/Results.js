@@ -43,7 +43,6 @@ function Results(data) {
         self.updateResults();
     } );
 
-
 }
 
 Results.prototype = _.create(
@@ -123,7 +122,6 @@ Results.prototype = _.create(
             this.updateMoneyToInvest(this.investments);
             this.updateInstalledCapacity(this.shares);
             this.updateImpact(this.shares,this.investments);
-
             Arbiter.publish("update/growthRates", this.annualGrowthRates);
             Arbiter.publish("update/projections", this.projections);
             Arbiter.publish("update/investments", this.investments);

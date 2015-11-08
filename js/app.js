@@ -1064,7 +1064,6 @@ function Results(data) {
         self.updateResults();
     } );
 
-
 }
 
 Results.prototype = _.create(
@@ -1144,7 +1143,6 @@ Results.prototype = _.create(
             this.updateMoneyToInvest(this.investments);
             this.updateInstalledCapacity(this.shares);
             this.updateImpact(this.shares,this.investments);
-
             Arbiter.publish("update/growthRates", this.annualGrowthRates);
             Arbiter.publish("update/projections", this.projections);
             Arbiter.publish("update/investments", this.investments);
@@ -1512,8 +1510,6 @@ module.exports = Data;
 
 function Data(data) {
     this.init();
-
-
 }
 
 Data.prototype = _.create(
@@ -1524,7 +1520,6 @@ Data.prototype = _.create(
         annualGrowthRates: null,
 
         init: function() {
-
 
              try{
                  var localData = JSON.parse(localStorage.getItem("data"));
@@ -1543,8 +1538,6 @@ Data.prototype = _.create(
                 localStorage.removeItem("data");
                 this.load();
             }
-
-
 
             this.loadEvents();
 
@@ -1627,7 +1620,7 @@ Data.prototype = _.create(
 
         load: function() {
             var _self = this;
-            $.getJSON( "/data.json",function(json) {
+            $.getJSON( "/data.json?t="+(new Date()),function(json) {
                 _self.update(json);
                 _self.save();
             }).fail(function(jqxhr, textStatus, error ) {
@@ -1666,6 +1659,7 @@ Data.prototype = _.create(
             this.data= null;
             this.investments= null;
             this.annualGrowthRates= null;
+            localStorage.clear()
             this.load();
         },
 
