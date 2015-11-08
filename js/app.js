@@ -1369,7 +1369,7 @@ SharesDataTable.prototype = _.create(
                     format[index+1][i+1] = {type: "numeric", format: "$ 0, 000"};
                     format[index+2][i+1] = {type: "numeric", format: "0, 000"};
                     format[index+3][i+1] = {type: "numeric", format: "0, 000 "};
-                    format[index+4][i+1] = {type: "numeric", format: "0, 000"};
+                    format[index+4][i+1] = {type: "numeric", format: "0, 000.00"};
                     format[index+5][i+1] = {type: "numeric", format: "%"};
                 }
 
