@@ -625,9 +625,49 @@ footer{
         padding-bottom: 1em;
     }
 
-
-
 }
+.footerlogo{
+    max-height: 9em;
+}
+.footer  {  
+    a{
+        color: #006262;
+        text-decoration: none;
+    }
+}
+.footer .tagline {
+		font: 40px WWFRegular, Arial, sans-serif;
+		letter-spacing: 0.5px;
+		margin-bottom: 12px;
+		padding: 7px 0 5px;
+		border-bottom: 1px solid #666;
+}
+.footer .meta {
+		clear: left;
+		padding-top: 5px;
+		font: 11px Georgia, "Times New Roman", serif;
+		font-style: italic;
+		color: #777777;
+}
+
+.auxiliary-nav{
+    margin: 0;
+    li{
+		    list-style: none;
+		    display: block;
+		    float: left;
+		    margin-right: 7px;
+		    padding-right: 7px;
+		    border-right: 1px solid #ccc;
+    }
+}
+.auxiliary-nav li:last-child {
+		border: none;
+}
+.auxiliary-nav .rss{
+		float:right;
+}
+
 @media only screen and (max-width: 44rem) {
 
     .dollas{
